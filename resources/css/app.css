@@ -1,0 +1,130 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Pesantrends palette — from Figma */
+    --color-forest-50: #f2f7f4;
+    --color-forest-100: #e0ede4;
+    --color-forest-200: #c3dccb;
+    --color-forest-300: #9cc2ad;
+    --color-forest-400: #6ea287;
+    --color-forest-500: #4d8669;
+    --color-forest-600: #3a6d53;
+    --color-forest-700: #2f5944;
+    --color-forest-800: #274838;
+    --color-forest-900: #12462a;
+    --color-forest-950: #0b2e1c;
+
+    --color-gold-50: #fbf8ec;
+    --color-gold-100: #f5edcf;
+    --color-gold-200: #ecd99b;
+    --color-gold-300: #e0c264;
+    --color-gold-400: #d5ac3d;
+    --color-gold-500: #c9a227;
+    --color-gold-600: #a98320;
+    --color-gold-700: #87651c;
+    --color-gold-800: #6f511d;
+    --color-gold-900: #5d431c;
+
+    --color-cream-50: #fdfbf5;
+    --color-cream-100: #f1e8c9;
+    --color-cream-200: #e6d9ae;
+    --color-cream-300: #d9c78c;
+
+    --color-sage-300: #a9c4b4;
+    --color-sage-400: #85aa96;
+    --color-sage-500: #6b9680;
+
+    --color-ink: #16261d;
+    --color-ink-soft: #4a5d52;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-white text-ink font-sans antialiased;
+    }
+
+    ::selection {
+        @apply bg-gold-200 text-forest-950;
+    }
+}
+
+@utility container-app {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+}
+
+@layer components {
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-forest-900 px-5 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-forest-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 active:scale-[0.98] disabled:opacity-60;
+    }
+
+    .btn-gold {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gold-500 px-5 py-3 text-sm font-bold text-forest-950 transition-all duration-200 hover:bg-gold-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 active:scale-[0.98] disabled:opacity-60;
+    }
+
+    .btn-outline {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl border-2 border-forest-900 bg-white px-5 py-3 text-sm font-bold text-forest-900 transition-all duration-200 hover:bg-forest-900 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 active:scale-[0.98];
+    }
+
+    .btn-ghost-light {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-5 py-3 text-sm font-bold text-white backdrop-blur transition-all duration-200 hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-300;
+    }
+
+    .input-field {
+        @apply w-full rounded-xl border border-forest-100 bg-white px-4 py-3 text-sm text-ink shadow-sm transition placeholder:text-ink-soft/50 focus:border-forest-500 focus:outline-none focus:ring-2 focus:ring-forest-500/20;
+    }
+
+    .chip {
+        @apply inline-flex items-center gap-1.5 rounded-full bg-forest-50 px-3 py-1.5 text-xs font-semibold text-forest-800;
+    }
+
+    .chip-gold {
+        @apply inline-flex items-center gap-1.5 rounded-full bg-gold-100 px-3 py-1.5 text-xs font-semibold text-gold-800;
+    }
+
+    .section-label {
+        @apply text-xs font-bold uppercase tracking-[0.2em] text-gold-600;
+    }
+
+    .card-shadow {
+        box-shadow: 0 1px 2px rgba(18, 70, 42, 0.06), 0 8px 24px -8px rgba(18, 70, 42, 0.12);
+    }
+
+    .card-shadow-lg {
+        box-shadow: 0 2px 4px rgba(18, 70, 42, 0.08), 0 20px 48px -12px rgba(18, 70, 42, 0.22);
+    }
+}
+
+/* Prose sederhana untuk konten artikel */
+.article-body {
+    @apply text-[15px] leading-[1.85] text-ink-soft;
+}
+
+.article-body h2 {
+    @apply mt-10 mb-4 text-xl font-extrabold text-ink;
+}
+
+.article-body p {
+    @apply mb-5;
+}
+
+.article-body strong {
+    @apply font-bold text-ink;
+}
+
+.article-body ol {
+    @apply mb-5 list-decimal space-y-2 pl-6;
+}
+
+.article-body ul {
+    @apply mb-5 list-disc space-y-2 pl-6;
+}
