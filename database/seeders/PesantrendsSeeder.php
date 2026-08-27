@@ -8,7 +8,9 @@ use App\Models\Facility;
 use App\Models\Program;
 use App\Models\School;
 use App\Models\Testimonial;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class PesantrendsSeeder extends Seeder
 {
@@ -474,5 +476,33 @@ class PesantrendsSeeder extends Seeder
         foreach ($testimonials as $t) {
             Testimonial::firstOrCreate(['name' => $t['name']], $t);
         }
+
+        // ---------- Users & Admin ----------
+        User::firstOrCreate(
+            ['email' => 'admin@pesantrends.id'],
+            [
+                'name' => 'Administrator',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+            ]
+        );
+
+        User::firstOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Admin Utama',
+                'password' => Hash::make('admin123'),
+                'email_verified_at' => now(),
+            ]
+        );
+
+        User::firstOrCreate(
+            ['email' => 'user@pesantrends.id'],
+            [
+                'name' => 'User Demo',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+            ]
+        );
     }
 }
