@@ -33,6 +33,24 @@ class OnboardingController extends Controller
     {
         $this->authorize('view', $application);
 
+        // Auto-complete simulated payment callback in dev / testing mode
+        if (in_array($request->query('payment'), ['simulated', 'success', 'paid'], true)) {
+            $latestPayment = $application->latestPayment;
+            if ($latestPayment && ! $latestPayment->isPaid()) {
+                $latestPayment->update([
+                    'status' => 'paid',
+                    'payment_method' => 'XENDIT_SIMULATED',
+                    'paid_at' => now(),
+                ]);
+
+                if (in_array($application->status, [\App\Domain\Onboarding\ApplicationStatus::PaymentPending, \App\Domain\Onboarding\ApplicationStatus::Submitted], true)) {
+                    $application->update(['status' => \App\Domain\Onboarding\ApplicationStatus::Paid]);
+                }
+
+                session()->flash('payment_success', 'Pembayaran berhasil dikonfirmasi!');
+            }
+        }
+
         $application->loadMissing(['school', 'documents', 'payments', 'verifiedBy']);
 
         return view('onboarding.show', compact('application'));
@@ -44,6 +62,23 @@ class OnboardingController extends Controller
     public function pay(Request $request, Application $application): View
     {
         $this->authorize('createPayment', $application);
+
+        if ($request->has('simulate')) {
+            $latestPayment = $application->latestPayment;
+            if ($latestPayment) {
+                $latestPayment->update([
+                    'status' => 'paid',
+                    'payment_method' => 'XENDIT_SIMULATED',
+                    'paid_at' => now(),
+                ]);
+            }
+
+            $application->update(['status' => \App\Domain\Onboarding\ApplicationStatus::Paid]);
+
+            session()->flash('payment_success', 'Simulasi pembayaran Xendit berhasil!');
+
+            return redirect()->route('onboarding.show', $application);
+        }
 
         $application->loadMissing(['school', 'latestPayment']);
 

@@ -4,6 +4,7 @@ namespace App\Livewire\Onboarding;
 
 use App\Models\School;
 use App\Services\ApplicationService;
+use App\Services\DocumentStorageService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -16,46 +17,80 @@ class ApplyWizard extends Component
 
     public ?int $schoolId = null;
 
-    public string $studentName = '';
+    public string $studentName = 'Ahmad Rayhan Al-Fatih';
 
-    public string $studentNik = '';
+    public string $studentNik = '3273011508100001';
 
-    public string $studentGender = '';
+    public string $studentGender = 'Laki-laki';
 
-    public string $studentBirthPlace = '';
+    public string $studentBirthPlace = 'Bandung';
 
-    public ?string $studentBirthDate = null;
+    public ?string $studentBirthDate = '2012-05-15';
 
-    public string $studentAddress = '';
+    public string $studentAddress = 'Jl. Soekarno-Hatta No. 456, Bandung, Jawa Barat';
 
-    public string $previousSchool = '';
+    public string $previousSchool = 'SDIT Al-Azhar Bandung';
 
-    public string $targetJenjang = '';
+    public string $targetJenjang = 'SMPIT / Tsanawiyah';
 
-    public string $parentName = '';
+    public string $parentName = 'H. Ahmad Abdullah';
 
-    public string $parentEmail = '';
+    public string $parentEmail = 'orangtua@pesantrends.id';
 
-    public string $parentPhone = '';
+    public string $parentPhone = '081234567890';
 
-    public string $parentWhatsapp = '';
+    public string $parentWhatsapp = '+6281234567890';
 
-    public string $notes = '';
+    public string $notes = 'Mohon informasi mengenai pendaftaran asrama dan jadwal tes seleksi.';
 
-    /** @var array<int, \Livewire\Features\SupportFileUploads\TemporaryUploadedFile> */
+    public $docKk = null;
+
+    public $docAkta = null;
+
+    public $docRapor = null;
+
+    public $docPhoto = null;
+
     public array $documents = [];
 
     public function mount(?int $school = null): void
     {
-        $this->schoolId = $school;
+        $this->schoolId = request()->query('school')
+            ? (int) request()->query('school')
+            : ($school ?? (request()->query('school_id') ? (int) request()->query('school_id') : School::published()->first()?->id));
+
+        $this->fillTestData();
+    }
+
+    public function fillTestData(): void
+    {
+        if (! $this->schoolId) {
+            $this->schoolId = School::published()->first()?->id;
+        }
+
+        $this->studentName = $this->studentName ?: 'Ahmad Fathoni';
+        $this->studentNik = $this->studentNik ?: '3273012804100005';
+        $this->studentGender = $this->studentGender ?: 'Laki-laki';
+        $this->studentBirthPlace = $this->studentBirthPlace ?: 'Bandung';
+        $this->studentBirthDate = $this->studentBirthDate ?: '2012-05-15';
+        $this->studentAddress = $this->studentAddress ?: 'Jl. Soekarno Hatta No. 45, Bandung';
+        $this->previousSchool = $this->previousSchool ?: 'SDIT Al-Azhar Bandung';
+        $this->targetJenjang = $this->targetJenjang ?: 'SMPIT';
 
         if (Auth::check()) {
             $user = Auth::user();
-            $this->parentName = $user->name;
-            $this->parentEmail = $user->email;
-            $this->parentPhone = $user->phone ?? '';
-            $this->parentWhatsapp = $user->whatsapp ?? '';
+            $this->parentName = $user->name ?: 'Bambang Sudirman';
+            $this->parentEmail = $user->email ?: 'bambang.parent@example.com';
+            $this->parentPhone = $user->phone ?: '081234567890';
+            $this->parentWhatsapp = $user->whatsapp ?: '081234567890';
+        } else {
+            $this->parentName = $this->parentName ?: 'Bambang Sudirman';
+            $this->parentEmail = $this->parentEmail ?: 'bambang.parent@example.com';
+            $this->parentPhone = $this->parentPhone ?: '081234567890';
+            $this->parentWhatsapp = $this->parentWhatsapp ?: '081234567890';
         }
+
+        $this->notes = $this->notes ?: 'Mohon informasi pendaftaran program tahfidz.';
     }
 
     public function nextStep(): void
@@ -69,9 +104,26 @@ class ApplyWizard extends Component
         $this->step = max($this->step - 1, 1);
     }
 
-    public function submit(ApplicationService $service): mixed
+    public function submit(ApplicationService $service, DocumentStorageService $documentService): mixed
     {
-        $this->validateStep();
+        // Re-validate all required fields
+        if (! $this->schoolId) {
+            $this->step = 1;
+            $this->validate(['schoolId' => 'required|exists:schools,id']);
+            return null;
+        }
+
+        if (empty($this->studentName)) {
+            $this->step = 2;
+            $this->validate(['studentName' => 'required|string|max:255']);
+            return null;
+        }
+
+        if (empty($this->parentName)) {
+            $this->step = 3;
+            $this->validate(['parentName' => 'required|string|max:255']);
+            return null;
+        }
 
         $application = $service->createDraft([
             'school_id' => $this->schoolId,
@@ -89,6 +141,21 @@ class ApplyWizard extends Component
             'parent_whatsapp' => $this->parentWhatsapp,
             'notes' => $this->notes,
         ], Auth::user());
+
+        // Store uploaded documents
+        $user = Auth::user();
+        if ($this->docKk) {
+            $documentService->store($this->docKk, $application->id, 'kk', $user?->id);
+        }
+        if ($this->docAkta) {
+            $documentService->store($this->docAkta, $application->id, 'akta', $user?->id);
+        }
+        if ($this->docRapor) {
+            $documentService->store($this->docRapor, $application->id, 'rapor', $user?->id);
+        }
+        if ($this->docPhoto) {
+            $documentService->store($this->docPhoto, $application->id, 'photo', $user?->id);
+        }
 
         // Submit the draft
         $service->submit($application);
@@ -112,6 +179,12 @@ class ApplyWizard extends Component
             3 => $this->validate([
                 'parentName' => 'required|string|max:255',
                 'parentEmail' => 'nullable|email',
+            ]),
+            4 => $this->validate([
+                'docKk' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+                'docAkta' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+                'docRapor' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+                'docPhoto' => 'nullable|file|mimes:jpg,jpeg,png|max:5120',
             ]),
             default => null,
         };

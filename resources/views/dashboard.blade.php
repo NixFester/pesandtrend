@@ -30,6 +30,41 @@
         <div class="container-app space-y-12">
             @include('components.flash')
 
+            {{-- Pendaftaran Saya --}}
+            <div>
+                <div class="flex items-end justify-between gap-4 mb-4">
+                    <h2 class="flex items-center gap-2.5 text-lg font-extrabold text-ink">
+                        <x-app-icon name="send" class="h-5 w-5 text-gold-600"/>
+                        Pendaftaran Saya
+                    </h2>
+                    <a href="{{ route('onboarding.apply') }}" class="text-sm font-bold text-forest-800 transition hover:text-forest-600">+ Buat Pendaftaran Baru</a>
+                </div>
+
+                @if(isset($applications) && $applications->isNotEmpty())
+                <div class="space-y-3">
+                    @foreach($applications as $app)
+                    <div class="card-shadow flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-white p-5">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="font-extrabold text-ink">{{ $app->student_name }}</span>
+                                <span class="chip-gold text-xs">{{ $app->status->label() }}</span>
+                            </div>
+                            <p class="text-xs text-ink-soft">{{ $app->school->name }} · Kode: <span class="font-mono">{{ $app->public_id }}</span></p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <a href="{{ route('onboarding.show', $app) }}" class="btn-primary !py-2 text-xs">Lihat Status Detail</a>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                @else
+                <div class="card-shadow rounded-2xl border border-dashed border-forest-200 bg-white p-6 text-center">
+                    <p class="text-xs font-semibold text-ink-soft">Belum ada riwayat pendaftaran sekolah.</p>
+                    <a href="{{ route('onboarding.apply') }}" class="btn-primary mt-3 inline-block text-xs">Daftar Sekolah Sekarang</a>
+                </div>
+                @endif
+            </div>
+
             {{-- Sekolah tersimpan --}}
             <div>
                 <div class="flex items-end justify-between gap-4">

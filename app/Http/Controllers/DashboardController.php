@@ -31,8 +31,23 @@ class DashboardController extends Controller
 
         $articlesRead = Article::orderByDesc('views')->take(3)->get();
 
+        // Auto-link any unlinked applications by email
+        \App\Models\Application::whereNull('parent_user_id')
+            ->where('parent_email', $user->email)
+            ->update(['parent_user_id' => $user->id]);
+
+        $applications = \App\Models\Application::where(function ($query) use ($user) {
+                $query->where('parent_user_id', $user->id)
+                    ->orWhere('created_by_user_id', $user->id)
+                    ->orWhere('parent_email', $user->email);
+            })
+            ->with(['school', 'latestPayment'])
+            ->latest()
+            ->get();
+
         return view('dashboard', [
             'user' => $user,
+            'applications' => $applications,
             'savedSchools' => $savedSchools,
             'recommended' => $recommended,
             'recentlyViewed' => $recentlyViewed,

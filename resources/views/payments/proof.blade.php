@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bukti Pembayaran — {{ $school->name }}</title>
     <style>
@@ -87,8 +88,8 @@
 
     @if($payment->isPaid())
     <div class="stamp">
-        <div class="status">✓ Terbayar</div>
-        <div class="date">pada {{ $payment->paid_at->translatedFormat('d F Y, H:i') }} WIB</div>
+        <div class="status">TERBAYAR</div>
+        <div class="date">pada {{ $payment->paid_at ? $payment->paid_at->translatedFormat('d F Y, H:i') : now()->translatedFormat('d F Y, H:i') }} WIB</div>
     </div>
     @endif
 

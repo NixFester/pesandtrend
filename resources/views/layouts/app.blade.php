@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Pesantrends — Platform terpercaya untuk menemukan, membandingkan, dan memilih sekolah Islam terbaik di Indonesia.">
-    <title>@yield('title', 'Pesantrends — Temukan Sekolah Islam Terbaik')</title>
+    <title>@yield('title', $title ?? 'Pesantrends — Temukan Sekolah Islam Terbaik')</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
@@ -13,6 +13,7 @@
     @include('components.navbar')
 
     <main class="flex-1">
+        {{ $slot ?? '' }}
         @yield('content')
     </main>
 

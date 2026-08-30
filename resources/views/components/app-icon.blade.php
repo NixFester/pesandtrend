@@ -65,3 +65,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="{{ $fill ?? 'none' }}" stroke="{{ $color ?? 'currentColor' }}" stroke-width="{{ $stroke ?? 2 }}" stroke-linecap="round" stroke-linejoin="round" class="{{ $class }}" aria-hidden="true">
     {!! $path !!}
 </svg>
+bash
+
+# Publish Filament and Laravel frontend assets
+php artisan filament:assets
+php artisan vendor:publish --tag=laravel-assets --ansi --force
+# Link storage disk for uploaded assets
+php artisan storage:link
+# Compile frontend bundles
+npm run build
+# Run fresh migrations and seeders
+php artisan migrate:fresh --seed
