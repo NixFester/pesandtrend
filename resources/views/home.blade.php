@@ -23,32 +23,32 @@
             <form action="{{ route('schools.index') }}" method="GET" class="mx-auto mt-9 max-w-3xl">
                 <div class="grid gap-2 rounded-2xl bg-white p-2.5 shadow-2xl sm:grid-cols-[1fr_auto] lg:grid-cols-[2fr_1fr_1fr_auto]">
                     <label class="relative flex items-center sm:col-span-1 lg:col-span-1">
-                        <x-icon name="search" class="pointer-events-none absolute left-4 h-5 w-5 text-ink-soft/60"/>
+                        <x-app-icon name="search" class="pointer-events-none absolute left-4 h-5 w-5 text-ink-soft/60"/>
                         <input type="text" name="q" placeholder="Nama sekolah, kota, atau program..." aria-label="Cari sekolah"
                                class="w-full rounded-xl border-0 bg-forest-50/60 py-3.5 pl-12 pr-4 text-sm font-medium text-ink placeholder:text-ink-soft/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-forest-500/30">
                     </label>
                     <label class="relative flex items-center">
-                        <x-icon name="map-pin" class="pointer-events-none absolute left-4 h-5 w-5 text-ink-soft/60"/>
+                        <x-app-icon name="map-pin" class="pointer-events-none absolute left-4 h-5 w-5 text-ink-soft/60"/>
                         <select name="kota" aria-label="Filter kota" class="w-full appearance-none rounded-xl border-0 bg-forest-50/60 py-3.5 pl-12 pr-10 text-sm font-medium text-ink focus:bg-white focus:outline-none focus:ring-2 focus:ring-forest-500/30">
                             <option value="">Semua Kota</option>
                             @foreach (\App\Models\School::orderBy('city')->distinct()->pluck('city') as $city)
                                 <option value="{{ $city }}">{{ $city }}</option>
                             @endforeach
                         </select>
-                        <x-icon name="chevron-down" class="pointer-events-none absolute right-3 h-4 w-4 text-ink-soft/60"/>
+                        <x-app-icon name="chevron-down" class="pointer-events-none absolute right-3 h-4 w-4 text-ink-soft/60"/>
                     </label>
                     <label class="relative flex items-center">
-                        <x-icon name="graduation-cap" class="pointer-events-none absolute left-4 h-5 w-5 text-ink-soft/60"/>
+                        <x-app-icon name="graduation-cap" class="pointer-events-none absolute left-4 h-5 w-5 text-ink-soft/60"/>
                         <select name="jenjang" aria-label="Filter jenjang" class="w-full appearance-none rounded-xl border-0 bg-forest-50/60 py-3.5 pl-12 pr-10 text-sm font-medium text-ink focus:bg-white focus:outline-none focus:ring-2 focus:ring-forest-500/30">
                             <option value="">Semua Jenjang</option>
                             @foreach (['SDIT', 'SMPIT', 'SMA Islam', 'MA'] as $level)
                                 <option value="{{ $level }}">{{ $level }}</option>
                             @endforeach
                         </select>
-                        <x-icon name="chevron-down" class="pointer-events-none absolute right-3 h-4 w-4 text-ink-soft/60"/>
+                        <x-app-icon name="chevron-down" class="pointer-events-none absolute right-3 h-4 w-4 text-ink-soft/60"/>
                     </label>
                     <button type="submit" class="btn-gold !rounded-xl sm:col-span-2 lg:col-span-1">
-                        <x-icon name="search" class="h-4 w-4" :stroke="2.5"/>
+                        <x-app-icon name="search" class="h-4 w-4" :stroke="2.5"/>
                         Cari Sekolah Sekarang
                     </button>
                 </div>
@@ -76,7 +76,7 @@
                 </div>
                 <a href="{{ route('schools.index') }}" class="inline-flex items-center gap-1.5 rounded-xl bg-forest-50 px-4 py-2.5 text-sm font-bold text-forest-800 transition hover:bg-forest-100">
                     Lihat Semua
-                    <x-icon name="arrow-right" class="h-4 w-4"/>
+                    <x-app-icon name="arrow-right" class="h-4 w-4"/>
                 </a>
             </div>
 

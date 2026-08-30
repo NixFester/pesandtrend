@@ -504,5 +504,29 @@ class PesantrendsSeeder extends Seeder
                 'email_verified_at' => now(),
             ]
         );
+
+        // ---------- Backfill lat/lng + whatsapp for existing schools ----------
+        $geoMap = [
+            'pesantren-modern-darussalam' => ['latitude' => -6.5971, 'longitude' => 106.7990, 'whatsapp_e164' => '+6281234567890'],
+            'sdit-al-hikmah' => ['latitude' => -6.2295, 'longitude' => 106.8320, 'whatsapp_e164' => '+6281234567891'],
+            'ma-unggulan-gontor-putri' => ['latitude' => -7.8620, 'longitude' => 111.4530, 'whatsapp_e164' => '+6281234567892'],
+            'smpit-nurul-fikri' => ['latitude' => -6.3810, 'longitude' => 106.8340, 'whatsapp_e164' => '+6281234567893'],
+            'pesantren-darussalam' => ['latitude' => -6.5200, 'longitude' => 106.8600, 'whatsapp_e164' => '+6281234567894'],
+            'smpit-al-furqan-bandung' => ['latitude' => -6.9387, 'longitude' => 107.6340, 'whatsapp_e164' => '+6281234567895'],
+            'sma-it-al-izzah' => ['latitude' => -7.2920, 'longitude' => 112.7380, 'whatsapp_e164' => '+6281234567896'],
+            'sdit-insan-cendekia-amanah' => ['latitude' => -6.3230, 'longitude' => 106.6840, 'whatsapp_e164' => '+6281234567897'],
+        ];
+
+        foreach ($geoMap as $slug => $data) {
+            School::where('slug', $slug)->update($data);
+        }
+
+        // ---------- Homepage Settings (singleton) ----------
+        \App\Models\HomepageSetting::firstOrCreate([], [
+            'total_schools' => School::count(),
+            'total_students' => (int) School::sum('students_count'),
+            'total_cities' => School::distinct('city')->count('city'),
+            'total_programs' => Program::count(),
+        ]);
     }
 }

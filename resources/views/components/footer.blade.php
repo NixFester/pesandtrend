@@ -4,7 +4,7 @@
             <div class="lg:col-span-2">
                 <a href="{{ route('home') }}" class="flex items-center gap-2.5">
                     <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-gold-500 text-forest-950">
-                        <x-icon name="book-open" class="h-5 w-5" :stroke="2.2"/>
+                        <x-app-icon name="book-open" class="h-5 w-5" :stroke="2.2"/>
                     </span>
                     <span class="text-lg font-extrabold tracking-tight text-white">Pesant<span class="text-gold-400">rends</span></span>
                 </a>
@@ -13,11 +13,11 @@
                 </p>
                 <div class="mt-5 flex flex-wrap gap-2">
                     <span class="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/80">
-                        <x-icon name="badge-check" class="h-3.5 w-3.5 text-gold-400"/>
+                        <x-app-icon name="badge-check" class="h-3.5 w-3.5 text-gold-400"/>
                         1.240+ Sekolah Terverifikasi
                     </span>
                     <span class="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/80">
-                        <x-icon name="map-pin" class="h-3.5 w-3.5 text-gold-400"/>
+                        <x-app-icon name="map-pin" class="h-3.5 w-3.5 text-gold-400"/>
                         34 Provinsi
                     </span>
                 </div>

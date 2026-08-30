@@ -46,3 +46,21 @@ Route::post('/keluar', [AuthController::class, 'logout'])->name('logout')->middl
 
 // Dashboard
 Route::middleware('auth')->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// ── Parent Onboarding ──
+Route::middleware(['auth'])->prefix('orang-tua')->group(function () {
+    Route::get('/pendaftaran', [\App\Http\Controllers\OnboardingController::class, 'index'])->name('onboarding.index');
+    Route::get('/pendaftaran/{application}', [\App\Http\Controllers\OnboardingController::class, 'show'])->name('onboarding.show');
+    Route::get('/pendaftaran/{application}/bayar', [\App\Http\Controllers\OnboardingController::class, 'pay'])->name('onboarding.pay');
+    Route::get('/daftar', \App\Livewire\Onboarding\ApplyWizard::class)->name('onboarding.apply');
+});
+
+// ── Signed download routes ──
+Route::get('/bukti-pembayaran/{payment}/cetak', [\App\Http\Controllers\ProofController::class, 'print'])
+    ->name('proof.print')
+    ->middleware('signed');
+
+Route::get('/dokumen/{document}/unduh', [\App\Http\Controllers\DocumentDownloadController::class, 'download'])
+    ->name('documents.download')
+    ->middleware('signed');
+

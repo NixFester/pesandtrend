@@ -17,5 +17,7 @@
     </main>
 
     @include('components.footer')
+    <x-mobile-bottom-nav/>
+    @stack('scripts')
 </body>
 </html>

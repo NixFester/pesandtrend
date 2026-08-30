@@ -1,0 +1,16 @@
+/* Filament Admin Panel — Pesantrends theme overrides */
+/* This file is imported by Vite as a separate entry for the admin panel */
+
+:root {
+    --primary-50: 242, 247, 244;
+    --primary-100: 224, 237, 228;
+    --primary-200: 195, 220, 203;
+    --primary-300: 156, 194, 173;
+    --primary-400: 110, 162, 135;
+    --primary-500: 77, 134, 105;
+    --primary-600: 58, 109, 83;
+    --primary-700: 47, 89, 68;
+    --primary-800: 39, 72, 56;
+    --primary-900: 18, 70, 42;
+    --primary-950: 11, 46, 28;
+}

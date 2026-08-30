@@ -31,8 +31,11 @@ class AuthController extends Controller
         if (auth()->attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('dashboard'))
-                ->with('success', 'Selamat datang kembali, '.auth()->user()->name.'!');
+            $user = auth()->user();
+            $redirect = $user->isAdmin() ? '/admin' : route('dashboard');
+
+            return redirect()->intended($redirect)
+                ->with('success', 'Selamat datang kembali, '.$user->name.'!');
         }
 
         return back()->withErrors([
@@ -65,7 +68,14 @@ class AuthController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'role' => 'parent',
         ]);
+
+        // Assign Spatie parent role
+        if (class_exists(\Spatie\Permission\Models\Role::class)) {
+            $parentRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'parent', 'guard_name' => 'web']);
+            $user->assignRole($parentRole);
+        }
 
         auth()->login($user);
         $request->session()->regenerate();

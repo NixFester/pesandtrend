@@ -2,7 +2,7 @@
 @section('title', 'Bandingkan Sekolah — Pesantrends')
 
 @section('content')
-    <section class="bg-forest-950 py-12">
+    <section class="bg-forest-950 py-16 sm:py-20">
         <div class="container-app">
             <nav class="text-xs font-semibold text-white/60" aria-label="Breadcrumb">
                 <a href="{{ route('home') }}" class="transition hover:text-white">Beranda</a>
@@ -14,7 +14,7 @@
         </div>
     </section>
 
-    <section class="bg-white py-10 sm:py-14">
+    <section class="bg-white py-14 sm:py-20">
         <div class="container-app">
             @include('components.flash')
 

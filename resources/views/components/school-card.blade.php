@@ -10,25 +10,25 @@
 
             @if ($school->badge)
                 <span class="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-gold-500 px-3 py-1.5 text-[11px] font-extrabold text-forest-950 shadow-sm">
-                    <x-icon name="calendar" class="h-3 w-3" :stroke="2.5"/>
+                    <x-app-icon name="calendar" class="h-3 w-3" :stroke="2.5"/>
                     {{ $school->badge }}
                 </span>
             @endif
 
             @if ($school->is_verified)
                 <span class="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-bold text-forest-800 shadow-sm" title="Sekolah terverifikasi">
-                    <x-icon name="badge-check" class="h-3.5 w-3.5 text-forest-700"/>
+                    <x-app-icon name="badge-check" class="h-3.5 w-3.5 text-forest-700"/>
                     Terverifikasi
                 </span>
             @endif
 
             <div class="absolute bottom-3 left-3 flex items-center gap-1.5 text-xs font-bold text-white">
-                <x-icon name="star" class="h-4 w-4 text-gold-400" fill="#C9A227" :stroke="0"/>
+                <x-app-icon name="star" class="h-4 w-4 text-gold-400" fill="#C9A227" :stroke="0"/>
                 {{ number_format($school->rating, 1) }}
                 <span class="font-medium text-white/80">({{ $school->reviews_count }} ulasan)</span>
             </div>
             <div class="absolute bottom-3 right-3 flex items-center gap-1 text-xs font-semibold text-white/90">
-                <x-icon name="users" class="h-3.5 w-3.5"/>
+                <x-app-icon name="users" class="h-3.5 w-3.5"/>
                 {{ Str::of(number_format($school->students_count))->replace(',', '.') }} siswa
             </div>
         </div>
@@ -41,7 +41,7 @@
                     <h3 class="truncate text-base font-extrabold text-ink transition group-hover:text-forest-800">{{ $school->name }}</h3>
                 </a>
                 <p class="mt-1 flex items-center gap-1.5 text-xs font-medium text-ink-soft">
-                    <x-icon name="map-pin" class="h-3.5 w-3.5 shrink-0 text-forest-600"/>
+                    <x-app-icon name="map-pin" class="h-3.5 w-3.5 shrink-0 text-forest-600"/>
                     {{ $school->city }}, {{ $school->province }}
                 </p>
             </div>
@@ -67,7 +67,7 @@
                     <input type="hidden" name="school_id" value="{{ $school->id }}">
                     <input type="hidden" name="current" value="{{ $compareIds }}">
                     <button type="submit" class="flex h-9 w-9 items-center justify-center rounded-xl border border-forest-100 text-forest-700 transition hover:border-forest-700 hover:bg-forest-50" title="Tambah ke perbandingan" aria-label="Tambah {{ $school->name }} ke perbandingan">
-                        <x-icon name="scale" class="h-4 w-4"/>
+                        <x-app-icon name="scale" class="h-4 w-4"/>
                     </button>
                 </form>
                 <a href="{{ route('schools.show', $school->slug) }}" class="btn-primary !px-4 !py-2 text-xs">Lihat Detail</a>

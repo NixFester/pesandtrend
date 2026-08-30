@@ -2,7 +2,7 @@
     <nav class="container-app flex h-16 items-center justify-between gap-4" aria-label="Navigasi utama">
         <a href="{{ route('home') }}" class="flex items-center gap-2.5" aria-label="Pesantrends — Beranda">
             <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-forest-900 text-gold-400">
-                <x-icon name="book-open" class="h-5 w-5" :stroke="2.2"/>
+                <x-app-icon name="book-open" class="h-5 w-5" :stroke="2.2"/>
             </span>
             <span class="text-lg font-extrabold tracking-tight text-forest-900">Pesant<span class="text-gold-600">rends</span></span>
         </a>
@@ -17,7 +17,7 @@
         <div class="hidden items-center gap-3 lg:flex">
             @auth
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-2 rounded-xl bg-forest-900 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-forest-700">
-                    <x-icon name="user" class="h-4 w-4"/>
+                    <x-app-icon name="user" class="h-4 w-4"/>
                     {{ Str::before(auth()->user()->name, ' ') }}
                 </a>
             @else
@@ -27,7 +27,7 @@
         </div>
 
         <button id="menu-toggle" class="rounded-lg p-2 text-forest-900 transition hover:bg-forest-50 lg:hidden" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
-            <x-icon name="menu" class="h-6 w-6"/>
+            <x-app-icon name="menu" class="h-6 w-6"/>
         </button>
     </nav>
 

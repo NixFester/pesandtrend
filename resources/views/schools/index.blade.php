@@ -78,20 +78,36 @@
                 <p class="text-sm font-bold text-ink">
                     {{ $schools->total() }} sekolah{{ $schools->total() > 1 ? '' : '' }} ditemukan
                 </p>
-                <form method="GET" class="flex items-center gap-2">
+                <form method="GET" class="flex items-center gap-2" id="sort-form">
                     @foreach (['q', 'kota', 'jenjang', 'tipe'] as $field)
                         @if (! empty($filters[$field]))
                             <input type="hidden" name="{{ $field }}" value="{{ $filters[$field] }}">
                         @endif
                     @endforeach
+                    <input type="hidden" name="lat" id="sort-lat" value="{{ $filters['lat'] ?? '' }}">
+                    <input type="hidden" name="lng" id="sort-lng" value="{{ $filters['lng'] ?? '' }}">
                     <label for="urut" class="text-xs font-semibold text-ink-soft">Urutkan</label>
-                    <select id="urut" name="urut" onchange="this.form.submit()" class="rounded-xl border-forest-100 bg-white py-2.5 pl-3 pr-8 text-xs font-bold text-forest-900 focus:border-forest-500 focus:outline-none focus:ring-2 focus:ring-forest-500/20">
+                    <select id="urut" name="urut" onchange="handleSort(this)" class="rounded-xl border-forest-100 bg-white py-2.5 pl-3 pr-8 text-xs font-bold text-forest-900 focus:border-forest-500 focus:outline-none focus:ring-2 focus:ring-forest-500/20">
                         <option value="">Paling Relevan</option>
                         <option value="rating" {{ ($filters['urut'] ?? '') === 'rating' ? 'selected' : '' }}>Rating Tertinggi</option>
                         <option value="murah" {{ ($filters['urut'] ?? '') === 'murah' ? 'selected' : '' }}>Biaya Termurah</option>
                         <option value="populer" {{ ($filters['urut'] ?? '') === 'populer' ? 'selected' : '' }}>Terpopuler</option>
+                        <option value="terdekat" {{ ($filters['urut'] ?? '') === 'terdekat' ? 'selected' : '' }}>📍 Terdekat</option>
                     </select>
                 </form>
+                <script>
+                function handleSort(el) {
+                    if (el.value === 'terdekat' && navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(pos) {
+                            document.getElementById('sort-lat').value = pos.coords.latitude;
+                            document.getElementById('sort-lng').value = pos.coords.longitude;
+                            document.getElementById('sort-form').submit();
+                        }, function() { document.getElementById('sort-form').submit(); }, { timeout: 5000 });
+                    } else {
+                        document.getElementById('sort-form').submit();
+                    }
+                }
+                </script>
             </div>
 
             @if ($schools->count())

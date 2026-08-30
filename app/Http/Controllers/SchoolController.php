@@ -18,9 +18,13 @@ class SchoolController extends Controller
             'berasrama' => 'Berasrama',
         ];
 
+        $lat = $request->filled('lat') ? (float) $request->input('lat') : null;
+        $lng = $request->filled('lng') ? (float) $request->input('lng') : null;
+
         $schools = School::query()
+            ->published()
             ->filter($request->only(['q', 'kota', 'jenjang', 'tipe']))
-            ->sorted($request->input('urut'))
+            ->sorted($request->input('urut'), $lat, $lng)
             ->with(['facilities', 'programs'])
             ->paginate(9)
             ->withQueryString();
