@@ -1,17 +1,31 @@
-<header class="sticky top-0 z-50 border-b border-forest-100/70 bg-white/90 backdrop-blur-md">
+@php
+    $isHome = request()->routeIs('home');
+@endphp
+<header id="main-header" class="group fixed inset-x-0 top-0 z-50 transition-all duration-300 {{ $isHome ? 'bg-transparent border-transparent' : 'bg-white/90 backdrop-blur-md border-b border-forest-100/70' }}" data-is-home="{{ $isHome ? 'true' : 'false' }}" {!! $isHome ? 'data-scrolled="false"' : '' !!}>
     <nav class="container-app flex h-16 items-center justify-between gap-4" aria-label="Navigasi utama">
         <a href="{{ route('home') }}" class="flex items-center gap-2.5" aria-label="Pesantrends — Beranda">
-            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-forest-900 text-gold-400">
-                <x-app-icon name="book-open" class="h-5 w-5" :stroke="2.2"/>
-            </span>
-            <span class="text-lg font-extrabold tracking-tight text-forest-900">Pesant<span class="text-gold-600">rends</span></span>
+            <img src="{{ asset('images/icon.svg') }}" alt="Icon Pesantrends" class="h-9 w-auto">
+            @if($isHome)
+                <img src="{{ asset('images/logo.svg') }}" alt="Logo Pesantrends" class="h-5 w-auto hidden sm:block sm:group-data-[scrolled=true]:hidden">
+                <img src="{{ asset('images/logo-green.svg') }}" alt="Logo Pesantrends" class="h-5 w-auto hidden sm:block sm:group-data-[scrolled=false]:hidden">
+            @else
+                <img src="{{ asset('images/logo-green.svg') }}" alt="Logo Pesantrends" class="h-5 w-auto hidden sm:block">
+            @endif
         </a>
 
         <div class="hidden items-center gap-1 lg:flex">
-            <a href="{{ route('home') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('home') ? 'bg-forest-50 text-forest-900' : 'text-ink-soft hover:bg-forest-50 hover:text-forest-900' }}">Beranda</a>
-            <a href="{{ route('schools.index') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('schools.*') ? 'bg-forest-50 text-forest-900' : 'text-ink-soft hover:bg-forest-50 hover:text-forest-900' }}">Cari Sekolah</a>
-            <a href="{{ route('compare.index') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('compare.*') ? 'bg-forest-50 text-forest-900' : 'text-ink-soft hover:bg-forest-50 hover:text-forest-900' }}">Bandingkan</a>
-            <a href="{{ route('articles.index') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('articles.*') ? 'bg-forest-50 text-forest-900' : 'text-ink-soft hover:bg-forest-50 hover:text-forest-900' }}">Artikel</a>
+            @php
+                $navLinkClass = $isHome 
+                    ? 'text-white/90 hover:text-white hover:bg-white/10 group-data-[scrolled=true]:text-ink-soft group-data-[scrolled=true]:hover:bg-forest-50 group-data-[scrolled=true]:hover:text-forest-900' 
+                    : 'text-ink-soft hover:bg-forest-50 hover:text-forest-900';
+                $navActiveClass = $isHome 
+                    ? 'bg-white/20 text-white group-data-[scrolled=true]:bg-forest-50 group-data-[scrolled=true]:text-forest-900' 
+                    : 'bg-forest-50 text-forest-900';
+            @endphp
+            <a href="{{ route('home') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('home') ? $navActiveClass : $navLinkClass }}">Beranda</a>
+            <a href="{{ route('schools.index') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('schools.*') ? $navActiveClass : $navLinkClass }}">Cari Sekolah</a>
+            <a href="{{ route('compare.index') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('compare.*') ? $navActiveClass : $navLinkClass }}">Bandingkan</a>
+            <a href="{{ route('articles.index') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('articles.*') ? $navActiveClass : $navLinkClass }}">Artikel</a>
         </div>
 
         <div class="hidden items-center gap-3 lg:flex">
@@ -21,12 +35,12 @@
                     {{ Str::before(auth()->user()->name, ' ') }}
                 </a>
             @else
-                <a href="{{ route('login') }}" class="rounded-xl px-4 py-2.5 text-sm font-bold text-forest-900 transition hover:bg-forest-50">Masuk</a>
+                <a href="{{ route('login') }}" class="rounded-xl px-4 py-2.5 text-sm font-bold transition {{ $isHome ? 'text-white hover:bg-white/10 group-data-[scrolled=true]:text-forest-900 group-data-[scrolled=true]:hover:bg-forest-50' : 'text-forest-900 hover:bg-forest-50' }}">Masuk</a>
                 <a href="{{ route('register') }}" class="btn-primary !px-4 !py-2.5">Daftar Gratis</a>
             @endauth
         </div>
 
-        <button id="menu-toggle" class="rounded-lg p-2 text-forest-900 transition hover:bg-forest-50 lg:hidden" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
+        <button id="menu-toggle" class="rounded-lg p-2 transition lg:hidden {{ $isHome ? 'text-white hover:bg-white/10 group-data-[scrolled=true]:text-forest-900 group-data-[scrolled=true]:hover:bg-forest-50' : 'text-forest-900 hover:bg-forest-50' }}" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
             <x-app-icon name="menu" class="h-6 w-6"/>
         </button>
     </nav>

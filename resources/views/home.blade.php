@@ -8,11 +8,16 @@
         <div class="absolute inset-0 bg-gradient-to-b from-forest-950/70 via-forest-950/80 to-forest-950" aria-hidden="true"></div>
         <span class="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-gold-500/10 blur-3xl" aria-hidden="true"></span>
 
-        <div class="container-app relative py-16 sm:py-24">
+        <div class="container-app relative pb-32 pt-32 sm:pb-44 sm:pt-40">
             <div class="mx-auto max-w-2xl text-center">
-                <p class="text-[11px] font-bold uppercase tracking-[0.35em] text-gold-400">Bismillahirrahmanirrahim</p>
+                <div class="mb-8 flex justify-center">
+                    <span class="inline-flex items-center gap-3 rounded-full border border-gold-400/50 bg-transparent px-5 py-2 text-[10px] font-bold uppercase tracking-[0.15em] text-gold-400 sm:text-[11px]">
+                        <span class="text-base font-normal normal-case tracking-normal" dir="rtl">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</span>
+                        BISMILLAHIRRAHMANIRRAHIM
+                    </span>
+                </div>
                 <h1 class="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
-                    Temukan Sekolah Islam Terbaik untuk <span class="text-gold-400">Putra-Putri Anda</span>
+                    Temukan Sekolah Islam <span class="text-gold-400">Terbaik</span> untuk Putra-Putri Anda
                 </h1>
                 <p class="mt-4 text-sm leading-relaxed text-white/75 sm:text-base">
                     Lebih dari 1.240 pesantren &amp; sekolah Islam terverifikasi di seluruh Indonesia
@@ -55,14 +60,15 @@
             </form>
 
             {{-- Statistik --}}
-            <dl class="mx-auto mt-10 grid max-w-3xl grid-cols-3 divide-x divide-white/15 rounded-2xl border border-white/10 bg-white/5 backdrop-blur">
+            <dl class="mx-auto mt-16 grid max-w-3xl grid-cols-3 sm:mt-20">
                 @foreach ([['value' => '1.240+', 'label' => 'Sekolah Terverifikasi'], ['value' => '34', 'label' => 'Provinsi'], ['value' => '50rb+', 'label' => 'Orang Tua Terbantu']] as $stat)
-                    <div class="px-3 py-4 text-center sm:px-6">
-                        <dt class="order-2 mt-1 text-[11px] font-semibold text-white/70 sm:text-xs">{{ $stat['label'] }}</dt>
-                        <dd class="order-1 text-xl font-extrabold text-gold-400 sm:text-2xl">{{ $stat['value'] }}</dd>
+                    <div class="flex flex-col items-center justify-center text-center">
+                        <dd class="text-3xl font-extrabold text-gold-400 sm:text-4xl">{{ $stat['value'] }}</dd>
+                        <dt class="mt-2 text-sm font-medium text-white/60 sm:text-base">{{ $stat['label'] }}</dt>
                     </div>
                 @endforeach
             </dl>
+            <div class="mx-auto mt-12 h-px w-[85%] max-w-xl bg-white/10 sm:mt-16"></div>
         </div>
     </section>
 
@@ -80,8 +86,8 @@
                 </a>
             </div>
 
-            <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                @foreach ($featuredSchools as $school)
+            <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach ($featuredSchools->take(3) as $school)
                     <x-school-card :school="$school" compare-ids=""/>
                 @endforeach
             </div>
@@ -295,33 +301,4 @@
         </div>
     </section>
 
-    {{-- ================= NEWSLETTER ================= --}}
-    <section class="bg-white pb-16 sm:pb-20">
-        <div class="container-app">
-            <div class="card-shadow-lg grid items-center gap-8 overflow-hidden rounded-3xl border border-forest-100 bg-cream-50 p-8 sm:p-12 lg:grid-cols-2">
-                <div>
-                    <span class="inline-flex items-center gap-2 rounded-full bg-gold-100 px-3.5 py-1.5 text-xs font-bold text-gold-800">
-                        <x-icon name="newspaper" class="h-3.5 w-3.5"/>
-                        Newsletter
-                    </span>
-                    <h2 class="mt-4 text-2xl font-extrabold tracking-tight text-ink">Dapatkan Artikel Pilihan Setiap Minggu</h2>
-                    <p class="mt-3 text-sm leading-relaxed text-ink-soft">
-                        Tips memilih sekolah, informasi beasiswa, dan panduan pendaftaran langsung ke email Anda.
-                    </p>
-                </div>
-                <form action="{{ route('newsletter.store') }}" method="POST" class="flex flex-col gap-3 sm:flex-row">
-                    @csrf
-                    <label class="relative flex-1">
-                        <x-icon name="mail" class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-soft/60"/>
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Email Anda..." required aria-label="Alamat email"
-                               class="input-field !py-4 pl-12">
-                    </label>
-                    <button type="submit" class="btn-primary !py-4">
-                        <x-icon name="send" class="h-4 w-4"/>
-                        Langganan
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
 @endsection

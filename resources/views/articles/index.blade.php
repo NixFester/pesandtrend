@@ -80,4 +80,34 @@
             </div>
         </section>
     @endif
+
+    {{-- ================= NEWSLETTER ================= --}}
+    <section class="bg-white py-12 sm:py-16">
+        <div class="container-app">
+            <div class="card-shadow-lg grid items-center gap-8 overflow-hidden rounded-3xl border border-forest-100 bg-cream-50 p-8 sm:p-12 lg:grid-cols-2">
+                <div>
+                    <span class="inline-flex items-center gap-2 rounded-full bg-gold-100 px-3.5 py-1.5 text-xs font-bold text-gold-800">
+                        <x-icon name="newspaper" class="h-3.5 w-3.5"/>
+                        Newsletter
+                    </span>
+                    <h2 class="mt-4 text-2xl font-extrabold tracking-tight text-ink">Dapatkan Artikel Pilihan Setiap Minggu</h2>
+                    <p class="mt-3 text-sm leading-relaxed text-ink-soft">
+                        Tips memilih sekolah, informasi beasiswa, dan panduan pendaftaran langsung ke email Anda.
+                    </p>
+                </div>
+                <form action="{{ route('newsletter.store') }}" method="POST" class="flex flex-col gap-3 sm:flex-row">
+                    @csrf
+                    <label class="relative flex-1">
+                        <x-icon name="mail" class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-soft/60"/>
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Email Anda..." required aria-label="Alamat email"
+                               class="input-field !py-4 pl-12">
+                    </label>
+                    <button type="submit" class="btn-primary !py-4">
+                        <x-icon name="send" class="h-4 w-4"/>
+                        Langganan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
 @endsection

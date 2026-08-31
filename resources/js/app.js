@@ -44,6 +44,24 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    // Navbar scroll effect untuk transparent di hero section
+    const header = document.getElementById('main-header');
+    if (header && header.dataset.isHome === 'true') {
+        const onScroll = () => {
+            if (window.scrollY > 20) {
+                header.dataset.scrolled = 'true';
+                header.classList.remove('bg-transparent', 'border-transparent');
+                header.classList.add('bg-white/90', 'backdrop-blur-md', 'border-b', 'border-forest-100/70');
+            } else {
+                header.dataset.scrolled = 'false';
+                header.classList.add('bg-transparent', 'border-transparent');
+                header.classList.remove('bg-white/90', 'backdrop-blur-md', 'border-b', 'border-forest-100/70');
+            }
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll(); // initial check
+    }
 });
 
 // Preset sekolah pada kalkulator biaya

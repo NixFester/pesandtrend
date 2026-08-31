@@ -12,7 +12,7 @@
 <body class="min-h-screen flex flex-col bg-white">
     @include('components.navbar')
 
-    <main class="flex-1">
+    <main class="flex-1 {{ request()->routeIs('home') ? '' : 'pt-16' }}">
         {{ $slot ?? '' }}
         @yield('content')
     </main>

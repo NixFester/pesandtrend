@@ -3,10 +3,8 @@
         <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
             <div class="lg:col-span-2">
                 <a href="{{ route('home') }}" class="flex items-center gap-2.5">
-                    <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-gold-500 text-forest-950">
-                        <x-app-icon name="book-open" class="h-5 w-5" :stroke="2.2"/>
-                    </span>
-                    <span class="text-lg font-extrabold tracking-tight text-white">Pesant<span class="text-gold-400">rends</span></span>
+                    <img src="{{ asset('images/icon.svg') }}" alt="Icon Pesantrends" class="h-9 w-auto">
+                    <img src="{{ asset('images/logo.svg') }}" alt="Logo Pesantrends" class="h-5 w-auto">
                 </a>
                 <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
                     Platform terpercaya untuk menemukan, membandingkan, dan memilih sekolah Islam terbaik di Indonesia.
