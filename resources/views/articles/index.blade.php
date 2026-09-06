@@ -87,8 +87,8 @@
             <div class="card-shadow-lg grid items-center gap-8 overflow-hidden rounded-3xl border border-forest-100 bg-cream-50 p-8 sm:p-12 lg:grid-cols-2">
                 <div>
                     <span class="inline-flex items-center gap-2 rounded-full bg-gold-100 px-3.5 py-1.5 text-xs font-bold text-gold-800">
-                        <x-icon name="newspaper" class="h-3.5 w-3.5"/>
-                        Newsletter
+                        <x-app-icon name="newspaper" class="h-3.5 w-3.5"/>
+                        Berlangganan Kabar
                     </span>
                     <h2 class="mt-4 text-2xl font-extrabold tracking-tight text-ink">Dapatkan Artikel Pilihan Setiap Minggu</h2>
                     <p class="mt-3 text-sm leading-relaxed text-ink-soft">

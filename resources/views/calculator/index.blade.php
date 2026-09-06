@@ -47,7 +47,7 @@
                             ['name' => 'asrama', 'label' => 'Biaya Asrama', 'note' => 'Per bulan'],
                             ['name' => 'seragam', 'label' => 'Seragam &amp; Perlengkapan', 'note' => 'Sekali'],
                             ['name' => 'ekskul', 'label' => 'Ekstrakurikuler', 'note' => 'Per tahun'],
-                            ['name' => 'tour', 'label' => 'Study Tour Tahunan', 'note' => 'Per tahun'],
+                            ['name' => 'tour', 'label' => 'Wisata Edukasi Tahunan', 'note' => 'Per tahun'],
                         ] as $field)
                             <div>
                                 <label for="{{ $field['name'] }}" class="flex items-center justify-between text-sm font-extrabold text-ink">

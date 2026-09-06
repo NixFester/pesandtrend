@@ -10,7 +10,7 @@
                 <span class="text-gold-400">Bandingkan Sekolah</span>
             </nav>
             <h1 class="mt-3 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Perbandingan Detail</h1>
-            <p class="mt-2 text-sm text-white/70">Pilih hingga 3 sekolah untuk dibandingkan — biaya, fasilitas, dan program unggulan side-by-side</p>
+            <p class="mt-2 text-sm text-white/70">Pilih hingga 3 sekolah untuk dibandingkan — biaya, fasilitas, dan program unggulan secara berdampingan</p>
         </div>
     </section>
 
@@ -185,7 +185,7 @@
                 </div>
 
                 @if ($schools->count() === 1)
-                    <p class="mt-6 text-center text-sm text-ink-soft">Tambahkan minimal satu sekolah lagi untuk melihat perbandingan side-by-side.</p>
+                    <p class="mt-6 text-center text-sm text-ink-soft">Tambahkan minimal satu sekolah lagi untuk melihat perbandingan secara berdampingan.</p>
                 @endif
             @endif
         </div>

@@ -263,7 +263,7 @@
 							['label' => 'Biaya Asrama', 'value' => $school->asrama_monthly ? 'Rp'.number_format($school->asrama_monthly, 0, ',', '.') : '—', 'note' => 'per bulan'],
 							['label' => 'Seragam & Perlengkapan', 'value' => 'Rp'.number_format($school->seragam_fee, 0, ',', '.'), 'note' => 'satu kali'],
 							['label' => 'Ekstrakurikuler', 'value' => 'Rp'.number_format($school->ekskul_fee, 0, ',', '.'), 'note' => 'per tahun'],
-							['label' => 'Study Tour Tahunan', 'value' => 'Rp'.number_format($school->study_tour_fee, 0, ',', '.'), 'note' => 'per tahun'],
+							['label' => 'Wisata Edukasi Tahunan', 'value' => 'Rp'.number_format($school->study_tour_fee, 0, ',', '.'), 'note' => 'per tahun'],
 						] as $row)
 							<div class="flex items-center justify-between border-b border-forest-50 pb-3 last:border-0">
 								<dt class="font-semibold text-ink-soft">{{ $row['label'] }}</dt>
@@ -312,7 +312,7 @@
 				{{-- Bandingkan --}}
 				<div class="card-shadow rounded-2xl border border-forest-100 bg-white p-6">
 					<h2 class="text-base font-extrabold text-ink">Bandingkan dengan sekolah lain</h2>
-					<p class="mt-2 text-xs leading-relaxed text-ink-soft">Tambahkan sekolah ini ke perbandingan dan lihat perbedaannya side-by-side.</p>
+					<p class="mt-2 text-xs leading-relaxed text-ink-soft">Tambahkan sekolah ini ke perbandingan dan lihat perbedaannya secara berdampingan.</p>
 					<form action="{{ route('compare.add') }}" method="POST" class="mt-4">
 						@csrf
 						<input type="hidden" name="school_id" value="{{ $school->id }}">

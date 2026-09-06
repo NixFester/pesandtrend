@@ -103,10 +103,10 @@
                     <h2 id="fitur-heading" class="mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Transparansi Biaya, <br class="hidden sm:block">Tanpa yang Tersembunyi</h2>
                     <p class="mt-4 text-sm leading-relaxed text-ink-soft sm:text-[15px]">
                         Rincian biaya lengkap tanpa ada yang tersembunyi. Hitung estimasi total biaya pendidikan
-                        sebelum memutuskan — dari uang pangkal hingga study tour tahunan.
+                        sebelum memutuskan — dari uang pangkal hingga wisata edukasi tahunan.
                     </p>
                     <ul class="mt-6 space-y-3">
-                        @foreach (['Uang pangkal & SPP bulanan', 'Biaya asrama & seragam', 'Kegiatan ekstrakurikuler & study tour tahunan'] as $item)
+                        @foreach (['Uang pangkal & SPP bulanan', 'Biaya asrama & seragam', 'Kegiatan ekstrakurikuler & wisata edukasi tahunan'] as $item)
                             <li class="flex items-center gap-3 text-sm font-semibold text-ink">
                                 <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-forest-900 text-gold-400">
                                     <x-app-icon name="check" class="h-3.5 w-3.5" :stroke="3"/>
@@ -136,7 +136,7 @@
                             ['label' => 'Uang Pangkal', 'value' => 'Rp7.500.000', 'note' => 'satu kali'],
                             ['label' => 'Seragam & Perlengkapan', 'value' => 'Rp1.250.000', 'note' => 'satu kali'],
                             ['label' => 'Ekstrakurikuler', 'value' => 'Rp900.000', 'note' => 'per tahun'],
-                            ['label' => 'Study Tour Tahunan', 'value' => 'Rp1.100.000', 'note' => 'per tahun'],
+                            ['label' => 'Wisata Edukasi Tahunan', 'value' => 'Rp1.100.000', 'note' => 'per tahun'],
                         ] as $row)
                             <div class="flex items-center justify-between border-b border-forest-50 pb-3.5 last:border-0">
                                 <dt class="font-semibold text-ink-soft">{{ $row['label'] }}</dt>
@@ -169,7 +169,7 @@
                 @foreach ([
                     ['icon' => 'badge-check', 'title' => 'Data Terverifikasi', 'desc' => 'Setiap sekolah melewati proses verifikasi ketat oleh tim kami'],
                     ['icon' => 'wallet', 'title' => 'Biaya Transparan', 'desc' => 'Rincian biaya lengkap tanpa ada yang tersembunyi'],
-                    ['icon' => 'scale', 'title' => 'Perbandingan Mudah', 'desc' => 'Bandingkan hingga 3 sekolah secara side-by-side'],
+                    ['icon' => 'scale', 'title' => 'Perbandingan Mudah', 'desc' => 'Bandingkan hingga 3 sekolah secara berdampingan'],
                     ['icon' => 'heart-pulse', 'title' => 'Konsultasi Gratis', 'desc' => 'Tim ahli pendidikan Islam siap membantu pilihan Anda'],
                     ['icon' => 'shield-check', 'title' => 'Reputasi Terpercaya', 'desc' => 'Dipercaya 50.000+ orang tua di seluruh Indonesia'],
                     ['icon' => 'trending-up', 'title' => 'Informasi Real-time', 'desc' => 'Update jadwal pendaftaran & berita terbaru'],
@@ -308,7 +308,7 @@
                 <div>
                     <span class="inline-flex items-center gap-2 rounded-full bg-gold-100 px-3.5 py-1.5 text-xs font-bold text-gold-800">
                         <x-app-icon name="newspaper" class="h-3.5 w-3.5"/>
-                        Newsletter
+                        Berlangganan Kabar
                     </span>
                     <h2 class="mt-4 text-2xl font-extrabold tracking-tight text-ink">Dapatkan Artikel Pilihan Setiap Minggu</h2>
                     <p class="mt-3 text-sm leading-relaxed text-ink-soft">
