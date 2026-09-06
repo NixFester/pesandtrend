@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\ApplicationPaymentResource\Pages\CreateApplicationPayment;
+use App\Filament\Resources\ApplicationPaymentResource\Pages\EditApplicationPayment;
+use App\Filament\Resources\ApplicationPaymentResource\Pages\ListApplicationPayments;
 use App\Models\ApplicationPayment;
 use Filament\Actions;
 use Filament\Forms;
@@ -81,9 +84,9 @@ class ApplicationPaymentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Resources\ApplicationPaymentResource\Pages\ListApplicationPayments::route('/'),
-            'create' => \App\Filament\Resources\ApplicationPaymentResource\Pages\CreateApplicationPayment::route('/create'),
-            'edit' => \App\Filament\Resources\ApplicationPaymentResource\Pages\EditApplicationPayment::route('/{record}/edit'),
+            'index' => ListApplicationPayments::route('/'),
+            'create' => CreateApplicationPayment::route('/create'),
+            'edit' => EditApplicationPayment::route('/{record}/edit'),
         ];
     }
 }

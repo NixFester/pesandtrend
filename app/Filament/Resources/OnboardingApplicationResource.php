@@ -3,6 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Domain\Onboarding\ApplicationStatus;
+use App\Filament\Resources\OnboardingApplicationResource\Pages\EditApplication;
+use App\Filament\Resources\OnboardingApplicationResource\Pages\ListApplications;
 use App\Models\Application;
 use Filament\Actions;
 use Filament\Forms;
@@ -83,8 +85,8 @@ class OnboardingApplicationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Resources\OnboardingApplicationResource\Pages\ListApplications::route('/'),
-            'edit' => \App\Filament\Resources\OnboardingApplicationResource\Pages\EditApplication::route('/{record}/edit'),
+            'index' => ListApplications::route('/'),
+            'edit' => EditApplication::route('/{record}/edit'),
         ];
     }
 }

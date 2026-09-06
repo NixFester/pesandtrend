@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class ApplicationPayment extends Model
 {
@@ -24,7 +25,7 @@ class ApplicationPayment extends Model
     {
         static::creating(function (ApplicationPayment $payment) {
             if (empty($payment->idempotency_key)) {
-                $payment->idempotency_key = (string) \Illuminate\Support\Str::uuid();
+                $payment->idempotency_key = (string) Str::uuid();
             }
         });
     }

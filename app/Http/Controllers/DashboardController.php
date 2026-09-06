@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use App\Models\Article;
 use App\Models\School;
 use Illuminate\View\View;
@@ -26,21 +27,21 @@ class DashboardController extends Controller
         $recentlyViewed = empty($recentIds)
             ? collect()
             : School::whereIn('id', $recentIds)
-                ->orderByRaw(\App\Http\Controllers\SchoolController::orderByIdsRaw($recentIds))
+                ->orderByRaw(SchoolController::orderByIdsRaw($recentIds))
                 ->get();
 
         $articlesRead = Article::orderByDesc('views')->take(3)->get();
 
         // Auto-link any unlinked applications by email
-        \App\Models\Application::whereNull('parent_user_id')
+        Application::whereNull('parent_user_id')
             ->where('parent_email', $user->email)
             ->update(['parent_user_id' => $user->id]);
 
-        $applications = \App\Models\Application::where(function ($query) use ($user) {
-                $query->where('parent_user_id', $user->id)
-                    ->orWhere('created_by_user_id', $user->id)
-                    ->orWhere('parent_email', $user->email);
-            })
+        $applications = Application::where(function ($query) use ($user) {
+            $query->where('parent_user_id', $user->id)
+                ->orWhere('created_by_user_id', $user->id)
+                ->orWhere('parent_email', $user->email);
+        })
             ->with(['school', 'latestPayment'])
             ->latest()
             ->get();

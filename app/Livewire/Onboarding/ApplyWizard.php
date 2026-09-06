@@ -6,6 +6,7 @@ use App\Models\School;
 use App\Services\ApplicationService;
 use App\Services\DocumentStorageService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -17,31 +18,34 @@ class ApplyWizard extends Component
 
     public ?int $schoolId = null;
 
-    public string $studentName = 'Ahmad Rayhan Al-Fatih';
+    // Student fields
+    public string $studentName = '';
 
-    public string $studentNik = '3273011508100001';
+    public string $studentNik = '';
 
-    public string $studentGender = 'Laki-laki';
+    public string $studentGender = '';
 
-    public string $studentBirthPlace = 'Bandung';
+    public string $studentBirthPlace = '';
 
-    public ?string $studentBirthDate = '2012-05-15';
+    public ?string $studentBirthDate = null;
 
-    public string $studentAddress = 'Jl. Soekarno-Hatta No. 456, Bandung, Jawa Barat';
+    public string $studentAddress = '';
 
-    public string $previousSchool = 'SDIT Al-Azhar Bandung';
+    public string $previousSchool = '';
 
-    public string $targetJenjang = 'SMPIT / Tsanawiyah';
+    public string $targetJenjang = '';
 
-    public string $parentName = 'H. Ahmad Abdullah';
+    // Parent fields
+    public string $parentName = '';
 
-    public string $parentEmail = 'orangtua@pesantrends.id';
+    public string $parentEmail = '';
 
-    public string $parentPhone = '081234567890';
+    public string $parentPhone = '';
 
-    public string $parentWhatsapp = '+6281234567890';
+    public string $parentWhatsapp = '';
 
-    public string $notes = 'Mohon informasi mengenai pendaftaran asrama dan jadwal tes seleksi.';
+    // Notes & Documents
+    public string $notes = '';
 
     public $docKk = null;
 
@@ -53,13 +57,40 @@ class ApplyWizard extends Component
 
     public array $documents = [];
 
+    // Dropdown options
+    public array $genderOptions = ['Laki-laki', 'Perempuan'];
+
+    public array $jenjangOptions = [
+        'SMPIT / Tsanawiyah',
+        'SMIT / Aliyah',
+        'MA / Madrasah Aliyah',
+        'MTs / Madrasah Tsanawiyah',
+    ];
+
+    // Focus management
+    public ?string $autofocusField = null;
+
     public function mount(?int $school = null): void
     {
         $this->schoolId = request()->query('school')
             ? (int) request()->query('school')
-            : ($school ?? (request()->query('school_id') ? (int) request()->query('school_id') : School::published()->first()?->id));
+            : ($school ?? (request()->query('school_id') ? (int) request()->query('school_id') : null));
 
-        $this->fillTestData();
+        $this->autofocusField = 'schoolId';
+
+        // Auto-fill parent fields from authenticated user
+        if (Auth::check()) {
+            $user = Auth::user();
+            $this->parentName = $user->name ?? '';
+            $this->parentEmail = $user->email ?? '';
+            $this->parentPhone = $user->phone ?? '';
+            $this->parentWhatsapp = $user->whatsapp ?? '';
+        }
+
+        // Pre-fill with test data in local/dev environment
+        if (config('app.debug')) {
+            $this->fillTestData();
+        }
     }
 
     public function fillTestData(): void
@@ -97,11 +128,25 @@ class ApplyWizard extends Component
     {
         $this->validateStep();
         $this->step = min($this->step + 1, 5);
+        $this->setAutofocusField();
     }
 
     public function previousStep(): void
     {
         $this->step = max($this->step - 1, 1);
+        $this->setAutofocusField();
+    }
+
+    private function setAutofocusField(): void
+    {
+        $this->autofocusField = match ($this->step) {
+            1 => 'schoolId',
+            2 => 'studentName',
+            3 => 'parentName',
+            4 => 'docKk',
+            5 => null,
+            default => null,
+        };
     }
 
     public function submit(ApplicationService $service, DocumentStorageService $documentService): mixed
@@ -110,18 +155,21 @@ class ApplyWizard extends Component
         if (! $this->schoolId) {
             $this->step = 1;
             $this->validate(['schoolId' => 'required|exists:schools,id']);
+
             return null;
         }
 
         if (empty($this->studentName)) {
             $this->step = 2;
             $this->validate(['studentName' => 'required|string|max:255']);
+
             return null;
         }
 
         if (empty($this->parentName)) {
             $this->step = 3;
             $this->validate(['parentName' => 'required|string|max:255']);
+
             return null;
         }
 
@@ -173,12 +221,24 @@ class ApplyWizard extends Component
         match ($this->step) {
             1 => $this->validate(['schoolId' => 'required|exists:schools,id']),
             2 => $this->validate([
-                'studentName' => 'required|string|max:255',
+                'studentName' => 'required|string|min:3|max:255',
                 'studentGender' => 'nullable|in:Laki-laki,Perempuan',
+                'studentNik' => 'nullable|digits:16',
+                'studentBirthDate' => 'nullable|date',
             ]),
             3 => $this->validate([
-                'parentName' => 'required|string|max:255',
-                'parentEmail' => 'nullable|email',
+                'parentName' => 'required|string|min:2|max:255',
+                'parentEmail' => 'nullable|email|max:255',
+                'parentPhone' => ['nullable', function ($attribute, $value, $fail) {
+                    if ($value && ! preg_match('/^(\+62|62|0)[0-9]{9,12}$/', $value)) {
+                        $fail('Format nomor telepon tidak valid (cth: 081234567890 atau +6281234567890)');
+                    }
+                }],
+                'parentWhatsapp' => ['nullable', function ($attribute, $value, $fail) {
+                    if ($value && ! preg_match('/^(\+62|62|0)[0-9]{9,12}$/', $value)) {
+                        $fail('Format WhatsApp tidak valid (cth: 081234567890 atau +6281234567890)');
+                    }
+                }],
             ]),
             4 => $this->validate([
                 'docKk' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
@@ -188,6 +248,57 @@ class ApplyWizard extends Component
             ]),
             default => null,
         };
+    }
+
+    public function saveDraft(ApplicationService $service, DocumentStorageService $documentService): void
+    {
+        // Basic validation for draft (at least school + student name)
+        try {
+            $this->validate([
+                'schoolId' => 'required|exists:schools,id',
+                'studentName' => 'required|string|min:3|max:255',
+            ]);
+        } catch (ValidationException $e) {
+            // If student name is empty, go to step 2
+            if (empty($this->studentName)) {
+                $this->step = 2;
+            }
+            throw $e;
+        }
+
+        $application = $service->createDraft([
+            'school_id' => $this->schoolId,
+            'student_name' => $this->studentName,
+            'student_nik' => $this->studentNik,
+            'student_gender' => $this->studentGender,
+            'student_birth_place' => $this->studentBirthPlace,
+            'student_birth_date' => $this->studentBirthDate,
+            'student_address' => $this->studentAddress,
+            'previous_school' => $this->previousSchool,
+            'target_jenjang' => $this->targetJenjang,
+            'parent_name' => $this->parentName,
+            'parent_email' => $this->parentEmail,
+            'parent_phone' => $this->parentPhone,
+            'parent_whatsapp' => $this->parentWhatsapp,
+            'notes' => $this->notes,
+        ], Auth::user());
+
+        // Store uploaded documents
+        $user = Auth::user();
+        if ($this->docKk) {
+            $documentService->store($this->docKk, $application->id, 'kk', $user?->id);
+        }
+        if ($this->docAkta) {
+            $documentService->store($this->docAkta, $application->id, 'akta', $user?->id);
+        }
+        if ($this->docRapor) {
+            $documentService->store($this->docRapor, $application->id, 'rapor', $user?->id);
+        }
+        if ($this->docPhoto) {
+            $documentService->store($this->docPhoto, $application->id, 'photo', $user?->id);
+        }
+
+        session()->flash('draft_saved', 'Draft pendaftaran berhasil disimpan. Anda dapat melengkapi data nanti.');
     }
 
     public function render()

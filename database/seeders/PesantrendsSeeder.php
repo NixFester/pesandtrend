@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Achievement;
 use App\Models\Article;
 use App\Models\Facility;
+use App\Models\HomepageSetting;
 use App\Models\Program;
 use App\Models\School;
 use App\Models\Testimonial;
@@ -522,7 +523,7 @@ class PesantrendsSeeder extends Seeder
         }
 
         // ---------- Homepage Settings (singleton) ----------
-        \App\Models\HomepageSetting::firstOrCreate([], [
+        HomepageSetting::firstOrCreate([], [
             'total_schools' => School::count(),
             'total_students' => (int) School::sum('students_count'),
             'total_cities' => School::distinct('city')->count('city'),

@@ -2,14 +2,17 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\ArticleResource\Pages\CreateArticle;
+use App\Filament\Resources\ArticleResource\Pages\EditArticle;
+use App\Filament\Resources\ArticleResource\Pages\ListArticles;
 use App\Models\Article;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Str;
 
 class ArticleResource extends Resource
 {
@@ -23,15 +26,61 @@ class ArticleResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema->components([
-            Forms\Components\TextInput::make('title')->label('Judul')->required()
-                ->live(onBlur: true)
-                ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
-            Forms\Components\TextInput::make('slug')->label('Slug')->required(),
-            Forms\Components\TextInput::make('category')->label('Kategori')->default('Berita'),
-            Forms\Components\Textarea::make('excerpt')->label('Kutipan Singkat')->rows(2),
-            Forms\Components\RichEditor::make('content')->label('Isi Artikel')->required(),
-            Forms\Components\Toggle::make('is_published')->label('Publikasikan')->default(true),
+        return $schema->columns(1)->components([
+            Section::make('Informasi Artikel')
+                ->description('Judul, slug, dan kategori artikel')
+                ->icon('heroicon-m-document-text')
+                ->schema([
+                    Forms\Components\TextInput::make('title')
+                        ->label('Judul')
+                        ->placeholder('Contoh: 5 Tips Memilih Sekolah Islam')
+                        ->required(),
+                    Forms\Components\Hidden::make('slug'),
+                    Forms\Components\TextInput::make('category')
+                        ->label('Kategori')
+                        ->placeholder('Contoh: Panduan')
+                        ->default('Berita'),
+                ]),
+
+            Section::make('Konten')
+                ->description('Kutipan singkat dan isi artikel')
+                ->icon('heroicon-m-book-open')
+                ->schema([
+                    Forms\Components\Textarea::make('excerpt')
+                        ->label('Kutipan Singkat')
+                        ->placeholder('Deskripsi singkat untuk preview artikel...')
+                        ->rows(3),
+                    Forms\Components\RichEditor::make('content')
+                        ->label('Isi Artikel')
+                        ->placeholder('Tulis konten artikel di sini...')
+                        ->toolbarButtons([
+                            'attachFiles',
+                            'blockquote',
+                            'bold',
+                            'bulletList',
+                            'codeBlock',
+                            'h2',
+                            'h3',
+                            'italic',
+                            'link',
+                            'orderedList',
+                            'redo',
+                            'strike',
+                            'underline',
+                            'undo',
+                        ])
+                        ->fileAttachmentsDirectory('articles/attachments'),
+                ]),
+
+            Section::make('Pengaturan')
+                ->description('Pengaturan publikasi')
+                ->icon('heroicon-m-cog')
+                ->schema([
+                    Forms\Components\Toggle::make('is_published')
+                        ->label('Publikasikan')
+                        ->default(true)
+                        ->helperText('Jika aktif, artikel akan muncul di halaman publik'),
+                ]),
         ]);
     }
 
@@ -41,7 +90,10 @@ class ArticleResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')->label('Judul')->searchable(),
                 Tables\Columns\TextColumn::make('category')->label('Kategori'),
-                Tables\Columns\IconColumn::make('is_published')->label('Publik')->boolean(),
+                Tables\Columns\IconColumn::make('published_at')
+                    ->label('Publik')
+                    ->boolean()
+                    ->getStateUsing(fn ($record) => ! is_null($record->published_at)),
                 Tables\Columns\TextColumn::make('created_at')->label('Dibuat')->dateTime('d M Y'),
             ])
             ->actions([Actions\EditAction::make()])
@@ -51,9 +103,9 @@ class ArticleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Resources\ArticleResource\Pages\ListArticles::route('/'),
-            'create' => \App\Filament\Resources\ArticleResource\Pages\CreateArticle::route('/create'),
-            'edit' => \App\Filament\Resources\ArticleResource\Pages\EditArticle::route('/{record}/edit'),
+            'index' => ListArticles::route('/'),
+            'create' => CreateArticle::route('/create'),
+            'edit' => EditArticle::route('/{record}/edit'),
         ];
     }
 }

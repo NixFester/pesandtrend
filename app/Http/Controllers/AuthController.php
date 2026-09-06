@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
@@ -72,8 +73,8 @@ class AuthController extends Controller
         ]);
 
         // Assign Spatie parent role
-        if (class_exists(\Spatie\Permission\Models\Role::class)) {
-            $parentRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'parent', 'guard_name' => 'web']);
+        if (class_exists(Role::class)) {
+            $parentRole = Role::firstOrCreate(['name' => 'parent', 'guard_name' => 'web']);
             $user->assignRole($parentRole);
         }
 

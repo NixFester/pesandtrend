@@ -20,19 +20,19 @@
 
             <div class="grid gap-8 lg:grid-cols-[1fr_380px]">
                 {{-- Form --}}
-                <form method="GET" class="card-shadow-lg space-y-6 rounded-3xl bg-white p-6 sm:p-8">
+                <form method="GET" action="{{ route('calculator.index') }}" class="card-shadow-lg space-y-6 rounded-3xl bg-white p-6 sm:p-8">
                     <div>
                         <h2 class="flex items-center gap-2.5 text-lg font-extrabold text-ink">
-                            <x-icon name="wallet" class="h-5 w-5 text-gold-600"/>
+                            <x-app-icon name="wallet" class="h-5 w-5 text-gold-600"/>
                             Masukkan Rincian Biaya
                         </h2>
                         <p class="mt-1.5 text-sm text-ink-soft">Gunakan angka dari halaman detail sekolah, atau isi perkiraan Anda sendiri.</p>
                     </div>
 
-                    {{-- Isi otomatis dari sekolah --}}
+                    {{-- Preset --}}
                     <div class="rounded-2xl border border-forest-100 bg-forest-50/50 p-4">
                         <label for="school-preset" class="text-xs font-extrabold uppercase tracking-wide text-forest-900">Isi otomatis dari data sekolah</label>
-                        <select id="school-preset" data-school-preset="{{ route('calculator.index') }}" class="mt-2 w-full rounded-xl border-forest-100 bg-white px-4 py-3 text-sm font-semibold focus:border-forest-500 focus:outline-none focus:ring-2 focus:ring-forest-500/20">
+                        <select id="school-preset" data-school-preset="{{ route('calculator.index') }}" class="input-field mt-2">
                             <option value="">— Pilih sekolah —</option>
                             @foreach ($schools as $preset)
                                 <option value="{{ $preset->id }}" data-preset="{{ json_encode(['pangkal' => $preset->uang_pangkal, 'spp' => $preset->spp_monthly, 'asrama' => $preset->asrama_monthly, 'seragam' => $preset->seragam_fee, 'ekskul' => $preset->ekskul_fee, 'tour' => $preset->study_tour_fee]) }}">{{ $preset->name }}</option>
@@ -42,12 +42,12 @@
 
                     <div class="grid gap-5 sm:grid-cols-2">
                         @foreach ([
-                            ['name' => 'pangkal', 'label' => 'Uang Pangkal', 'note' => 'Satu kali', 'value' => $input['pangkal']],
-                            ['name' => 'spp', 'label' => 'SPP Bulanan', 'note' => 'Per bulan', 'value' => $input['spp']],
-                            ['name' => 'asrama', 'label' => 'Biaya Asrama', 'note' => 'Per bulan', 'value' => $input['asrama']],
-                            ['name' => 'seragam', 'label' => 'Seragam & Perlengkapan', 'note' => 'Satu kali', 'value' => $input['seragam']],
-                            ['name' => 'ekskul', 'label' => 'Kegiatan Ekstrakurikuler', 'note' => 'Per tahun', 'value' => $input['ekskul']],
-                            ['name' => 'tour', 'label' => 'Study Tour Tahunan', 'note' => 'Per tahun', 'value' => $input['tour']],
+                            ['name' => 'pangkal', 'label' => 'Uang Pangkal', 'note' => 'Satu kali'],
+                            ['name' => 'spp', 'label' => 'SPP Bulanan', 'note' => 'Per bulan'],
+                            ['name' => 'asrama', 'label' => 'Biaya Asrama', 'note' => 'Per bulan'],
+                            ['name' => 'seragam', 'label' => 'Seragam &amp; Perlengkapan', 'note' => 'Sekali'],
+                            ['name' => 'ekskul', 'label' => 'Ekstrakurikuler', 'note' => 'Per tahun'],
+                            ['name' => 'tour', 'label' => 'Study Tour Tahunan', 'note' => 'Per tahun'],
                         ] as $field)
                             <div>
                                 <label for="{{ $field['name'] }}" class="flex items-center justify-between text-sm font-extrabold text-ink">
@@ -58,7 +58,7 @@
                                     <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-bold text-ink-soft">Rp</span>
                                     <input id="{{ $field['name'] }}" type="text" inputmode="numeric" data-rupiah-input
                                            name="{{ $field['name'] }}"
-                                           value="{{ number_format($field['value'], 0, ',', '.') }}"
+                                           value="{{ number_format($input[$field['name']], 0, ',', '.') }}"
                                            class="input-field !py-3.5 pl-10 font-bold" required>
                                 </div>
                             </div>
@@ -78,23 +78,23 @@
                     </div>
 
                     <button type="submit" class="btn-primary w-full">
-                        <x-icon name="calculator" class="h-4 w-4"/>
-                        Hitung Total Biaya Lengkap
+                        <x-app-icon name="calculator" class="h-4 w-4"/>
+                        Hitung Total Biaya
                     </button>
                 </form>
 
-                {{-- Hasil --}}
-                <aside class="space-y-6">
-                    <div class="card-shadow-lg sticky top-24 rounded-3xl bg-forest-950 p-7">
+                {{-- Desktop result sidebar (always visible on lg+) --}}
+                <aside class="space-y-6 hidden lg:block">
+                    <div class="card-shadow-lg sticky top-16 rounded-3xl bg-forest-950 p-7">
                         <h2 class="flex items-center gap-2.5 text-base font-extrabold text-white">
-                            <x-icon name="trending-up" class="h-5 w-5 text-gold-400"/>
+                            <x-app-icon name="trending-up" class="h-5 w-5 text-gold-400"/>
                             Hasil Perhitungan
                         </h2>
 
                         <div class="mt-5 rounded-2xl bg-gold-500/15 p-5 text-center">
                             <p class="text-xs font-bold uppercase tracking-wider text-gold-300">Total/bulan rata-rata</p>
                             <p class="mt-1.5 text-3xl font-extrabold text-gold-400">Rp{{ number_format($result['avgMonthly'], 0, ',', '.') }}</p>
-                            <p class="mt-1 text-[11px] text-white/60">termasuk biaya tahunan &amp sekali bayar</p>
+                            <p class="mt-1 text-[11px] text-white/60">termasuk biaya tahunan &amp; sekali bayar</p>
                         </div>
 
                         <dl class="mt-5 space-y-3.5 text-sm">
@@ -118,14 +118,14 @@
                         </div>
 
                         <a href="{{ route('schools.index') }}" class="btn-gold mt-5 w-full">
-                            <x-icon name="search" class="h-4 w-4" :stroke="2.5"/>
+                            <x-app-icon name="search" class="h-4 w-4" :stroke="2.5"/>
                             Cari Sekolah Lainnya
                         </a>
                     </div>
 
                     <div class="card-shadow rounded-2xl border border-gold-200 bg-gold-50 p-6">
                         <h3 class="flex items-center gap-2 text-sm font-extrabold text-gold-800">
-                            <x-icon name="info" class="h-4 w-4"/>
+                            <x-app-icon name="info" class="h-4 w-4"/>
                             Tips Menghemat
                         </h3>
                         <ul class="mt-3 space-y-2 text-xs leading-relaxed text-gold-800/80">

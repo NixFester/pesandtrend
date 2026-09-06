@@ -1,42 +1,67 @@
-{{-- Mobile bottom navigation bar — visible on small screens only --}}
-<nav class="fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-t border-forest-100 md:hidden safe-area-bottom" id="mobile-bottom-nav">
-    <div class="flex items-center justify-around h-16">
-        <a href="{{ route('home') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 text-xs font-medium {{ request()->routeIs('home') ? 'text-forest-700' : 'text-ink-soft/60' }}">
-            <x-app-icon name="home" class="h-5 w-5"/>
-            <span>Beranda</span>
-        </a>
-        <a href="{{ route('schools.index') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 text-xs font-medium {{ request()->routeIs('schools.*') ? 'text-forest-700' : 'text-ink-soft/60' }}">
-            <x-app-icon name="search" class="h-5 w-5"/>
-            <span>Cari</span>
-        </a>
-        @auth
-        <a href="{{ route('dashboard') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 text-xs font-medium {{ request()->routeIs('dashboard') ? 'text-forest-700' : 'text-ink-soft/60' }}">
-            <x-app-icon name="bookmark" class="h-5 w-5"/>
-            <span>Simpan</span>
-        </a>
-        <a href="{{ route('onboarding.index') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 text-xs font-medium {{ request()->routeIs('onboarding.*') ? 'text-forest-700' : 'text-ink-soft/60' }}">
-            <x-app-icon name="send" class="h-5 w-5"/>
-            <span>Daftar</span>
-        </a>
-        <a href="{{ route('dashboard') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 text-xs font-medium text-ink-soft/60">
-            <x-app-icon name="user" class="h-5 w-5"/>
-            <span>Akun</span>
-        </a>
-        @else
-        <a href="{{ route('login') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 text-xs font-medium text-ink-soft/60">
-            <x-app-icon name="bookmark" class="h-5 w-5"/>
-            <span>Simpan</span>
-        </a>
-        <a href="{{ route('login') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 text-xs font-medium text-ink-soft/60">
-            <x-app-icon name="send" class="h-5 w-5"/>
-            <span>Daftar</span>
-        </a>
-        <a href="{{ route('login') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 text-xs font-medium text-ink-soft/60">
-            <x-app-icon name="user" class="h-5 w-5"/>
-            <span>Masuk</span>
-        </a>
-        @endauth
+{{-- Mobile bottom navigation — fixed to bottom of viewport on small screens --}}
+@php
+    $navItems = [
+        [
+            'route' => route('home'),
+            'icon' => 'home',
+            'label' => 'Beranda',
+            'active' => request()->routeIs('home'),
+            'auth' => null,
+        ],
+        [
+            'route' => route('schools.index'),
+            'icon' => 'search',
+            'label' => 'Cari',
+            'active' => request()->routeIs('schools.*'),
+            'auth' => null,
+        ],
+        [
+            'route' => route('dashboard'),
+            'icon' => 'bookmark',
+            'label' => 'Simpan',
+            'active' => request()->routeIs('dashboard'),
+            'auth' => 'required',
+        ],
+        [
+            'route' => route('onboarding.apply'),
+            'icon' => 'send',
+            'label' => 'Daftar',
+            'active' => request()->routeIs('onboarding.*'),
+            'auth' => 'required',
+        ],
+        [
+            'route' => auth()->check() ? route('dashboard') : route('login'),
+            'icon' => 'user',
+            'label' => 'Akun',
+            'active' => request()->routeIs('dashboard'),
+            'auth' => null,
+        ],
+    ];
+@endphp
+
+<nav class="fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-t border-forest-100 md:hidden safe-bottom" id="mobile-bottom-nav" aria-label="Navigasi utama">
+    {{-- Spacer: 4rem (h-16) + safe-area-bottom so content isn't hidden --}}
+    <div class="h-16"></div>
+
+    <div class="absolute inset-x-0 top-0 flex h-full">
+        @foreach ($navItems as $item)
+            @php
+                $href = $item['auth'] === 'required' && !auth()->check() ? route('login') : $item['route'];
+                $showActive = $item['active'];
+            @endphp
+            <a
+                href="{{ $href }}"
+                class="relative flex flex-1 flex-col items-center justify-center gap-0.5 py-2 text-xs font-medium transition-colors duration-150
+                    {{ $showActive ? 'text-forest-700' : 'text-ink-soft/60' }}"
+                @if ($showActive) aria-current="page" @endif
+            >
+                {{-- Active indicator: top dot --}}
+                @if ($showActive)
+                    <span class="absolute top-1.5 h-1 w-1 rounded-full bg-forest-700" aria-hidden="true"></span>
+                @endif
+                <x-app-icon name="{{ $item['icon'] }}" class="h-5 w-5" />
+                <span>{{ $item['label'] }}</span>
+            </a>
+        @endforeach
     </div>
 </nav>
-{{-- Spacer so content isn't hidden behind the fixed nav --}}
-<div class="h-16 md:hidden"></div>

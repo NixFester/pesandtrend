@@ -1,13 +1,19 @@
 <?php
 
+use App\Http\Controllers\Admin\SchoolActionController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CalculatorController;
 use App\Http\Controllers\CompareController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocumentDownloadController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\ProofController;
 use App\Http\Controllers\SavedSchoolController;
 use App\Http\Controllers\SchoolController;
+use App\Livewire\Onboarding\ApplyWizard;
 use Illuminate\Support\Facades\Route;
 
 // Halaman utama
@@ -23,7 +29,7 @@ Route::post('/bandingkan/tambah', [CompareController::class, 'add'])->name('comp
 Route::post('/bandingkan/hapus', [CompareController::class, 'remove'])->name('compare.remove');
 
 // Kalkulator biaya
-Route::get('/kalkulator', [\App\Http\Controllers\CalculatorController::class, 'index'])->name('calculator.index');
+Route::get('/kalkulator', [CalculatorController::class, 'index'])->name('calculator.index');
 
 // Artikel
 Route::get('/artikel', [ArticleController::class, 'index'])->name('articles.index');
@@ -49,18 +55,27 @@ Route::middleware('auth')->get('/dashboard', [DashboardController::class, 'index
 
 // ── Parent Onboarding ──
 Route::middleware(['auth'])->prefix('orang-tua')->group(function () {
-    Route::get('/pendaftaran', [\App\Http\Controllers\OnboardingController::class, 'index'])->name('onboarding.index');
-    Route::get('/pendaftaran/{application}', [\App\Http\Controllers\OnboardingController::class, 'show'])->name('onboarding.show');
-    Route::get('/pendaftaran/{application}/bayar', [\App\Http\Controllers\OnboardingController::class, 'pay'])->name('onboarding.pay');
-    Route::get('/daftar', \App\Livewire\Onboarding\ApplyWizard::class)->name('onboarding.apply');
+    Route::get('/pendaftaran', [OnboardingController::class, 'index'])->name('onboarding.index');
+    Route::get('/pendaftaran/{application}', [OnboardingController::class, 'show'])->name('onboarding.show');
+    Route::get('/pendaftaran/{application}/bayar', [OnboardingController::class, 'pay'])->name('onboarding.pay');
+    Route::get('/daftar', ApplyWizard::class)->name('onboarding.apply');
 });
 
 // ── Signed download routes ──
-Route::get('/bukti-pembayaran/{payment}/cetak', [\App\Http\Controllers\ProofController::class, 'print'])
+Route::get('/bukti-pembayaran/{payment}/cetak', [ProofController::class, 'print'])
     ->name('proof.print')
     ->middleware('signed');
 
-Route::get('/dokumen/{document}/unduh', [\App\Http\Controllers\DocumentDownloadController::class, 'download'])
+Route::get('/dokumen/{document}/unduh', [DocumentDownloadController::class, 'download'])
     ->name('documents.download')
     ->middleware('signed');
 
+// ── Admin School Actions ──
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::post('/sekolah/{school}/toggle-publish', [SchoolActionController::class, 'togglePublish'])
+        ->name('filament.admin.resources.schools.toggle-publish');
+    Route::delete('/sekolah/{school}', [SchoolActionController::class, 'destroy'])
+        ->name('filament.admin.resources.schools.destroy');
+    Route::get('/sekolah/export', [SchoolActionController::class, 'export'])
+        ->name('filament.admin.resources.schools.export');
+});

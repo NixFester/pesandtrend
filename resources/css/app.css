@@ -7,6 +7,16 @@
     --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 
+    /* Custom breakpoint for very small screens (home hero stats) */
+    --breakpoint-xs: 24rem;
+
+    /* iOS / Android safe-area inset spacing */
+    --spacing-safe-top: env(safe-area-inset-top, 0px);
+    --spacing-safe-bottom: env(safe-area-inset-bottom, 0px);
+
+    /* Shared easing for snappy UI transitions */
+    --ease-snappy: cubic-bezier(0.2, 0.8, 0.2, 1);
+
     /* Pesantrends palette — from Figma */
     --color-forest-50: #f2f7f4;
     --color-forest-100: #e0ede4;
@@ -36,30 +46,113 @@
     --color-cream-200: #e6d9ae;
     --color-cream-300: #d9c78c;
 
-    --color-sage-300: #a9c4b4;
-    --color-sage-400: #85aa96;
-    --color-sage-500: #6b9680;
-
     --color-ink: #16261d;
     --color-ink-soft: #4a5d52;
+
+    /* WhatsApp brand color — used sparingly */
+    --color-whatsapp-500: #25D366;
+    --color-whatsapp-600: #1ebe57;
 }
 
 @layer base {
     html {
         scroll-behavior: smooth;
+        /* Removes the blue flash on tap for interactive elements on iOS */
+        -webkit-tap-highlight-color: transparent;
     }
 
     body {
         @apply bg-white text-ink font-sans antialiased;
+        min-height: 100dvh;
     }
 
     ::selection {
         @apply bg-gold-200 text-forest-950;
     }
+
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
 }
 
 @utility container-app {
     @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+}
+
+@utility container-narrow {
+    @apply mx-auto w-full max-w-2xl px-4 sm:px-6;
+}
+
+/* Responsive card grid used across home, schools index, articles, etc. */
+@utility auto-grid-cards {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6;
+}
+
+/* Safe-area padding utilities for iOS notch / home-indicator */
+@utility safe-top {
+    padding-top: var(--spacing-safe-top);
+}
+
+@utility safe-bottom {
+    padding-bottom: var(--spacing-safe-bottom);
+}
+
+/* Skip-to-content link: visually hidden until focused */
+@utility skip-link {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 100;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    background: #12462a;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 700;
+    transform: translateY(-150%);
+    transition: transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+    outline: 2px solid #d5ac3d;
+    outline-offset: 2px;
+}
+
+/* Mobile menu panel — toggled via JS adding .is-open class */
+@utility menu-panel {
+    max-height: 0;
+    opacity: 0;
+}
+
+.menu-panel.is-open {
+    max-height: 80dvh;
+    opacity: 1;
+}
+
+/* Compare table: sticky first-column label cells */
+.compare-sticky-label {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    background-color: rgb(241 251 244); /* forest-50 */
+    min-width: 140px;
+}
+
+/* Compare table: sticky header cell (school name) */
+.compare-sticky-header {
+    position: sticky;
+    left: 0;
+    z-index: 20;
+    background-color: white;
+    min-width: 180px;
 }
 
 @layer components {
@@ -79,8 +172,26 @@
         @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-5 py-3 text-sm font-bold text-white backdrop-blur transition-all duration-200 hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-300;
     }
 
+    .btn-whatsapp {
+        @apply inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold text-white transition;
+        background-color: #25D366;
+    }
+
+    .btn-whatsapp:hover {
+        background-color: #1ebe57;
+    }
+
     .input-field {
         @apply w-full rounded-xl border border-forest-100 bg-white px-4 py-3 text-sm text-ink shadow-sm transition placeholder:text-ink-soft/50 focus:border-forest-500 focus:outline-none focus:ring-2 focus:ring-forest-500/20;
+    }
+
+    /* Error state for form inputs — add .input-error alongside .input-field */
+    .input-error {
+        @apply border-red-400 bg-red-50/30;
+    }
+
+    .input-error:focus {
+        @apply border-red-400 ring-red-400/30;
     }
 
     .chip {
@@ -89,6 +200,23 @@
 
     .chip-gold {
         @apply inline-flex items-center gap-1.5 rounded-full bg-gold-100 px-3 py-1.5 text-xs font-semibold text-gold-800;
+    }
+
+    /* Status chips driven by ApplicationStatus::color() return values */
+    .chip-status-success {
+        @apply inline-flex items-center gap-1.5 rounded-full bg-forest-50 px-3 py-1.5 text-xs font-semibold text-forest-800;
+    }
+
+    .chip-status-warning {
+        @apply inline-flex items-center gap-1.5 rounded-full bg-gold-100 px-3 py-1.5 text-xs font-semibold text-gold-800;
+    }
+
+    .chip-status-danger {
+        @apply inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700;
+    }
+
+    .chip-status-info {
+        @apply inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700;
     }
 
     .section-label {

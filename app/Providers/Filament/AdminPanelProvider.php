@@ -6,6 +6,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationItem;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -29,10 +30,14 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::hex('#12462a'),
                 'warning' => Color::hex('#c9a227'),
                 'success' => Color::hex('#4d8669'),
+                'danger' => Color::hex('#dc2626'),
+                'info' => Color::hex('#2563eb'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->darkMode(false)
+            ->maxContentWidth('full')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -49,6 +54,24 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->brandName('Pesantrends Admin')
             ->favicon(asset('favicon.ico'))
-            ->sidebarCollapsibleOnDesktop();
+            ->sidebarCollapsibleOnDesktop()
+            ->navigationGroups([
+                'Katalog',
+                'Konten',
+                'Onboarding',
+                'Pengaturan',
+                'Akun',
+            ])
+            ->navigationItems([
+                NavigationItem::make('Keluar')
+                    ->label('Keluar')
+                    ->icon('heroicon-o-arrow-left-on-rectangle')
+                    ->group('Akun')
+                    ->url('#')
+                    ->extraAttributes([
+                        'onclick' => "event.preventDefault(); const form = document.createElement('form'); form.method = 'POST'; form.action = '" . url('/admin/logout') . "'; const csrf = document.createElement('input'); csrf.type = 'hidden'; csrf.name = '_token'; csrf.value = '" . csrf_token() . "'; form.appendChild(csrf); document.body.appendChild(form); form.submit();",
+                    ])
+                    ->sort(9999),
+            ]);
     }
 }

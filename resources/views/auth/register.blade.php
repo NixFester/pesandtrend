@@ -6,7 +6,13 @@
         <div class="container-app">
             <div class="mx-auto max-w-md">
                 <div class="text-center">
+<<<<<<< Updated upstream
                     <img src="{{ asset('images/icon.svg') }}" alt="Pesantrends" class="mx-auto h-14 w-14">
+=======
+                    <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-forest-900 text-gold-400">
+                        <x-app-icon name="sparkles" class="h-7 w-7"/>
+                    </span>
+>>>>>>> Stashed changes
                     <h1 class="mt-5 text-2xl font-extrabold tracking-tight text-ink">Bergabung dengan Keluarga Muslim Indonesia</h1>
                     <p class="mt-2 text-sm text-ink-soft">Simpan sekolah favorit, dapatkan rekomendasi, dan akses panduan lengkap — gratis</p>
                 </div>

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class School extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name', 'slug', 'type', 'jenjang', 'city', 'province', 'address',
         'short_desc', 'description', 'rating', 'reviews_count', 'students_count',
@@ -105,7 +106,7 @@ class School extends Model
 
     public function scopeNearby($query, float $lat, float $lng, float $radiusKm = 50)
     {
-        $haversine = "(6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude))))";
+        $haversine = '(6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude))))';
 
         return $query
             ->whereNotNull('latitude')
@@ -152,4 +153,3 @@ class School extends Model
         };
     }
 }
-

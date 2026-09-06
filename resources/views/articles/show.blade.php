@@ -16,9 +16,9 @@
                     <span class="rounded-full bg-gold-500 px-3.5 py-1.5 text-[11px] font-extrabold text-forest-950">{{ $article->category }}</span>
                     <h1 class="mt-4 text-2xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl">{{ $article->title }}</h1>
                     <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-white/75">
-                        <span class="flex items-center gap-1.5"><x-icon name="calendar" class="h-4 w-4 text-gold-400"/>{{ $article->published_label }}</span>
-                        <span class="flex items-center gap-1.5"><x-icon name="clock" class="h-4 w-4 text-gold-400"/>{{ $article->read_minutes }} min baca</span>
-                        <span class="flex items-center gap-1.5"><x-icon name="eye" class="h-4 w-4 text-gold-400"/>{{ number_format($article->views) }} dibaca</span>
+                        <span class="flex items-center gap-1.5"><x-app-icon name="calendar" class="h-4 w-4 text-gold-400"/>{{ $article->published_label }}</span>
+                        <span class="flex items-center gap-1.5"><x-app-icon name="clock" class="h-4 w-4 text-gold-400"/>{{ $article->read_minutes }} min baca</span>
+                        <span class="flex items-center gap-1.5"><x-app-icon name="eye" class="h-4 w-4 text-gold-400"/>{{ number_format($article->views) }} dibaca</span>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                         <p class="text-sm font-extrabold text-ink">Tertarik mencari sekolah untuk buah hati?</p>
                         <p class="mt-1.5 text-sm text-ink-soft">Jelajahi 1.240+ sekolah Islam terverifikasi di Pesantrends.</p>
                         <a href="{{ route('schools.index') }}" class="btn-primary mt-4">
-                            <x-icon name="search" class="h-4 w-4" :stroke="2.5"/>
+                            <x-app-icon name="search" class="h-4 w-4" :stroke="2.5"/>
                             Cari Sekolah Sekarang
                         </a>
                     </div>

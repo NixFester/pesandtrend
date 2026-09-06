@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\ProgramResource\Pages\CreateProgram;
+use App\Filament\Resources\ProgramResource\Pages\EditProgram;
+use App\Filament\Resources\ProgramResource\Pages\ListPrograms;
 use App\Models\Program;
 use Filament\Actions;
 use Filament\Forms;
@@ -14,11 +17,13 @@ class ProgramResource extends Resource
 {
     protected static ?string $model = Program::class;
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-book-open';
 
     protected static ?string $navigationLabel = 'Program';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Katalog';
+    protected static string|\UnitEnum|null $navigationGroup = null;
 
     protected static ?int $navigationSort = 2;
 
@@ -46,9 +51,9 @@ class ProgramResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Resources\ProgramResource\Pages\ListPrograms::route('/'),
-            'create' => \App\Filament\Resources\ProgramResource\Pages\CreateProgram::route('/create'),
-            'edit' => \App\Filament\Resources\ProgramResource\Pages\EditProgram::route('/{record}/edit'),
+            'index' => ListPrograms::route('/'),
+            'create' => CreateProgram::route('/create'),
+            'edit' => EditProgram::route('/{record}/edit'),
         ];
     }
 }

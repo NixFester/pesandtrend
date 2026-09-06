@@ -15,7 +15,7 @@ return new class extends Migration
         $teams = config('permission.teams');
 
         if (empty($tableNames)) {
-            throw new \Exception('Error: config/permission.php not loaded. Run [php artisan vendor:publish --provider="Spatie\\Permission\\PermissionServiceProvider"] and try again.');
+            throw new Exception('Error: config/permission.php not loaded. Run [php artisan vendor:publish --provider="Spatie\\Permission\\PermissionServiceProvider"] and try again.');
         }
 
         Schema::create($tableNames['permissions'] ?? 'permissions', function (Blueprint $table) {
@@ -84,7 +84,7 @@ return new class extends Migration
         $tableNames = config('permission.table_names');
 
         if (empty($tableNames)) {
-            throw new \Exception('Error: config/permission.php not found.');
+            throw new Exception('Error: config/permission.php not found.');
         }
 
         Schema::drop($tableNames['role_has_permissions'] ?? 'role_has_permissions');

@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\HomepageSettingResource\Pages\EditHomepageSetting;
+use App\Filament\Resources\HomepageSettingResource\Pages\ListHomepageSettings;
 use App\Models\HomepageSetting;
 use Filament\Actions;
 use Filament\Forms;
@@ -57,8 +59,8 @@ class HomepageSettingResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Resources\HomepageSettingResource\Pages\ListHomepageSettings::route('/'),
-            'edit' => \App\Filament\Resources\HomepageSettingResource\Pages\EditHomepageSetting::route('/{record}/edit'),
+            'index' => ListHomepageSettings::route('/'),
+            'edit' => EditHomepageSetting::route('/{record}/edit'),
         ];
     }
 }

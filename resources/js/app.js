@@ -1,16 +1,9 @@
 // Pesantrends — interaksi ringan sisi klien
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Toggle menu mobile
-    const menuBtn = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (menuBtn && mobileMenu) {
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            menuBtn.setAttribute('aria-expanded', mobileMenu.classList.contains('hidden') ? 'false' : 'true');
-        });
-    }
+import './nav.js';
+import './sheet.js';
 
+document.addEventListener('DOMContentLoaded', () => {
     // Format angka Rupiah pada kalkulator biaya
     document.querySelectorAll('[data-rupiah-input]').forEach((el) => {
         const fmt = (value) => {
@@ -21,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const pos = el.selectionStart;
             const before = el.value;
             el.value = fmt(el.value);
-            // pertahankan kursor sederhana
             if (pos === before.length) el.setSelectionRange(el.value.length, el.value.length);
         });
     });
@@ -38,8 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tutup panel tambah sekolah bila klik di luar
     document.addEventListener('click', (e) => {
         const panel = document.getElementById('compare-add-panel');
-        if (panel && ! panel.classList.contains('hidden')) {
-            if (! e.target.closest('[data-compare-add]') && ! e.target.closest('#compare-add-panel')) {
+        if (panel && !panel.classList.contains('hidden')) {
+            if (
+                !e.target.closest('[data-compare-add]') &&
+                !e.target.closest('#compare-add-panel')
+            ) {
                 panel.classList.add('hidden');
             }
         }

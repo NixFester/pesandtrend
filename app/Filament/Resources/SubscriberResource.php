@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\SubscriberResource\Pages\ListSubscribers;
 use App\Models\Subscriber;
 use Filament\Actions;
 use Filament\Forms;
@@ -41,7 +42,7 @@ class SubscriberResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Resources\SubscriberResource\Pages\ListSubscribers::route('/'),
+            'index' => ListSubscribers::route('/'),
         ];
     }
 }

@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Pesantrends — Platform terpercaya untuk menemukan, membandingkan, dan memilih sekolah Islam terbaik di Indonesia.">
-    <title>@yield('title', $title ?? 'Pesantrends — Temukan Sekolah Islam Terbaik')</title>
+    <x-app-head :title="$title ?? null" />
     <link rel="preconnect" href="https://fonts.bunny.net">
+    @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
 </head>
 <body class="min-h-screen flex flex-col bg-white">
+    {{-- Accessibility: skip to main content --}}
+    <x-skip-link href="#main-content" />
+
     @include('components.navbar')
 
+<<<<<<< Updated upstream
     <main class="flex-1 {{ request()->routeIs('home') ? '' : 'pt-16' }}">
+=======
+    <main id="main-content" tabindex="-1" class="flex-1">
+>>>>>>> Stashed changes
         {{ $slot ?? '' }}
         @yield('content')
     </main>
 
     @include('components.footer')
-    <x-mobile-bottom-nav/>
+    <x-mobile-bottom-nav />
     @stack('scripts')
+    @livewireScripts
 </body>
 </html>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Onboarding\ApplicationStatus;
 use App\Models\Application;
 use App\Services\ApplicationService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -43,8 +45,8 @@ class OnboardingController extends Controller
                     'paid_at' => now(),
                 ]);
 
-                if (in_array($application->status, [\App\Domain\Onboarding\ApplicationStatus::PaymentPending, \App\Domain\Onboarding\ApplicationStatus::Submitted], true)) {
-                    $application->update(['status' => \App\Domain\Onboarding\ApplicationStatus::Paid]);
+                if (in_array($application->status, [ApplicationStatus::PaymentPending, ApplicationStatus::Submitted], true)) {
+                    $application->update(['status' => ApplicationStatus::Paid]);
                 }
 
                 session()->flash('payment_success', 'Pembayaran berhasil dikonfirmasi!');
@@ -59,7 +61,7 @@ class OnboardingController extends Controller
     /**
      * Show payment page for an application.
      */
-    public function pay(Request $request, Application $application): View
+    public function pay(Request $request, Application $application): View|RedirectResponse
     {
         $this->authorize('createPayment', $application);
 
@@ -73,7 +75,7 @@ class OnboardingController extends Controller
                 ]);
             }
 
-            $application->update(['status' => \App\Domain\Onboarding\ApplicationStatus::Paid]);
+            $application->update(['status' => ApplicationStatus::Paid]);
 
             session()->flash('payment_success', 'Simulasi pembayaran Xendit berhasil!');
 

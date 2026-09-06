@@ -19,7 +19,7 @@
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 <button type="submit" class="btn-ghost-light !py-2.5 text-xs">
-                    <x-icon name="log-out" class="h-4 w-4"/>
+                    <x-app-icon name="log-out" class="h-4 w-4"/>
                     Keluar
                 </button>
             </form>
@@ -69,7 +69,7 @@
             <div>
                 <div class="flex items-end justify-between gap-4">
                     <h2 class="flex items-center gap-2.5 text-lg font-extrabold text-ink">
-                        <x-icon name="bookmark" class="h-5 w-5 text-gold-600"/>
+                        <x-app-icon name="bookmark" class="h-5 w-5 text-gold-600"/>
                         Sekolah Tersimpan
                     </h2>
                     <a href="{{ route('schools.index') }}" class="text-sm font-bold text-forest-800 transition hover:text-forest-600">Tambah sekolah →</a>
@@ -92,7 +92,7 @@
                                     <form action="{{ route('schools.save', $school) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="flex h-[42px] w-[42px] items-center justify-center rounded-xl border border-forest-100 text-ink-soft transition hover:border-red-300 hover:bg-red-50 hover:text-red-600" title="Hapus dari tersimpan" aria-label="Hapus {{ $school->name }} dari tersimpan">
-                                            <x-icon name="x" class="h-4 w-4"/>
+                                            <x-app-icon name="x" class="h-4 w-4"/>
                                         </button>
                                     </form>
                                 </div>
@@ -111,7 +111,7 @@
             {{-- Rekomendasi --}}
             <div>
                 <h2 class="flex items-center gap-2.5 text-lg font-extrabold text-ink">
-                    <x-icon name="sparkles" class="h-5 w-5 text-gold-600"/>
+                    <x-app-icon name="sparkles" class="h-5 w-5 text-gold-600"/>
                     Rekomendasi Untukmu
                 </h2>
                 <div class="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -126,7 +126,7 @@
                 @if ($recentlyViewed->count())
                     <div>
                         <h2 class="flex items-center gap-2.5 text-lg font-extrabold text-ink">
-                            <x-icon name="clock" class="h-5 w-5 text-gold-600"/>
+                            <x-app-icon name="clock" class="h-5 w-5 text-gold-600"/>
                             Terakhir Dilihat
                         </h2>
                         <div class="mt-5 space-y-3">
@@ -137,7 +137,7 @@
                                         <p class="truncate text-sm font-extrabold text-ink">{{ $school->name }}</p>
                                         <p class="text-xs text-ink-soft">{{ $school->city }} · Rp{{ number_format($school->spp_monthly, 0, ',', '.') }}/bln</p>
                                     </div>
-                                    <x-icon name="chevron-right" class="h-4 w-4 shrink-0 text-ink-soft"/>
+                                    <x-app-icon name="chevron-right" class="h-4 w-4 shrink-0 text-ink-soft"/>
                                 </a>
                             @endforeach
                         </div>
@@ -147,7 +147,7 @@
                 {{-- Artikel dibaca --}}
                 <div>
                     <h2 class="flex items-center gap-2.5 text-lg font-extrabold text-ink">
-                        <x-icon name="newspaper" class="h-5 w-5 text-gold-600"/>
+                        <x-app-icon name="newspaper" class="h-5 w-5 text-gold-600"/>
                         Artikel Populer
                     </h2>
                     <div class="mt-5 space-y-3">
@@ -158,7 +158,7 @@
                                     <p class="truncate text-sm font-extrabold text-ink">{{ $article->title }}</p>
                                     <p class="text-xs text-ink-soft">{{ $article->read_minutes }} min baca · {{ number_format($article->views) }} dibaca</p>
                                 </div>
-                                <x-icon name="chevron-right" class="h-4 w-4 shrink-0 text-ink-soft"/>
+                                <x-app-icon name="chevron-right" class="h-4 w-4 shrink-0 text-ink-soft"/>
                             </a>
                         @endforeach
                     </div>

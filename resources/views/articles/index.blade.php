@@ -15,7 +15,7 @@
                     <p class="mt-2 text-sm text-white/70">Wawasan terbaik untuk orang tua cerdas — {{ $totalArticles }} artikel tersedia</p>
                 </div>
                 <form method="GET" class="relative w-full max-w-sm">
-                    <x-icon name="search" class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-soft/60"/>
+                    <x-app-icon name="search" class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-soft/60"/>
                     <input type="text" name="q" value="{{ $search }}" placeholder="Cari artikel..." aria-label="Cari artikel"
                            class="w-full rounded-2xl border-0 bg-white/10 py-3.5 pl-12 pr-4 text-sm font-medium text-white placeholder:text-white/50 backdrop-blur focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-gold-400/50">
                 </form>
@@ -47,7 +47,7 @@
             @else
                 <div class="card-shadow mt-8 rounded-2xl border border-forest-100 bg-cream-50 p-14 text-center">
                     <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-forest-100 text-forest-700">
-                        <x-icon name="newspaper" class="h-7 w-7"/>
+                        <x-app-icon name="newspaper" class="h-7 w-7"/>
                     </span>
                     <h2 class="mt-4 text-lg font-extrabold text-ink">Artikel tidak ditemukan</h2>
                     <p class="mx-auto mt-2 max-w-sm text-sm text-ink-soft">Coba kata kunci lain atau jelajahi kategori yang tersedia.</p>
@@ -62,7 +62,7 @@
         <section class="bg-cream-50 py-12 sm:py-16" aria-labelledby="populer-heading">
             <div class="container-app">
                 <h2 id="populer-heading" class="flex items-center gap-2.5 text-xl font-extrabold tracking-tight text-ink">
-                    <x-icon name="trending-up" class="h-5 w-5 text-gold-600"/>
+                    <x-app-icon name="trending-up" class="h-5 w-5 text-gold-600"/>
                     Artikel Terpopuler
                 </h2>
                 <div class="mt-6 grid gap-4 sm:grid-cols-2">

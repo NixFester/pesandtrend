@@ -2,10 +2,14 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\TestimonialResource\Pages\CreateTestimonial;
+use App\Filament\Resources\TestimonialResource\Pages\EditTestimonial;
+use App\Filament\Resources\TestimonialResource\Pages\ListTestimonials;
 use App\Models\Testimonial;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -22,12 +26,47 @@ class TestimonialResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema->components([
-            Forms\Components\TextInput::make('name')->label('Nama Pengulas')->required(),
-            Forms\Components\TextInput::make('role')->label('Peran')->placeholder('Orang Tua Santri'),
-            Forms\Components\Textarea::make('content')->label('Isi Ulasan')->required()->rows(3),
-            Forms\Components\TextInput::make('rating')->label('Rating (1-5)')->numeric()->default(5),
-            Forms\Components\Toggle::make('is_published')->label('Publikasikan')->default(true),
+        return $schema->columns(1)->components([
+            Section::make('Informasi Testimoni')
+                ->description('Nama dan peran pengulas')
+                ->icon('heroicon-m-user')
+                ->schema([
+                    Forms\Components\TextInput::make('name')
+                        ->label('Nama Pengulas')
+                        ->placeholder('Contoh: Ibu Sari Rahayu')
+                        ->required(),
+                    Forms\Components\Hidden::make('slug'),
+                    Forms\Components\TextInput::make('role')
+                        ->label('Peran')
+                        ->placeholder('Contoh: Orang Tua Santri'),
+                ]),
+
+            Section::make('Konten Testimoni')
+                ->description('Isi ulasan atau testimoni')
+                ->icon('heroicon-m-chat-bubble-left-right')
+                ->schema([
+                    Forms\Components\Textarea::make('quote')
+                        ->label('Isi Testimoni')
+                        ->placeholder('Tulis testimoni atau ulasan di sini...')
+                        ->required()
+                        ->rows(4),
+                    Forms\Components\TextInput::make('rating')
+                        ->label('Rating (1-5)')
+                        ->numeric()
+                        ->minValue(1)
+                        ->maxValue(5)
+                        ->default(5),
+                ]),
+
+            Section::make('Pengaturan')
+                ->description('Pengaturan publikasi')
+                ->icon('heroicon-m-cog')
+                ->schema([
+                    Forms\Components\Toggle::make('is_published')
+                        ->label('Publikasikan')
+                        ->default(true)
+                        ->helperText('Jika aktif, testimoni akan muncul di halaman publik'),
+                ]),
         ]);
     }
 
@@ -47,9 +86,9 @@ class TestimonialResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Resources\TestimonialResource\Pages\ListTestimonials::route('/'),
-            'create' => \App\Filament\Resources\TestimonialResource\Pages\CreateTestimonial::route('/create'),
-            'edit' => \App\Filament\Resources\TestimonialResource\Pages\EditTestimonial::route('/{record}/edit'),
+            'index' => ListTestimonials::route('/'),
+            'create' => CreateTestimonial::route('/create'),
+            'edit' => EditTestimonial::route('/{record}/edit'),
         ];
     }
 }

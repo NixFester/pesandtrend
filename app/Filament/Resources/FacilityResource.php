@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\FacilityResource\Pages\CreateFacility;
+use App\Filament\Resources\FacilityResource\Pages\EditFacility;
+use App\Filament\Resources\FacilityResource\Pages\ListFacilities;
 use App\Models\Facility;
 use Filament\Actions;
 use Filament\Forms;
@@ -14,11 +17,13 @@ class FacilityResource extends Resource
 {
     protected static ?string $model = Facility::class;
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-office';
 
     protected static ?string $navigationLabel = 'Fasilitas';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Katalog';
+    protected static string|\UnitEnum|null $navigationGroup = null;
 
     protected static ?int $navigationSort = 3;
 
@@ -45,9 +50,9 @@ class FacilityResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Resources\FacilityResource\Pages\ListFacilities::route('/'),
-            'create' => \App\Filament\Resources\FacilityResource\Pages\CreateFacility::route('/create'),
-            'edit' => \App\Filament\Resources\FacilityResource\Pages\EditFacility::route('/{record}/edit'),
+            'index' => ListFacilities::route('/'),
+            'create' => CreateFacility::route('/create'),
+            'edit' => EditFacility::route('/{record}/edit'),
         ];
     }
 }

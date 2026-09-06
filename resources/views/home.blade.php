@@ -4,7 +4,7 @@
 @section('content')
     {{-- ================= HERO ================= --}}
     <section class="relative overflow-hidden bg-forest-950">
-        <img src="{{ asset('images/hero/architecture.jpg') }}" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover opacity-25">
+        <img src="{{ asset('images/hero/architecture.jpg') }}" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover opacity-25" width="1600" height="900" loading="eager" fetchpriority="high">
         <div class="absolute inset-0 bg-gradient-to-b from-forest-950/70 via-forest-950/80 to-forest-950" aria-hidden="true"></div>
         <span class="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-gold-500/10 blur-3xl" aria-hidden="true"></span>
 
@@ -52,19 +52,28 @@
                         </select>
                         <x-app-icon name="chevron-down" class="pointer-events-none absolute right-3 h-4 w-4 text-ink-soft/60"/>
                     </label>
-                    <button type="submit" class="btn-gold !rounded-xl sm:col-span-2 lg:col-span-1">
+                    <button type="submit" class="btn-gold !rounded-xl min-h-[44px] sm:col-span-2 lg:col-span-1">
                         <x-app-icon name="search" class="h-4 w-4" :stroke="2.5"/>
                         Cari Sekolah Sekarang
                     </button>
                 </div>
             </form>
 
+<<<<<<< Updated upstream
             {{-- Statistik --}}
             <dl class="mx-auto mt-16 grid max-w-3xl grid-cols-3 sm:mt-20">
                 @foreach ([['value' => '1.240+', 'label' => 'Sekolah Terverifikasi'], ['value' => '34', 'label' => 'Provinsi'], ['value' => '50rb+', 'label' => 'Orang Tua Terbantu']] as $stat)
                     <div class="flex flex-col items-center justify-center text-center">
                         <dd class="text-3xl font-extrabold text-gold-400 sm:text-4xl">{{ $stat['value'] }}</dd>
                         <dt class="mt-2 text-sm font-medium text-white/60 sm:text-base">{{ $stat['label'] }}</dt>
+=======
+            {{-- Statistik — stacked below xs breakpoint, row above --}}
+            <dl class="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-4 xs:flex-row xs:divide-x xs:divide-white/15 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 backdrop-blur sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-white/15 sm:rounded-2xl sm:border sm:border-white/10 sm:bg-white/5 sm:px-6 sm:py-4 sm:backdrop-blur">
+                @foreach ([['value' => '1.240+', 'label' => 'Sekolah Terverifikasi'], ['value' => '34', 'label' => 'Provinsi'], ['value' => '50rb+', 'label' => 'Orang Tua Terbantu']] as $stat)
+                    <div class="px-3 py-2 text-center sm:px-6 sm:py-0">
+                        <dt class="order-2 mt-1 text-[11px] font-semibold text-white/70 xs:order-1 xs:mt-0 sm:text-xs">{{ $stat['label'] }}</dt>
+                        <dd class="order-1 text-xl font-extrabold text-gold-400 xs:order-2 sm:text-2xl">{{ $stat['value'] }}</dd>
+>>>>>>> Stashed changes
                     </div>
                 @endforeach
             </dl>
@@ -109,14 +118,14 @@
                         @foreach (['Uang pangkal & SPP bulanan', 'Biaya asrama & seragam', 'Kegiatan ekstrakurikuler & study tour tahunan'] as $item)
                             <li class="flex items-center gap-3 text-sm font-semibold text-ink">
                                 <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-forest-900 text-gold-400">
-                                    <x-icon name="check" class="h-3.5 w-3.5" :stroke="3"/>
+                                    <x-app-icon name="check" class="h-3.5 w-3.5" :stroke="3"/>
                                 </span>
                                 {{ $item }}
                             </li>
                         @endforeach
                     </ul>
                     <a href="{{ route('calculator.index') }}" class="btn-primary mt-8">
-                        <x-icon name="calculator" class="h-4 w-4"/>
+                        <x-app-icon name="calculator" class="h-4 w-4"/>
                         Hitung Total Biaya Lengkap
                     </a>
                 </div>
@@ -124,7 +133,7 @@
                 <div class="card-shadow-lg rounded-3xl bg-white p-6 sm:p-8">
                     <div class="flex items-center justify-between">
                         <h3 class="flex items-center gap-2 text-base font-extrabold text-ink">
-                            <x-icon name="wallet" class="h-5 w-5 text-gold-600"/>
+                            <x-app-icon name="wallet" class="h-5 w-5 text-gold-600"/>
                             Estimasi Biaya per Bulan
                         </h3>
                         <span class="chip">Contoh</span>
@@ -176,7 +185,7 @@
                 ] as $feature)
                     <div class="card-shadow group rounded-2xl border border-forest-50 bg-white p-6 transition hover:-translate-y-1 hover:border-forest-200">
                         <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-forest-900 text-gold-400 transition group-hover:scale-105">
-                            <x-icon :name="$feature['icon']" class="h-6 w-6"/>
+                            <x-app-icon :name="$feature['icon']" class="h-6 w-6"/>
                         </span>
                         <h3 class="mt-4 text-base font-extrabold text-ink">{{ $feature['title'] }}</h3>
                         <p class="mt-2 text-sm leading-relaxed text-ink-soft">{{ $feature['desc'] }}</p>
@@ -202,13 +211,13 @@
                 @foreach ($flagshipPrograms as $program)
                     <div class="group rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition hover:border-gold-400/40 hover:bg-white/10">
                         <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gold-500/15 text-gold-400">
-                            <x-icon :name="$program->icon" class="h-6 w-6"/>
+                            <x-app-icon :name="$program->icon" class="h-6 w-6"/>
                         </span>
                         <h3 class="mt-4 text-base font-extrabold text-white">{{ $program->name }}</h3>
                         <p class="mt-2 text-sm leading-relaxed text-white/65">{{ $program->description }}</p>
                         <a href="{{ route('schools.index', ['q' => $program->name]) }}" class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-gold-400 transition hover:gap-2.5">
                             Lihat sekolah terkait
-                            <x-icon name="arrow-right" class="h-3.5 w-3.5"/>
+                            <x-app-icon name="arrow-right" class="h-3.5 w-3.5"/>
                         </a>
                     </div>
                 @endforeach
@@ -229,11 +238,11 @@
                 @foreach ($testimonials as $testimonial)
                     <figure class="card-shadow relative rounded-2xl bg-white p-7">
                         <span class="absolute -top-4 left-6 flex h-9 w-9 items-center justify-center rounded-xl bg-gold-500 text-forest-950 shadow-md">
-                            <x-icon name="quote" class="h-4.5 w-4.5 h-[18px] w-[18px]" fill="currentColor" :stroke="0"/>
+                            <x-app-icon name="quote" class="h-4.5 w-4.5 h-[18px] w-[18px]" fill="currentColor" :stroke="0"/>
                         </span>
                         <div class="flex gap-1 pt-2" aria-label="Rating {{ $testimonial->rating }} dari 5">
                             @for ($i = 0; $i < $testimonial->rating; $i++)
-                                <x-icon name="star" class="h-4 w-4 text-gold-500" fill="#C9A227" :stroke="0"/>
+                                <x-app-icon name="star" class="h-4 w-4 text-gold-500" fill="#C9A227" :stroke="0"/>
                             @endfor
                         </div>
                         <blockquote class="mt-4 text-sm leading-relaxed text-ink-soft">"{{ $testimonial->quote }}"</blockquote>
@@ -266,11 +275,11 @@
                     </p>
                     <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                         <a href="{{ route('schools.index') }}" class="btn-gold">
-                            <x-icon name="search" class="h-4 w-4" :stroke="2.5"/>
+                            <x-app-icon name="search" class="h-4 w-4" :stroke="2.5"/>
                             Cari Sekolah
                         </a>
                         <a href="{{ route('compare.index') }}" class="btn-ghost-light">
-                            <x-icon name="scale" class="h-4 w-4"/>
+                            <x-app-icon name="scale" class="h-4 w-4"/>
                             Mulai Membandingkan
                         </a>
                     </div>
@@ -289,7 +298,7 @@
                 </div>
                 <a href="{{ route('articles.index') }}" class="inline-flex items-center gap-1.5 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-forest-800 card-shadow transition hover:bg-forest-50">
                     Lihat Semua
-                    <x-icon name="arrow-right" class="h-4 w-4"/>
+                    <x-app-icon name="arrow-right" class="h-4 w-4"/>
                 </a>
             </div>
 
@@ -301,4 +310,36 @@
         </div>
     </section>
 
+<<<<<<< Updated upstream
+=======
+    {{-- ================= NEWSLETTER ================= --}}
+    <section class="bg-white pb-16 sm:pb-20">
+        <div class="container-app">
+            <div class="card-shadow-lg grid items-center gap-8 overflow-hidden rounded-3xl border border-forest-100 bg-cream-50 p-8 sm:p-12 lg:grid-cols-2">
+                <div>
+                    <span class="inline-flex items-center gap-2 rounded-full bg-gold-100 px-3.5 py-1.5 text-xs font-bold text-gold-800">
+                        <x-app-icon name="newspaper" class="h-3.5 w-3.5"/>
+                        Newsletter
+                    </span>
+                    <h2 class="mt-4 text-2xl font-extrabold tracking-tight text-ink">Dapatkan Artikel Pilihan Setiap Minggu</h2>
+                    <p class="mt-3 text-sm leading-relaxed text-ink-soft">
+                        Tips memilih sekolah, informasi beasiswa, dan panduan pendaftaran langsung ke email Anda.
+                    </p>
+                </div>
+                <form action="{{ route('newsletter.store') }}" method="POST" class="flex flex-col gap-3 sm:flex-row">
+                    @csrf
+                    <label class="relative flex-1">
+                        <x-app-icon name="mail" class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-soft/60"/>
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Email Anda..." required aria-label="Alamat email"
+                               class="input-field !py-4 pl-12">
+                    </label>
+                    <button type="submit" class="btn-primary !py-4">
+                        <x-app-icon name="send" class="h-4 w-4"/>
+                        Langganan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+>>>>>>> Stashed changes
 @endsection

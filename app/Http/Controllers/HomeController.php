@@ -15,7 +15,7 @@ class HomeController extends Controller
             'featuredSchools' => School::where('is_featured', true)
                 ->with(['facilities', 'programs'])
                 ->orderByDesc('rating')
-                ->take(4)
+                ->take(3)
                 ->get(),
             'flagshipPrograms' => Program::whereIn('slug', [
                 'tahfidz-30-juz', 'stem-robotika', 'bahasa-arab-intensif',

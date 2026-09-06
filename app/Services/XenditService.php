@@ -3,13 +3,13 @@
 namespace App\Services;
 
 use App\Domain\Onboarding\ApplicationStatus;
-use App\Models\Application;
 use App\Models\ApplicationPayment;
 use App\Models\XenditWebhookEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class XenditService
 {
@@ -36,7 +36,7 @@ class XenditService
         $application = $payment->application;
 
         if (empty($this->secretKey) || str_starts_with($this->secretKey, 'dummy') || str_starts_with($this->secretKey, 'xnd_development_dummy')) {
-            $mockInvoiceId = 'inv_mock_'.strtolower(\Illuminate\Support\Str::random(12));
+            $mockInvoiceId = 'inv_mock_'.strtolower(Str::random(12));
 
             return [
                 'id' => $mockInvoiceId,
@@ -78,7 +78,7 @@ class XenditService
                 ]);
 
                 // Fallback for dev mode
-                $mockInvoiceId = 'inv_fallback_'.strtolower(\Illuminate\Support\Str::random(12));
+                $mockInvoiceId = 'inv_fallback_'.strtolower(Str::random(12));
 
                 return [
                     'id' => $mockInvoiceId,
@@ -97,7 +97,7 @@ class XenditService
                 'payment_id' => $payment->id,
             ]);
 
-            $mockInvoiceId = 'inv_fallback_'.strtolower(\Illuminate\Support\Str::random(12));
+            $mockInvoiceId = 'inv_fallback_'.strtolower(Str::random(12));
 
             return [
                 'id' => $mockInvoiceId,
