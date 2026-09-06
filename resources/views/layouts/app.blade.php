@@ -13,11 +13,7 @@
 
     @include('components.navbar')
 
-<<<<<<< Updated upstream
-    <main class="flex-1 {{ request()->routeIs('home') ? '' : 'pt-16' }}">
-=======
-    <main id="main-content" tabindex="-1" class="flex-1">
->>>>>>> Stashed changes
+    <main id="main-content" tabindex="-1" class="flex-1 {{ request()->routeIs('home') ? '' : 'pt-16' }}">
         {{ $slot ?? '' }}
         @yield('content')
     </main>

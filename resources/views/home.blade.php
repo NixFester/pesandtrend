@@ -59,21 +59,12 @@
                 </div>
             </form>
 
-<<<<<<< Updated upstream
-            {{-- Statistik --}}
-            <dl class="mx-auto mt-16 grid max-w-3xl grid-cols-3 sm:mt-20">
-                @foreach ([['value' => '1.240+', 'label' => 'Sekolah Terverifikasi'], ['value' => '34', 'label' => 'Provinsi'], ['value' => '50rb+', 'label' => 'Orang Tua Terbantu']] as $stat)
-                    <div class="flex flex-col items-center justify-center text-center">
-                        <dd class="text-3xl font-extrabold text-gold-400 sm:text-4xl">{{ $stat['value'] }}</dd>
-                        <dt class="mt-2 text-sm font-medium text-white/60 sm:text-base">{{ $stat['label'] }}</dt>
-=======
             {{-- Statistik — stacked below xs breakpoint, row above --}}
             <dl class="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-4 xs:flex-row xs:divide-x xs:divide-white/15 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 backdrop-blur sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-white/15 sm:rounded-2xl sm:border sm:border-white/10 sm:bg-white/5 sm:px-6 sm:py-4 sm:backdrop-blur">
                 @foreach ([['value' => '1.240+', 'label' => 'Sekolah Terverifikasi'], ['value' => '34', 'label' => 'Provinsi'], ['value' => '50rb+', 'label' => 'Orang Tua Terbantu']] as $stat)
                     <div class="px-3 py-2 text-center sm:px-6 sm:py-0">
                         <dt class="order-2 mt-1 text-[11px] font-semibold text-white/70 xs:order-1 xs:mt-0 sm:text-xs">{{ $stat['label'] }}</dt>
                         <dd class="order-1 text-xl font-extrabold text-gold-400 xs:order-2 sm:text-2xl">{{ $stat['value'] }}</dd>
->>>>>>> Stashed changes
                     </div>
                 @endforeach
             </dl>
@@ -310,8 +301,6 @@
         </div>
     </section>
 
-<<<<<<< Updated upstream
-=======
     {{-- ================= NEWSLETTER ================= --}}
     <section class="bg-white pb-16 sm:pb-20">
         <div class="container-app">
@@ -341,5 +330,4 @@
             </div>
         </div>
     </section>
->>>>>>> Stashed changes
 @endsection
