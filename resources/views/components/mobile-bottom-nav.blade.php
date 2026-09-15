@@ -40,7 +40,7 @@
 @endphp
 
 <nav class="fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-t border-forest-100 md:hidden safe-bottom" id="mobile-bottom-nav" aria-label="Navigasi utama">
-    {{-- Spacer: 4rem (h-16) + safe-area-bottom so content isn't hidden --}}
+    {{-- Spacer: 4rem (h-16) + safe-bottom so content isn't hidden --}}
     <div class="h-16"></div>
 
     <div class="absolute inset-x-0 top-0 flex h-full">

@@ -98,12 +98,12 @@
                 <form action="{{ route('newsletter.store') }}" method="POST" class="flex flex-col gap-3 sm:flex-row">
                     @csrf
                     <label class="relative flex-1">
-                        <x-icon name="mail" class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-soft/60"/>
+                        <x-app-icon name="mail" class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-soft/60"/>
                         <input type="email" name="email" value="{{ old('email') }}" placeholder="Email Anda..." required aria-label="Alamat email"
                                class="input-field !py-4 pl-12">
                     </label>
                     <button type="submit" class="btn-primary !py-4">
-                        <x-icon name="send" class="h-4 w-4"/>
+                        <x-app-icon name="send" class="h-4 w-4"/>
                         Langganan
                     </button>
                 </form>

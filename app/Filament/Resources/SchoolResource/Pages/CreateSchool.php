@@ -89,7 +89,7 @@ class CreateSchool extends CreateRecord
             ['SD', 'SMP'],
             ['SMP', 'SMA'],
             ['RA', 'TK', 'SD', 'SMP', 'SMA'],
-            ['SMP', 'SMA', 'MA'],
+            ['SMP', 'SMA', 'Pesantren'],
         ];
 
         $shortDescs = [

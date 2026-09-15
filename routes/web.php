@@ -10,6 +10,7 @@ use App\Http\Controllers\DocumentDownloadController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProofController;
 use App\Http\Controllers\SavedSchoolController;
 use App\Http\Controllers\SchoolController;
@@ -52,6 +53,13 @@ Route::post('/keluar', [AuthController::class, 'logout'])->name('logout')->middl
 
 // Dashboard
 Route::middleware('auth')->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// Profil
+Route::middleware('auth')->prefix('profil')->group(function () {
+    Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+});
 
 // ── Parent Onboarding ──
 Route::middleware(['auth'])->prefix('orang-tua')->group(function () {

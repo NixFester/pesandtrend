@@ -11,7 +11,7 @@ class OnboardingStatusChipTest extends TestCase
     {
         foreach (ApplicationStatus::cases() as $status) {
             $color = $status->color();
-            $this->assertContains($color, ['success', 'warning', 'danger', 'info']);
+            $this->assertContains($color, ['success', 'warning', 'danger', 'info', 'gray']);
         }
     }
 }

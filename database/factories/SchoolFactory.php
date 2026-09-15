@@ -21,7 +21,7 @@ class SchoolFactory extends Factory
             'name' => $name,
             'slug' => Str::slug($name).'-'.uniqid(),
             'type' => 'Pesantren Modern',
-            'jenjang' => ['SMAIT', 'SMPIT'],
+            'jenjang' => ['SMA', 'SMP'],
             'city' => $this->faker->city(),
             'province' => 'Jawa Barat',
             'address' => $this->faker->address(),

@@ -251,7 +251,7 @@
 
 			<aside class="space-y-6">
 				{{-- Rincian biaya --}}
-				<div class="card-shadow-lg sticky top-20 rounded-2xl bg-white p-6">
+				<div class="card-shadow-lg rounded-2xl bg-white p-6">
 					<h2 class="flex items-center gap-2.5 text-base font-extrabold text-ink">
 						<x-app-icon name="wallet" class="h-5 w-5 text-gold-600"/>
 						Rincian Biaya
