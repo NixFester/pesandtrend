@@ -43,7 +43,23 @@ class CreateSchool extends CreateRecord
             unset($data['new_facilities']);
         }
 
+        // Unset gallery photos from direct school attributes
+        unset($data['photos']);
+
         return $data;
+    }
+
+    protected function afterCreate(): void
+    {
+        $photos = $this->data['photos'] ?? [];
+        if (is_array($photos)) {
+            foreach ($photos as $index => $path) {
+                $this->record->photos()->create([
+                    'path' => $path,
+                    'sort' => $index,
+                ]);
+            }
+        }
     }
 
     protected function isDevMode(): bool

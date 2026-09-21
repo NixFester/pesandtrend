@@ -155,6 +155,8 @@ class SchoolResource extends Resource
                         ->image()
                         ->imageEditor()
                         ->imageEditorAspectRatios(['16:9', '4:3', '1:1'])
+                        ->disk('public')
+                        ->visibility('public')
                         ->directory('schools/images')
                         ->maxSize(5120)
                         ->helperText('Foto yang akan muncul di kartu sekolah dan halaman detail. Ukuran optimal 1200x800px. Maks 5MB'),
@@ -164,6 +166,8 @@ class SchoolResource extends Resource
                         ->multiple()
                         ->maxFiles(20)
                         ->reorderable()
+                        ->disk('public')
+                        ->visibility('public')
                         ->directory('schools/gallery')
                         ->maxSize(5120)
                         ->helperText('Tambahkan foto-foto kegiatan dan fasilitas sekolah. Maks 20 foto, 5MB per foto'),

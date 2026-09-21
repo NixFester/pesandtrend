@@ -38,7 +38,14 @@ class HomepageSettingResource extends Resource
             Section::make('Hero Banner')->schema([
                 Forms\Components\TextInput::make('hero_title')->label('Judul Hero'),
                 Forms\Components\Textarea::make('hero_subtitle')->label('Subjudul Hero')->rows(2),
-                Forms\Components\TextInput::make('hero_image')->label('Gambar Hero')->placeholder('images/hero.jpg'),
+                Forms\Components\FileUpload::make('hero_image')
+                    ->label('Gambar Hero')
+                    ->image()
+                    ->imageEditor()
+                    ->disk('public')
+                    ->visibility('public')
+                    ->directory('homepage')
+                    ->helperText('Unggah gambar latar belakang hero di beranda. Maks 5MB'),
             ]),
         ]);
     }

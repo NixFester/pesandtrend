@@ -176,7 +176,7 @@
                     <div class="mt-5 auto-grid-cards">
                         @foreach ($recentlyViewed as $school)
                             <a href="{{ route('schools.show', $school->slug) }}" class="card-shadow group flex items-center gap-3 rounded-2xl bg-white p-3 transition hover:-translate-y-0.5">
-                                <img src="{{ asset($school->image) }}" alt="" class="h-14 w-14 rounded-xl object-cover" loading="lazy">
+                                <img src="{{ $school->image_url }}" alt="" class="h-14 w-14 rounded-xl object-cover" loading="lazy">
                                 <div class="min-w-0">
                                     <p class="truncate text-sm font-extrabold text-ink group-hover:text-forest-800">{{ $school->name }}</p>
                                     <p class="text-xs text-ink-soft">{{ $school->city }}, {{ $school->province }}</p>

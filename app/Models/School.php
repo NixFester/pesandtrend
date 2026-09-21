@@ -97,6 +97,27 @@ class School extends Model
         return "https://wa.me/{$digits}?text=".urlencode("Assalamu'alaikum, saya ingin bertanya tentang {$this->name}.");
     }
 
+    public function getImageUrlAttribute(): string
+    {
+        if (empty($this->image)) {
+            return asset('images/schools/default.jpg');
+        }
+
+        if (str_starts_with($this->image, 'http://') || str_starts_with($this->image, 'https://')) {
+            return $this->image;
+        }
+
+        if (str_starts_with($this->image, 'images/')) {
+            return asset($this->image);
+        }
+
+        if (str_starts_with($this->image, 'storage/')) {
+            return asset($this->image);
+        }
+
+        return \Illuminate\Support\Facades\Storage::disk('public')->url($this->image);
+    }
+
     // ── Scopes ──
 
     public function scopePublished($query)

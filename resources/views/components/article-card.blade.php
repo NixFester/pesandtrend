@@ -1,7 +1,7 @@
 <article class="group card-shadow overflow-hidden rounded-2xl bg-white transition-all duration-300 hover:-translate-y-1 hover:card-shadow-lg">
     <a href="{{ route('articles.show', $article->slug) }}" class="block">
         <div class="relative aspect-[16/9] overflow-hidden">
-            <img src="{{ asset($article->image) }}" alt="{{ $article->title }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy">
+            <img src="{{ $article->image_url }}" alt="{{ $article->title }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy">
             <span class="absolute left-3 top-3 rounded-full bg-forest-900/90 px-3 py-1.5 text-[11px] font-bold text-white backdrop-blur">{{ $article->category }}</span>
         </div>
     </a>

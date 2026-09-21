@@ -24,6 +24,27 @@ class Article extends Model
         return $this->published_at?->translatedFormat('j F Y') ?? '';
     }
 
+    public function getImageUrlAttribute(): string
+    {
+        if (empty($this->image)) {
+            return asset('images/articles/default.jpg');
+        }
+
+        if (str_starts_with($this->image, 'http://') || str_starts_with($this->image, 'https://')) {
+            return $this->image;
+        }
+
+        if (str_starts_with($this->image, 'images/')) {
+            return asset($this->image);
+        }
+
+        if (str_starts_with($this->image, 'storage/')) {
+            return asset($this->image);
+        }
+
+        return \Illuminate\Support\Facades\Storage::disk('public')->url($this->image);
+    }
+
     /** Ubah markdown ringan (##, **, -) menjadi HTML aman */
     public function getFormattedContentAttribute(): string
     {

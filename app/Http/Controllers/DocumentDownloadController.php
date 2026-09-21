@@ -14,16 +14,21 @@ class DocumentDownloadController extends Controller
     public function download(ApplicationDocument $document): StreamedResponse
     {
         $this->authorize('download', $document);
-        $diskName = config('filesystems.default_private', 'private');
-        $disk = Storage::disk(Storage::exists($document->storage_path) ? config('filesystems.default', 'local') : 'private');
 
         $path = $document->storage_path ?? $document->path;
 
-        if (! Storage::disk('private')->exists($path) && ! Storage::disk('local')->exists($path)) {
-            abort(404, 'File tidak ditemukan.');
+        $activeDisk = null;
+        if (Storage::disk('public')->exists($path)) {
+            $activeDisk = 'public';
+        } elseif (Storage::disk('local')->exists($path)) {
+            $activeDisk = 'local';
+        } elseif (Storage::disk('private')->exists($path)) {
+            $activeDisk = 'private';
         }
 
-        $activeDisk = Storage::disk('private')->exists($path) ? 'private' : 'local';
+        if (! $activeDisk) {
+            abort(404, 'File tidak ditemukan.');
+        }
 
         return Storage::disk($activeDisk)->download($path, $document->original_name);
     }

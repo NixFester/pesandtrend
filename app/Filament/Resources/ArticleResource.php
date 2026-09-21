@@ -40,6 +40,15 @@ class ArticleResource extends Resource
                         ->label('Kategori')
                         ->placeholder('Contoh: Panduan')
                         ->default('Berita'),
+                    Forms\Components\FileUpload::make('image')
+                        ->label('Gambar Utama Artikel')
+                        ->image()
+                        ->imageEditor()
+                        ->disk('public')
+                        ->visibility('public')
+                        ->directory('articles/images')
+                        ->maxSize(5120)
+                        ->helperText('Gambar thumbnail artikel. Maks 5MB'),
                 ]),
 
             Section::make('Konten')
@@ -69,6 +78,8 @@ class ArticleResource extends Resource
                             'underline',
                             'undo',
                         ])
+                        ->fileAttachmentsDisk('public')
+                        ->fileAttachmentsVisibility('public')
                         ->fileAttachmentsDirectory('articles/attachments'),
                 ]),
 

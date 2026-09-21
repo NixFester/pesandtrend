@@ -42,7 +42,7 @@
                                     <input type="hidden" name="school_id" value="{{ $option->id }}">
                                     <input type="hidden" name="current" value="{{ $ids }}">
                                     <button type="submit" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition hover:bg-forest-50">
-                                        <img src="{{ asset($option->image) }}" alt="" class="h-12 w-12 rounded-lg object-cover">
+                                        <img src="{{ $option->image_url }}" alt="" class="h-12 w-12 rounded-lg object-cover">
                                         <span class="min-w-0 flex-1">
                                             <span class="block truncate text-sm font-bold text-ink">{{ $option->name }}</span>
                                             <span class="block text-xs text-ink-soft">{{ $option->city }} · Rp{{ number_format($option->spp_monthly, 0, ',', '.') }}/bln</span>
@@ -72,7 +72,7 @@
                                 <input type="hidden" name="school_id" value="{{ $suggestion->id }}">
                                 <input type="hidden" name="current" value="">
                                 <button type="submit" class="w-full">
-                                    <img src="{{ asset($suggestion->image) }}" alt="{{ $suggestion->name }}" class="h-28 w-full rounded-xl object-cover">
+                                    <img src="{{ $suggestion->image_url }}" alt="{{ $suggestion->name }}" class="h-28 w-full rounded-xl object-cover">
                                     <p class="mt-3 truncate text-sm font-extrabold text-ink">{{ $suggestion->name }}</p>
                                     <p class="text-xs text-ink-soft">{{ $suggestion->city }}, {{ $suggestion->province }}</p>
                                     <span class="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-forest-50 px-3 py-2 text-xs font-bold text-forest-800">
@@ -113,7 +113,7 @@
                                                     </button>
                                                 </form>
                                             @endif
-                                            <img src="{{ asset($school->image) }}" alt="{{ $school->name }}" class="h-24 w-full rounded-xl object-cover">
+                                            <img src="{{ $school->image_url }}" alt="{{ $school->name }}" class="h-24 w-full rounded-xl object-cover">
                                             <a href="{{ route('schools.show', $school->slug) }}" class="mt-3 block text-sm font-extrabold leading-snug text-ink transition hover:text-forest-700">{{ $school->name }}</a>
                                             <p class="mt-1 flex items-center gap-1 text-xs text-ink-soft">
                                                 <x-app-icon name="map-pin" class="h-3 w-3"/>

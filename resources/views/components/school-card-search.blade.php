@@ -4,7 +4,7 @@
 <article class="group card-shadow flex flex-col overflow-hidden rounded-3xl bg-white transition-all duration-300 hover:-translate-y-1 hover:card-shadow-lg">
     <a href="{{ route('schools.show', $school->slug) }}" class="block shrink-0">
         <div class="relative aspect-[16/10] overflow-hidden">
-            <img src="{{ asset($school->image) }}" alt="Foto {{ $school->name }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy">
+            <img src="{{ $school->image_url }}" alt="Foto {{ $school->name }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" aria-hidden="true"></div>
 
             <div class="absolute left-4 top-4 flex flex-col items-start gap-1.5">

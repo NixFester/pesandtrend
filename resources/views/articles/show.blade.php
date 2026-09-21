@@ -4,7 +4,7 @@
 @section('content')
     <article>
         <header class="relative overflow-hidden bg-forest-950">
-            <img src="{{ asset($article->image) }}" alt="{{ $article->title }}" class="absolute inset-0 h-full w-full object-cover opacity-25">
+            <img src="{{ $article->image_url }}" alt="{{ $article->title }}" class="absolute inset-0 h-full w-full object-cover opacity-25">
             <div class="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/75 to-forest-950/45" aria-hidden="true"></div>
             <div class="container-app relative py-14 sm:py-20">
                 <nav class="text-xs font-semibold text-white/60" aria-label="Breadcrumb">
@@ -29,7 +29,7 @@
                 <div>
                     @include('components.flash')
 
-                    <img src="{{ asset($article->image) }}" alt="{{ $article->title }}" class="card-shadow aspect-[16/8] w-full rounded-3xl object-cover">
+                    <img src="{{ $article->image_url }}" alt="{{ $article->title }}" class="card-shadow aspect-[16/8] w-full rounded-3xl object-cover">
                     <p class="mt-6 border-l-4 border-gold-500 pl-5 text-base font-semibold leading-relaxed text-ink-soft">{{ $article->excerpt }}</p>
 
                     <div class="article-body mt-8">
@@ -52,7 +52,7 @@
                         <div class="mt-4 space-y-4">
                             @foreach ($latest as $item)
                                 <a href="{{ route('articles.show', $item->slug) }}" class="group flex gap-3">
-                                    <img src="{{ asset($item->image) }}" alt="" class="h-14 w-16 shrink-0 rounded-lg object-cover" loading="lazy">
+                                    <img src="{{ $item->image_url }}" alt="" class="h-14 w-16 shrink-0 rounded-lg object-cover" loading="lazy">
                                     <div class="min-w-0">
                                         <h3 class="line-clamp-2 text-xs font-bold leading-snug text-ink group-hover:text-forest-700">{{ $item->title }}</h3>
                                         <p class="mt-1 text-[11px] text-ink-soft">{{ $item->read_minutes }} min baca</p>

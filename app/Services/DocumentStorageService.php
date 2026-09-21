@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\URL;
 
 class DocumentStorageService
 {
-    private string $disk = 'local';
+    private string $disk = 'public';
 
-    private string $basePath = 'private/applications';
+    private string $basePath = 'documents/applications';
 
     /**
      * Store an uploaded document file.
@@ -35,7 +35,7 @@ class DocumentStorageService
     /**
      * Generate a temporary signed download URL for a document.
      */
-    public function signedUrl(ApplicationDocument $document, int $minutes = 15): string
+    public function signedUrl(ApplicationDocument $document, int $minutes = 60): string
     {
         return URL::temporarySignedRoute(
             'documents.download',
@@ -49,7 +49,9 @@ class DocumentStorageService
      */
     public function fullPath(ApplicationDocument $document): string
     {
-        return Storage::disk($this->disk)->path($document->path);
+        $disk = Storage::disk('public')->exists($document->path) ? 'public' : 'local';
+
+        return Storage::disk($disk)->path($document->path);
     }
 
     /**
@@ -57,7 +59,12 @@ class DocumentStorageService
      */
     public function delete(ApplicationDocument $document): void
     {
-        Storage::disk($this->disk)->delete($document->path);
+        if (Storage::disk('public')->exists($document->path)) {
+            Storage::disk('public')->delete($document->path);
+        } elseif (Storage::disk('local')->exists($document->path)) {
+            Storage::disk('local')->delete($document->path);
+        }
+
         $document->delete();
     }
 }

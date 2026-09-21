@@ -4,7 +4,7 @@
 @section('content')
 	{{-- Hero detail --}}
 	<section class="relative overflow-hidden bg-forest-950">
-		<img src="{{ asset($school->image) }}" alt="{{ $school->name }}" class="absolute inset-0 h-full w-full object-cover opacity-30" width="1600" height="900" loading="eager" fetchpriority="high">
+		<img src="{{ $school->image_url }}" alt="{{ $school->name }}" class="absolute inset-0 h-full w-full object-cover opacity-30" width="1600" height="900" loading="eager" fetchpriority="high">
 		<div class="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/70 to-forest-950/40" aria-hidden="true"></div>
 
 		<div class="container-app relative py-14 sm:py-20">

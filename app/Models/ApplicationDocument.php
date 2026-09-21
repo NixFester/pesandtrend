@@ -22,6 +22,20 @@ class ApplicationDocument extends Model
         return $this->path;
     }
 
+    public function getUrlAttribute(): string
+    {
+        if ($this->path && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->path)) {
+            return \Illuminate\Support\Facades\Storage::disk('public')->url($this->path);
+        }
+
+        return $this->download_url;
+    }
+
+    public function getDownloadUrlAttribute(): string
+    {
+        return app(\App\Services\DocumentStorageService::class)->signedUrl($this, 60);
+    }
+
     public function application(): BelongsTo
     {
         return $this->belongsTo(Application::class);

@@ -197,7 +197,7 @@
                         @foreach ($savedSchools as $school)
                             <div class="card-shadow rounded-2xl bg-white p-5">
                                 <div class="flex items-start gap-4">
-                                    <img src="{{ asset($school->image) }}" alt="" class="h-16 w-16 rounded-xl object-cover">
+                                    <img src="{{ $school->image_url }}" alt="" class="h-16 w-16 rounded-xl object-cover">
                                     <div class="min-w-0 flex-1">
                                         <a href="{{ route('schools.show', $school->slug) }}" class="block truncate text-sm font-extrabold text-ink transition hover:text-forest-700">{{ $school->name }}</a>
                                         <p class="mt-0.5 text-xs text-ink-soft">{{ $school->city }}, {{ $school->province }}</p>
@@ -254,7 +254,7 @@
                         <div class="mt-5 space-y-3">
                             @foreach ($recentlyViewed as $school)
                                 <a href="{{ route('schools.show', $school->slug) }}" class="card-shadow flex items-center gap-3 rounded-2xl bg-white p-3 transition hover:-translate-y-0.5">
-                                    <img src="{{ asset($school->image) }}" alt="" class="h-12 w-12 rounded-xl object-cover">
+                                    <img src="{{ $school->image_url }}" alt="" class="h-12 w-12 rounded-xl object-cover">
                                     <div class="min-w-0 flex-1">
                                         <p class="truncate text-sm font-extrabold text-ink">{{ $school->name }}</p>
                                         <p class="text-xs text-ink-soft">{{ $school->city }} · Rp{{ number_format($school->spp_monthly, 0, ',', '.') }}/bln</p>
@@ -275,7 +275,7 @@
                     <div class="mt-5 space-y-3">
                         @foreach ($articlesRead as $article)
                             <a href="{{ route('articles.show', $article->slug) }}" class="card-shadow flex items-center gap-3 rounded-2xl bg-white p-3 transition hover:-translate-y-0.5">
-                                <img src="{{ asset($article->image) }}" alt="" class="h-12 w-12 rounded-xl object-cover">
+                                <img src="{{ $article->image_url }}" alt="" class="h-12 w-12 rounded-xl object-cover">
                                 <div class="min-w-0 flex-1">
                                     <p class="truncate text-sm font-extrabold text-ink">{{ $article->title }}</p>
                                     <p class="text-xs text-ink-soft">{{ $article->read_minutes }} min baca · {{ number_format($article->views) }} dibaca</p>

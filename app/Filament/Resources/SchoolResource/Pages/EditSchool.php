@@ -37,6 +37,13 @@ class EditSchool extends EditRecord
         return $actions;
     }
 
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['photos'] = $this->record->photos()->orderBy('sort')->pluck('path')->toArray();
+
+        return $data;
+    }
+
     protected function mutateFormDataBeforeSave(array $data): array
     {
         // Handle new programs
@@ -51,7 +58,24 @@ class EditSchool extends EditRecord
             unset($data['new_facilities']);
         }
 
+        // Unset photos from direct school attributes
+        unset($data['photos']);
+
         return $data;
+    }
+
+    protected function afterSave(): void
+    {
+        $photos = $this->data['photos'] ?? [];
+        if (is_array($photos)) {
+            $this->record->photos()->delete();
+            foreach ($photos as $index => $path) {
+                $this->record->photos()->create([
+                    'path' => $path,
+                    'sort' => $index,
+                ]);
+            }
+        }
     }
 
     protected function isDevMode(): bool

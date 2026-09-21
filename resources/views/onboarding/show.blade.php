@@ -30,11 +30,27 @@
             {{-- Documents --}}
             @if($application->documents->isNotEmpty())
             <div class="rounded-2xl border border-forest-100 p-6 card-shadow">
-                <h2 class="font-bold text-ink mb-4">Dokumen</h2>
-                <div class="space-y-2">
+                <h2 class="font-bold text-ink mb-4">Dokumen Terunggah</h2>
+                <div class="space-y-2.5">
                     @foreach($application->documents as $doc)
-                    <div class="flex items-center justify-between text-sm">
-                        <span>{{ $doc->kind->label() }} — {{ $doc->original_name }}</span>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-xl border border-forest-100/70 bg-forest-50/40 p-3 text-sm">
+                        <div class="flex items-center gap-3">
+                            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-forest-900 text-gold-400 font-bold text-xs shrink-0">
+                                📄
+                            </span>
+                            <div>
+                                <span class="font-semibold text-ink">{{ $doc->kind->label() }}</span>
+                                <p class="text-xs text-ink-soft">{{ $doc->original_name }} ({{ number_format($doc->size / 1024, 0) }} KB)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 self-end sm:self-center">
+                            <a href="{{ $doc->url }}" target="_blank" class="inline-flex items-center gap-1 rounded-lg border border-forest-200 bg-white px-2.5 py-1 text-xs font-semibold text-forest-800 hover:bg-forest-50 transition">
+                                Lihat Dokumen
+                            </a>
+                            <a href="{{ $doc->download_url }}" class="inline-flex items-center gap-1 rounded-lg bg-forest-900 px-2.5 py-1 text-xs font-semibold text-white hover:bg-forest-800 transition">
+                                Unduh
+                            </a>
+                        </div>
                     </div>
                     @endforeach
                 </div>

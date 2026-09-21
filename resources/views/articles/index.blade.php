@@ -68,7 +68,7 @@
                 <div class="mt-6 grid gap-4 sm:grid-cols-2">
                     @foreach ($popular as $article)
                         <a href="{{ route('articles.show', $article->slug) }}" class="card-shadow group flex items-center gap-4 rounded-2xl bg-white p-4 transition hover:-translate-y-0.5">
-                            <img src="{{ asset($article->image) }}" alt="{{ $article->title }}" class="h-16 w-20 shrink-0 rounded-xl object-cover" loading="lazy">
+                            <img src="{{ $article->image_url }}" alt="{{ $article->title }}" class="h-16 w-20 shrink-0 rounded-xl object-cover" loading="lazy">
                             <div class="min-w-0">
                                 <p class="text-[11px] font-bold text-gold-700">{{ $article->category }}</p>
                                 <h3 class="mt-0.5 line-clamp-2 text-sm font-extrabold leading-snug text-ink group-hover:text-forest-800">{{ $article->title }}</h3>

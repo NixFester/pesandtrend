@@ -3,7 +3,7 @@
 @endphp
 <article class="group relative flex min-h-[320px] flex-col justify-end overflow-hidden rounded-3xl bg-forest-950 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-forest-900/20 sm:min-h-[340px]">
     {{-- Background Image --}}
-    <img src="{{ asset($school->image) }}" alt="Foto {{ $school->name }}" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy">
+    <img src="{{ $school->image_url }}" alt="Foto {{ $school->name }}" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy">
     
     {{-- Gradient Overlay --}}
     <div class="absolute inset-0 bg-gradient-to-t from-[#0d1e15] via-[#0d1e15]/80 to-transparent opacity-95 transition-opacity duration-300 group-hover:opacity-100"></div>
