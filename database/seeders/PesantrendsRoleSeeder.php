@@ -15,7 +15,7 @@ class PesantrendsRoleSeeder extends Seeder
         $parentRole = Role::firstOrCreate(['name' => 'parent', 'guard_name' => 'web']);
 
         // Assign admin role
-        $admins = User::whereIn('email', ['admin@pesantrends.id', 'admin@gmail.com'])->get();
+        $admins = User::whereIn('email', ['admin@pesantrends.com', 'admin@gmail.com'])->get();
         foreach ($admins as $admin) {
             if (! $admin->hasRole('admin')) {
                 $admin->assignRole($adminRole);
@@ -26,7 +26,7 @@ class PesantrendsRoleSeeder extends Seeder
         }
 
         // Assign parent role to demo user and others
-        $parents = User::whereNotIn('email', ['admin@pesantrends.id', 'admin@gmail.com'])->get();
+        $parents = User::whereNotIn('email', ['admin@pesantrends.com', 'admin@gmail.com'])->get();
         foreach ($parents as $parent) {
             if (! $parent->hasRole('admin') && ! $parent->hasRole('parent')) {
                 $parent->assignRole($parentRole);

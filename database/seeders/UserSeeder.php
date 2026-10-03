@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     {
         // Admin Account
         User::firstOrCreate(
-            ['email' => 'admin@pesantrends.id'],
+            ['email' => 'admin@pesantrends.com'],
             [
                 'name' => 'Administrator',
                 'password' => Hash::make('password'),
