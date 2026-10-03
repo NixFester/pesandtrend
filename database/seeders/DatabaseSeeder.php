@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
             PesantrendsSeeder::class,
             PesantrendsRoleSeeder::class,
             MentorSeeder::class,
-            CampaignsSeeder::class,
+            CampaignSeeder::class,
             SeoCitySeeder::class,
         ]);
     }
