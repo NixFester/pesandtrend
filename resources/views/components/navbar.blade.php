@@ -25,6 +25,10 @@
             @endphp
             <a href="{{ route('home') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('home') ? $navActiveClass : $navLinkClass }}">Beranda</a>
             <a href="{{ route('schools.index') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('schools.*') ? $navActiveClass : $navLinkClass }}">Cari Sekolah</a>
+            <a href="{{ route('seo.schools.best') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('seo.schools.*') ? $navActiveClass : $navLinkClass }}">Sekolah Terbaik</a>
+            <a href="{{ route('seo.pesantren.best') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('seo.pesantren.*') ? $navActiveClass : $navLinkClass }}">Pesantren Terbaik</a>
+            <a href="{{ route('donations.index') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('donations.*') ? $navActiveClass : $navLinkClass }}">Bantu Pesantren</a>
+            <a href="{{ route('bimbel.index') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('bimbel.*') ? $navActiveClass : $navLinkClass }}">Bimbel</a>
             <a href="{{ route('compare.index') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('compare.*') ? $navActiveClass : $navLinkClass }}">Bandingkan</a>
             <a href="{{ route('articles.index') }}" class="rounded-lg px-4 py-2 text-sm font-bold transition {{ request()->routeIs('articles.*') ? $navActiveClass : $navLinkClass }}">Artikel</a>
         </div>
@@ -56,6 +60,10 @@
         <div class="flex flex-col gap-1 pb-5" data-menu-links>
             <a href="{{ route('home') }}" class="rounded-lg px-3 py-2.5 text-sm font-bold transition {{ request()->routeIs('home') ? 'bg-forest-50 text-forest-900' : 'text-ink-soft' }}">Beranda</a>
             <a href="{{ route('schools.index') }}" class="rounded-lg px-3 py-2.5 text-sm font-bold transition {{ request()->routeIs('schools.*') ? 'bg-forest-50 text-forest-900' : 'text-ink-soft' }}">Cari Sekolah</a>
+            <a href="{{ route('seo.schools.best') }}" class="rounded-lg px-3 py-2.5 text-sm font-bold transition {{ request()->routeIs('seo.schools.*') ? 'bg-forest-50 text-forest-900' : 'text-ink-soft' }}">Sekolah Terbaik</a>
+            <a href="{{ route('seo.pesantren.best') }}" class="rounded-lg px-3 py-2.5 text-sm font-bold transition {{ request()->routeIs('seo.pesantren.*') ? 'bg-forest-50 text-forest-900' : 'text-ink-soft' }}">Pesantren Terbaik</a>
+            <a href="{{ route('donations.index') }}" class="rounded-lg px-3 py-2.5 text-sm font-bold transition {{ request()->routeIs('donations.*') ? 'bg-forest-50 text-forest-900' : 'text-ink-soft' }}">Bantu Pesantren</a>
+            <a href="{{ route('bimbel.index') }}" class="rounded-lg px-3 py-2.5 text-sm font-bold transition {{ request()->routeIs('bimbel.*') ? 'bg-forest-50 text-forest-900' : 'text-ink-soft' }}">Bimbel</a>
             <a href="{{ route('compare.index') }}" class="rounded-lg px-3 py-2.5 text-sm font-bold transition {{ request()->routeIs('compare.*') ? 'bg-forest-50 text-forest-900' : 'text-ink-soft' }}">Bandingkan Sekolah</a>
             <a href="{{ route('articles.index') }}" class="rounded-lg px-3 py-2.5 text-sm font-bold transition {{ request()->routeIs('articles.*') ? 'bg-forest-50 text-forest-900' : 'text-ink-soft' }}">Artikel</a>
             <a href="{{ route('calculator.index') }}" class="rounded-lg px-3 py-2.5 text-sm font-bold transition {{ request()->routeIs('calculator.*') ? 'bg-forest-50 text-forest-900' : 'text-ink-soft' }}">Kalkulator Biaya</a>

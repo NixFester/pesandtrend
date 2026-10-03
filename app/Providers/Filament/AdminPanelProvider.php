@@ -58,6 +58,9 @@ class AdminPanelProvider extends PanelProvider
             ->navigationGroups([
                 'Katalog',
                 'Konten',
+                'SEO',
+                'Donasi',
+                'Bimbel',
                 'Onboarding',
                 'Pengaturan',
                 'Akun',
@@ -69,7 +72,7 @@ class AdminPanelProvider extends PanelProvider
                     ->group('Akun')
                     ->url('#')
                     ->extraAttributes([
-                        'onclick' => "event.preventDefault(); const form = document.createElement('form'); form.method = 'POST'; form.action = '" . url('/admin/logout') . "'; const csrf = document.createElement('input'); csrf.type = 'hidden'; csrf.name = '_token'; csrf.value = '" . csrf_token() . "'; form.appendChild(csrf); document.body.appendChild(form); form.submit();",
+                        'onclick' => "event.preventDefault(); const form = document.createElement('form'); form.method = 'POST'; form.action = '".url('/admin/logout')."'; const csrf = document.createElement('input'); csrf.type = 'hidden'; csrf.name = '_token'; csrf.value = '".csrf_token()."'; form.appendChild(csrf); document.body.appendChild(form); form.submit();",
                     ])
                     ->sort(9999),
             ]);

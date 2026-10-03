@@ -16,8 +16,10 @@
                     @endif
                     @if ($loop->last)
                         <span class="text-gold-400" aria-current="page">{{ $item['label'] }}</span>
-                    @else
+                    @elseif (isset($item['href']))
                         <a href="{{ $item['href'] }}" class="transition hover:text-white">{{ $item['label'] }}</a>
+                    @else
+                        <span class="transition">{{ $item['label'] }}</span>
                     @endif
                 </li>
             @endforeach
