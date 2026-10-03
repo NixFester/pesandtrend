@@ -11,6 +11,48 @@
             </nav>
             <h1 class="mt-3 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Cari Sekolah Islam Terbaik</h1>
             <p class="mt-2 text-sm text-white/70">Temukan pesantren &amp; sekolah Islam terverifikasi sesuai kebutuhan keluarga Anda</p>
+
+            {{-- Quick Navigation: Sekolah Terbaik, Pesantren Terbaik, Bandingkan --}}
+            <div class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <a href="{{ route('seo.schools.best') }}" class="group relative flex items-center gap-3.5 rounded-2xl border border-white/15 bg-white/10 p-3.5 backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-gold-400/50 hover:bg-white/15 hover:shadow-lg">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold-400/20 text-gold-400 transition-transform duration-200 group-hover:scale-105">
+                        <x-app-icon name="trophy" class="h-5 w-5" />
+                    </span>
+                    <div class="min-w-0 flex-1">
+                        <div class="flex items-center justify-between gap-1">
+                            <span class="text-sm font-bold text-white group-hover:text-gold-300">Sekolah Terbaik</span>
+                            <x-app-icon name="chevron-right" class="h-4 w-4 text-white/50 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-gold-300" />
+                        </div>
+                        <p class="mt-0.5 truncate text-xs text-white/70">Peringkat &amp; rekomendasi unggulan</p>
+                    </div>
+                </a>
+
+                <a href="{{ route('seo.pesantren.best') }}" class="group relative flex items-center gap-3.5 rounded-2xl border border-white/15 bg-white/10 p-3.5 backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-gold-400/50 hover:bg-white/15 hover:shadow-lg">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-forest-400/25 text-forest-300 transition-transform duration-200 group-hover:scale-105">
+                        <x-app-icon name="sparkles" class="h-5 w-5" />
+                    </span>
+                    <div class="min-w-0 flex-1">
+                        <div class="flex items-center justify-between gap-1">
+                            <span class="text-sm font-bold text-white group-hover:text-gold-300">Pesantren Terbaik</span>
+                            <x-app-icon name="chevron-right" class="h-4 w-4 text-white/50 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-gold-300" />
+                        </div>
+                        <p class="mt-0.5 truncate text-xs text-white/70">Pondok pesantren terverifikasi</p>
+                    </div>
+                </a>
+
+                <a href="{{ route('compare.index') }}" class="group relative flex items-center gap-3.5 rounded-2xl border border-white/15 bg-white/10 p-3.5 backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:border-gold-400/50 hover:bg-white/15 hover:shadow-lg">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/20 text-white transition-transform duration-200 group-hover:scale-105">
+                        <x-app-icon name="scale" class="h-5 w-5" />
+                    </span>
+                    <div class="min-w-0 flex-1">
+                        <div class="flex items-center justify-between gap-1">
+                            <span class="text-sm font-bold text-white group-hover:text-gold-300">Bandingkan Sekolah</span>
+                            <x-app-icon name="chevron-right" class="h-4 w-4 text-white/50 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-gold-300" />
+                        </div>
+                        <p class="mt-0.5 truncate text-xs text-white/70">Komparasi fasilitas &amp; biaya</p>
+                    </div>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -95,8 +137,22 @@
                 </form>
             </x-mobile-sheet>
 
-            {{-- Pencarian populer --}}
+            {{-- Pilihan cepat & pencarian populer --}}
             <div class="mt-5 flex flex-wrap items-center gap-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-ink-soft">Pilihan Cepat:</span>
+                <a href="{{ route('seo.schools.best') }}" class="inline-flex items-center gap-1.5 rounded-full border border-forest-200 bg-forest-50/90 px-3 py-1 text-xs font-bold text-forest-800 transition hover:bg-forest-100 hover:border-forest-300">
+                    <x-app-icon name="trophy" class="h-3.5 w-3.5 text-gold-500" />
+                    Sekolah Terbaik
+                </a>
+                <a href="{{ route('seo.pesantren.best') }}" class="inline-flex items-center gap-1.5 rounded-full border border-forest-200 bg-forest-50/90 px-3 py-1 text-xs font-bold text-forest-800 transition hover:bg-forest-100 hover:border-forest-300">
+                    <x-app-icon name="sparkles" class="h-3.5 w-3.5 text-forest-600" />
+                    Pesantren Terbaik
+                </a>
+                <a href="{{ route('compare.index') }}" class="inline-flex items-center gap-1.5 rounded-full border border-forest-200 bg-forest-50/90 px-3 py-1 text-xs font-bold text-forest-800 transition hover:bg-forest-100 hover:border-forest-300">
+                    <x-app-icon name="scale" class="h-3.5 w-3.5 text-forest-600" />
+                    Bandingkan
+                </a>
+                <span class="mx-1 hidden text-forest-200 sm:inline">|</span>
                 <span class="text-xs font-bold uppercase tracking-wider text-ink-soft">Pencarian Populer:</span>
                 @foreach ($popularSearches as $term)
                     <a href="{{ route('schools.index', ['q' => $term]) }}" class="chip transition hover:bg-forest-100">{{ $term }}</a>

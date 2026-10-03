@@ -16,7 +16,7 @@
 
     const MENU_OPEN_CLASS = 'is-open';
     const SCROLL_LOCK_CLASS = 'overflow-hidden';
-    const MD_BREAKPOINT = 768;
+    const LG_BREAKPOINT = 1024;
 
     let menuToggle = null;
     let menuPanel = null;
@@ -40,7 +40,11 @@
         menuToggle.addEventListener('click', toggleMenu);
 
         // Close on click inside menu links
-        menuLinks?.addEventListener('click', closeMenu);
+        menuLinks?.addEventListener('click', function (e) {
+            if (e.target.closest('a')) {
+                closeMenu();
+            }
+        });
 
         // Close on outside click
         document.addEventListener('click', handleOutsideClick);
@@ -48,11 +52,12 @@
         // Close on Escape
         document.addEventListener('keydown', handleKeydown);
 
-        // Auto-close on resize past md
+        // Auto-close on resize past lg
         window.addEventListener('resize', handleResize);
     }
 
-    function toggleMenu() {
+    function toggleMenu(e) {
+        if (e) e.stopPropagation();
         isOpen ? closeMenu() : openMenu();
     }
 
@@ -62,6 +67,12 @@
 
         menuPanel.classList.add(MENU_OPEN_CLASS);
         document.body.classList.add(SCROLL_LOCK_CLASS);
+
+        const header = document.getElementById('main-header');
+        if (header) {
+            header.classList.add('bg-white', 'border-b', 'border-forest-100/70');
+            header.classList.remove('bg-transparent', 'border-transparent');
+        }
 
         // Icon morph: hamburger → X
         if (iconMenu) iconMenu.classList.add('hidden');
@@ -83,6 +94,12 @@
 
         menuPanel.classList.remove(MENU_OPEN_CLASS);
         document.body.classList.remove(SCROLL_LOCK_CLASS);
+
+        const header = document.getElementById('main-header');
+        if (header && header.dataset.isHome === 'true' && header.dataset.scrolled !== 'true') {
+            header.classList.add('bg-transparent', 'border-transparent');
+            header.classList.remove('bg-white', 'border-b', 'border-forest-100/70');
+        }
 
         // Icon morph: X → hamburger
         if (iconMenu) iconMenu.classList.remove('hidden');
@@ -130,7 +147,9 @@
     function handleOutsideClick(e) {
         if (!isOpen) return;
         if (
+            !e.target.closest('#menu-toggle') &&
             !e.target.closest('[data-menu-toggle]') &&
+            !e.target.closest('#mobile-menu') &&
             !e.target.closest('[data-menu-panel]')
         ) {
             closeMenu();
@@ -147,7 +166,7 @@
     function handleResize() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
-            if (window.innerWidth >= MD_BREAKPOINT && isOpen) {
+            if (window.innerWidth >= LG_BREAKPOINT && isOpen) {
                 closeMenu();
             }
         }, 100);

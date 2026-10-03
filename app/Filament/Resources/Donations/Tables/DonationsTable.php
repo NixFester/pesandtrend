@@ -19,7 +19,7 @@ class DonationsTable
                     ->label('Donatur')
                     ->searchable(),
                 TextColumn::make('campaign.title')
-                    ->label('Campaign')
+                    ->label('Bantu Pesantren')
                     ->wrap(),
                 TextColumn::make('amount')
                     ->label('Jumlah')

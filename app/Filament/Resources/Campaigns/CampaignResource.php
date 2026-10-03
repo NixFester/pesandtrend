@@ -19,7 +19,7 @@ class CampaignResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-heart';
 
-    protected static ?string $navigationLabel = 'Campaign';
+    protected static ?string $navigationLabel = 'Bantu Pesantren';
 
     protected static string|\UnitEnum|null $navigationGroup = 'Donasi';
 

@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class LayoutAccessibilityTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_skip_link_renders_on_home_page(): void
     {
         $response = $this->get('/');

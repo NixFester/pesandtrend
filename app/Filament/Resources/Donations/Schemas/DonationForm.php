@@ -32,7 +32,7 @@ class DonationForm
                 ->description('Detail transaksi donasi')
                 ->schema([
                     Forms\Components\Select::make('campaign_id')
-                        ->label('Campaign')
+                        ->label('Bantu Pesantren')
                         ->relationship('campaign', 'title')
                         ->disabled(),
                     Forms\Components\TextInput::make('amount')
