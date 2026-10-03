@@ -26,7 +26,7 @@ class SeoCitiesTable
                 TextColumn::make('slug')
                     ->label('Slug')
                     ->copyable()
-                    ->monospace(),
+                    ->fontFamily('mono'),
                 TextColumn::make('schools_count')
                     ->label('Jumlah Sekolah')
                     ->counts('citySchools'),
