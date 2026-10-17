@@ -99,7 +99,11 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->label('Judul')->searchable(),
+                Tables\Columns\TextColumn::make('title')
+                    ->label('Judul')
+                    ->searchable()
+                    ->extraHeaderAttributes(['class' => 'fi-mobile-title-column'])
+                    ->extraCellAttributes(['class' => 'fi-mobile-title-column']),
                 Tables\Columns\TextColumn::make('category')->label('Kategori'),
                 Tables\Columns\IconColumn::make('published_at')
                     ->label('Publik')

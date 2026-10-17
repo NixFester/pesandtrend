@@ -1,0 +1,30 @@
+@media (max-width: 767px) {
+    .fi-page.fi-resource-list-records-page .fi-ta-table {
+        width: 100%;
+        max-width: 100%;
+        table-layout: fixed;
+    }
+
+    .fi-page.fi-resource-list-records-page .fi-ta-header-cell:not(.fi-mobile-title-column),
+    .fi-page.fi-resource-list-records-page .fi-ta-cell:not(.fi-mobile-title-column) {
+        display: none !important;
+    }
+
+    .fi-page.fi-resource-list-records-page .fi-mobile-title-column {
+        width: 100%;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+
+    .fi-page.fi-resource-schools .fi-ta-row {
+        cursor: pointer;
+    }
+
+    .fi-page.fi-resource-schools .fi-ta-row:nth-child(odd) {
+        background: transparent;
+    }
+
+    .fi-page.fi-resource-schools .fi-ta-row:nth-child(even) {
+        background: rgba(0, 0, 0, 0.02);
+    }
+}

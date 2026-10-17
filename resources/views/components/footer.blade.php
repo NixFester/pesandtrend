@@ -3,7 +3,6 @@
         <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
             <div class="lg:col-span-2">
                 <a href="{{ route('home') }}" class="flex items-center gap-2.5">
-                    <img src="{{ asset('images/icon.svg') }}" alt="Icon Pesantrends" class="h-9 w-auto">
                     <img src="{{ asset('images/logo.svg') }}" alt="Logo Pesantrends" class="h-5 w-auto">
                 </a>
                 <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/70">

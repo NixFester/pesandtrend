@@ -74,7 +74,11 @@ class TestimonialResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->label('Nama')->searchable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nama')
+                    ->searchable()
+                    ->extraHeaderAttributes(['class' => 'fi-mobile-title-column'])
+                    ->extraCellAttributes(['class' => 'fi-mobile-title-column']),
                 Tables\Columns\TextColumn::make('role')->label('Peran'),
                 Tables\Columns\TextColumn::make('rating')->label('Rating'),
                 Tables\Columns\IconColumn::make('is_published')->label('Publik')->boolean(),

@@ -13,6 +13,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\HtmlString;
 
 class OnboardingApplicationResource extends Resource
 {
@@ -65,24 +66,25 @@ class OnboardingApplicationResource extends Resource
                         ->label('Daftar Dokumen Terlampir')
                         ->content(function (?Application $record) {
                             if (! $record || $record->documents->isEmpty()) {
-                                return new \Illuminate\Support\HtmlString('<span class="text-gray-400 italic">Belum ada dokumen yang diunggah.</span>');
+                                return new HtmlString('<span class="text-gray-400 italic">Belum ada dokumen yang diunggah.</span>');
                             }
 
                             $list = $record->documents->map(function ($doc) {
                                 $url = $doc->url;
                                 $label = e($doc->kind->label());
                                 $filename = e($doc->original_name);
-                                $size = $doc->size ? ' (' . number_format($doc->size / 1024, 0) . ' KB)' : '';
+                                $size = $doc->size ? ' ('.number_format($doc->size / 1024, 0).' KB)' : '';
+
                                 return "<li class='py-1 flex items-center justify-between border-b border-gray-100 last:border-0'>"
-                                    . "<div class='flex items-center gap-2'>"
-                                    . "<span class='font-medium text-gray-900'>{$label}</span>"
-                                    . "<span class='text-xs text-gray-500'>{$filename}{$size}</span>"
-                                    . "</div>"
-                                    . "<a href='{$url}' target='_blank' class='text-xs font-semibold text-primary-600 hover:text-primary-800 underline flex items-center gap-1'>Buka Dokumen &rarr;</a>"
-                                    . "</li>";
+                                    ."<div class='flex items-center gap-2'>"
+                                    ."<span class='font-medium text-gray-900'>{$label}</span>"
+                                    ."<span class='text-xs text-gray-500'>{$filename}{$size}</span>"
+                                    .'</div>'
+                                    ."<a href='{$url}' target='_blank' class='text-xs font-semibold text-primary-600 hover:text-primary-800 underline flex items-center gap-1'>Buka Dokumen &rarr;</a>"
+                                    .'</li>';
                             })->implode('');
 
-                            return new \Illuminate\Support\HtmlString("<ul class='divide-y divide-gray-100'>{$list}</ul>");
+                            return new HtmlString("<ul class='divide-y divide-gray-100'>{$list}</ul>");
                         }),
                 ]),
         ]);
@@ -93,7 +95,11 @@ class OnboardingApplicationResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('public_id')->label('Kode')->searchable(),
-                Tables\Columns\TextColumn::make('student_name')->label('Nama Siswa')->searchable(),
+                Tables\Columns\TextColumn::make('student_name')
+                    ->label('Nama Siswa')
+                    ->searchable()
+                    ->extraHeaderAttributes(['class' => 'fi-mobile-title-column'])
+                    ->extraCellAttributes(['class' => 'fi-mobile-title-column']),
                 Tables\Columns\TextColumn::make('school.name')->label('Sekolah')->searchable(),
                 Tables\Columns\TextColumn::make('parent_name')->label('Orang Tua'),
                 Tables\Columns\TextColumn::make('status')->label('Status')

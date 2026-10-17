@@ -17,6 +17,8 @@ class HomeController extends Controller
                 ->orderByDesc('rating')
                 ->take(3)
                 ->get(),
+            'cities' => School::query()->orderBy('city')->pluck('city', 'city')->unique(),
+            'jenjang' => ['SDIT' => 'SDIT', 'SMPIT' => 'SMPIT', 'SMA Islam' => 'SMA Islam', 'MA' => 'MA'],
             'flagshipPrograms' => Program::whereIn('slug', [
                 'tahfidz-30-juz', 'stem-robotika', 'bahasa-arab-intensif',
                 'leadership-dakwah', 'quran-science', 'digital-literacy',

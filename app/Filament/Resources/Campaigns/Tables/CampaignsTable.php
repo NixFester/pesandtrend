@@ -72,7 +72,9 @@ class CampaignsTable
                 TextColumn::make('title')
                     ->label('Judul')
                     ->searchable()
-                    ->wrap(),
+                    ->wrap()
+                    ->extraHeaderAttributes(['class' => 'fi-mobile-title-column'])
+                    ->extraCellAttributes(['class' => 'fi-mobile-title-column']),
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()

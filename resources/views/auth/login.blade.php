@@ -6,7 +6,6 @@
         <div class="container-app">
             <div class="mx-auto max-w-md">
                 <div class="text-center">
-                    <img src="{{ asset('images/icon.svg') }}" alt="Pesantrends" class="mx-auto h-14 w-14">
                     <h1 class="mt-5 text-2xl font-extrabold tracking-tight text-ink">Selamat Datang Kembali</h1>
                     <p class="mt-2 text-sm text-ink-soft">Masuk untuk melihat sekolah tersimpan dan rekomendasi pilihan</p>
                 </div>

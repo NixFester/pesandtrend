@@ -55,6 +55,10 @@
 }
 
 @layer base {
+    [x-cloak] {
+        display: none !important;
+    }
+
     html {
         scroll-behavior: smooth;
         /* Removes the blue flash on tap for interactive elements on iOS */
@@ -126,15 +130,50 @@
     outline-offset: 2px;
 }
 
-/* Mobile menu panel — toggled via JS adding .is-open class */
+/* Menu panel — toggled via JS adding .is-open class */
 @utility menu-panel {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.menu-panel.is-open {
     max-height: 0;
     opacity: 0;
 }
 
-.menu-panel.is-open {
-    max-height: 80dvh;
-    opacity: 1;
+/* Desktop menu: full-width dropdown with centered content */
+@media (min-width: 1024px) {
+    .menu-panel.is-open {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        max-height: none;
+        opacity: 1;
+        overflow: visible;
+        border-bottom: 1px solid rgb(209 250 229);
+        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.15);
+    }
+
+    .menu-panel.is-open [data-menu-links] {
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .menu-panel.is-open [data-menu-links]::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Mobile menu: full-screen */
+@media (max-width: 1023px) {
+    .menu-panel.is-open {
+        max-height: 85dvh;
+        opacity: 1;
+        overflow: hidden;
+    }
 }
 
 /* Compare table: sticky first-column label cells */
@@ -255,4 +294,23 @@
 
 .article-body ul {
     @apply mb-5 list-disc space-y-2 pl-6;
+}
+
+/* Filament Admin - Mobile-only school list simplification */
+@media (max-width: 767px) {
+    /* Hide checkbox column on mobile for school list */
+    .fi-ta-selection-cell,
+    .fi-ta-checkbox {
+        display: none !important;
+    }
+
+    /* Hide action buttons on mobile */
+    .fi-ta-actions-cell {
+        display: none !important;
+    }
+
+    /* Make table rows more touch-friendly */
+    .fi-ta-row {
+        cursor: pointer;
+    }
 }

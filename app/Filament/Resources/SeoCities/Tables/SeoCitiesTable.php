@@ -22,7 +22,9 @@ class SeoCitiesTable
                 TextColumn::make('name')
                     ->label('Nama Kota')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->extraHeaderAttributes(['class' => 'fi-mobile-title-column'])
+                    ->extraCellAttributes(['class' => 'fi-mobile-title-column']),
                 TextColumn::make('slug')
                     ->label('Slug')
                     ->copyable()

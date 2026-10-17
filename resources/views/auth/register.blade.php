@@ -6,7 +6,6 @@
         <div class="container-app">
             <div class="mx-auto max-w-md">
                 <div class="text-center">
-                    <img src="{{ asset('images/icon.svg') }}" alt="Pesantrends" class="mx-auto h-14 w-14">
                     <h1 class="mt-5 text-2xl font-extrabold tracking-tight text-ink">Bergabung dengan Keluarga Muslim Indonesia</h1>
                     <p class="mt-2 text-sm text-ink-soft">Simpan sekolah favorit, dapatkan rekomendasi, dan akses panduan lengkap — gratis</p>
                 </div>

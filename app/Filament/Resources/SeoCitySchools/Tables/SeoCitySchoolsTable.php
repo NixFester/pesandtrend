@@ -26,7 +26,9 @@ class SeoCitySchoolsTable
                 TextColumn::make('school.name')
                     ->label('Sekolah')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->extraHeaderAttributes(['class' => 'fi-mobile-title-column'])
+                    ->extraCellAttributes(['class' => 'fi-mobile-title-column']),
                 TextColumn::make('school.city')
                     ->label('Kota Sekolah')
                     ->searchable(),

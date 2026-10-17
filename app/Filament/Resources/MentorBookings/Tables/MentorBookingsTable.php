@@ -64,7 +64,9 @@ class MentorBookingsTable
                     ->wrap(),
                 TextColumn::make('client_name')
                     ->label('Klien')
-                    ->searchable(),
+                    ->searchable()
+                    ->extraHeaderAttributes(['class' => 'fi-mobile-title-column'])
+                    ->extraCellAttributes(['class' => 'fi-mobile-title-column']),
                 TextColumn::make('client_whatsapp')
                     ->label('WhatsApp'),
                 TextColumn::make('amount')

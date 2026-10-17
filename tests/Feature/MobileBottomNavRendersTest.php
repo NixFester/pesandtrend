@@ -8,32 +8,36 @@ use Tests\TestCase;
 class MobileBottomNavRendersTest extends TestCase
 {
     use RefreshDatabase;
-    public function test_bottom_nav_has_five_nav_items_in_order(): void
+
+    public function test_bottom_nav_has_four_requested_items_in_order(): void
     {
         $html = $this->get('/')->getContent();
-        $this->assertStringContainsString('mobile-bottom-nav', $html);
-        $this->assertStringContainsString('Beranda', $html);
-        $this->assertStringContainsString('Cari', $html);
-        $this->assertStringContainsString('Bantu', $html);
-        $this->assertStringContainsString('Bimbel', $html);
-        $this->assertStringContainsString('Login', $html);
 
-        // Check relative order of labels in bottom nav
         $bottomNavPos = strpos($html, 'id="mobile-bottom-nav"');
         $this->assertNotFalse($bottomNavPos);
         $bottomNavEndPos = strpos($html, '</nav>', $bottomNavPos);
         $bottomNavHtml = substr($html, $bottomNavPos, $bottomNavEndPos - $bottomNavPos + 6);
 
+        preg_match_all('/<a\b/', $bottomNavHtml, $links);
+
+        $this->assertSame(4, count($links[0]));
+        $this->assertStringContainsString('href="'.route('home').'"', $bottomNavHtml);
+        $this->assertStringContainsString('href="'.route('schools.index').'"', $bottomNavHtml);
+        $this->assertStringContainsString('href="'.route('articles.index').'"', $bottomNavHtml);
+        $this->assertStringContainsString('href="'.route('login').'"', $bottomNavHtml);
+
         $posBeranda = strpos($bottomNavHtml, 'Beranda');
         $posCari = strpos($bottomNavHtml, 'Cari');
-        $posBantu = strpos($bottomNavHtml, 'Bantu');
-        $posBimbel = strpos($bottomNavHtml, 'Bimbel');
+        $posArtikel = strpos($bottomNavHtml, 'Artikel');
         $posLogin = strpos($bottomNavHtml, 'Login');
 
+        $this->assertNotFalse($posBeranda);
+        $this->assertNotFalse($posCari);
+        $this->assertNotFalse($posArtikel);
+        $this->assertNotFalse($posLogin);
         $this->assertTrue($posBeranda < $posCari);
-        $this->assertTrue($posCari < $posBantu);
-        $this->assertTrue($posBantu < $posBimbel);
-        $this->assertTrue($posBimbel < $posLogin);
+        $this->assertTrue($posCari < $posArtikel);
+        $this->assertTrue($posArtikel < $posLogin);
     }
 
     public function test_desktop_navbar_excludes_sekolah_terbaik_pesantren_terbaik_bandingkan(): void

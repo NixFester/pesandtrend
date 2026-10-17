@@ -166,9 +166,7 @@
     function handleResize() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
-            if (window.innerWidth >= LG_BREAKPOINT && isOpen) {
-                closeMenu();
-            }
+            // Menu stays open on resize — no auto-close
         }, 100);
     }
 

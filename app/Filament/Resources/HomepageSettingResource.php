@@ -54,7 +54,10 @@ class HomepageSettingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('total_schools')->label('Sekolah'),
+                Tables\Columns\TextColumn::make('total_schools')
+                    ->label('Sekolah')
+                    ->extraHeaderAttributes(['class' => 'fi-mobile-title-column'])
+                    ->extraCellAttributes(['class' => 'fi-mobile-title-column']),
                 Tables\Columns\TextColumn::make('total_students')->label('Santri'),
                 Tables\Columns\TextColumn::make('total_cities')->label('Kota'),
                 Tables\Columns\TextColumn::make('total_programs')->label('Program'),

@@ -15,7 +15,9 @@ class MentorsTable
                 TextColumn::make('name')
                     ->label('Nama')
                     ->searchable()
-                    ->wrap(),
+                    ->wrap()
+                    ->extraHeaderAttributes(['class' => 'fi-mobile-title-column'])
+                    ->extraCellAttributes(['class' => 'fi-mobile-title-column']),
                 TextColumn::make('tagline')
                     ->label('Tagline')
                     ->limit(40)

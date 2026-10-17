@@ -6,35 +6,24 @@
             'icon' => 'home',
             'label' => 'Beranda',
             'active' => request()->routeIs('home'),
-            'auth' => null,
         ],
         [
             'route' => route('schools.index'),
             'icon' => 'search',
             'label' => 'Cari',
             'active' => request()->routeIs('schools.*'),
-            'auth' => null,
         ],
         [
-            'route' => route('donations.index'),
-            'icon' => 'heart',
-            'label' => 'Bantu',
-            'active' => request()->routeIs('donations.*'),
-            'auth' => null,
+            'route' => route('articles.index'),
+            'icon' => 'newspaper',
+            'label' => 'Artikel',
+            'active' => request()->routeIs('articles.*'),
         ],
         [
-            'route' => route('bimbel.index'),
-            'icon' => 'graduation-cap',
-            'label' => 'Bimbel',
-            'active' => request()->routeIs('bimbel.*'),
-            'auth' => null,
-        ],
-        [
-            'route' => auth()->check() ? route('dashboard') : route('login'),
+            'route' => route('login'),
             'icon' => 'user',
-            'label' => auth()->check() ? 'Akun' : 'Login',
-            'active' => request()->routeIs('dashboard') || request()->routeIs('login'),
-            'auth' => null,
+            'label' => 'Login',
+            'active' => request()->routeIs('login'),
         ],
     ];
 @endphp
@@ -46,13 +35,16 @@
     <div class="absolute inset-x-0 top-0 flex h-full">
         @foreach ($navItems as $item)
             @php
-                $href = $item['auth'] === 'required' && !auth()->check() ? route('login') : $item['route'];
                 $showActive = $item['active'];
             @endphp
             <a
-                href="{{ $href }}"
+                href="{{ $item['route'] }}"
                 class="relative flex flex-1 flex-col items-center justify-center gap-0.5 py-2 text-xs font-medium transition-colors duration-150
-                    {{ $showActive ? 'text-forest-700' : 'text-ink-soft/60' }}"
+                    @if ($showActive)
+                        text-forest-700
+                    @else
+                        text-ink-soft/60
+                    @endif"
                 @if ($showActive) aria-current="page" @endif
             >
                 {{-- Active indicator: top dot --}}

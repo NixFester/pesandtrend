@@ -407,7 +407,13 @@ class SchoolResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama Sekolah')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->url(fn (School $record): string => static::getUrl('edit', ['record' => $record]))
+                    ->extraAttributes([
+                        'class' => 'cursor-pointer hover:text-primary-600 transition-colors',
+                    ])
+                    ->extraHeaderAttributes(['class' => 'fi-mobile-title-column'])
+                    ->extraCellAttributes(['class' => 'fi-mobile-title-column']),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('type')

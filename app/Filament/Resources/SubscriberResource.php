@@ -32,7 +32,11 @@ class SubscriberResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('email')->label('Email')->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->label('Email')
+                    ->searchable()
+                    ->extraHeaderAttributes(['class' => 'fi-mobile-title-column'])
+                    ->extraCellAttributes(['class' => 'fi-mobile-title-column']),
                 Tables\Columns\TextColumn::make('created_at')->label('Berlangganan')->dateTime('d M Y'),
             ])
             ->actions([Actions\DeleteAction::make()])

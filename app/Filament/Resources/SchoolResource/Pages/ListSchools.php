@@ -23,4 +23,14 @@ class ListSchools extends ListRecords
     {
         return parent::getTableQuery()->with(['facilities', 'programs']);
     }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [];
+    }
+
+    public function getSubheading(): ?string
+    {
+        return null;
+    }
 }

@@ -51,7 +51,10 @@ class ApplicationPaymentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('application.public_id')->label('Kode Daftar')->searchable(),
-                Tables\Columns\TextColumn::make('application.student_name')->label('Siswa'),
+                Tables\Columns\TextColumn::make('application.student_name')
+                    ->label('Siswa')
+                    ->extraHeaderAttributes(['class' => 'fi-mobile-title-column'])
+                    ->extraCellAttributes(['class' => 'fi-mobile-title-column']),
                 Tables\Columns\TextColumn::make('provider')->label('Provider')->badge(),
                 Tables\Columns\TextColumn::make('amount')->label('Jumlah')->money('IDR')->sortable(),
                 Tables\Columns\TextColumn::make('status')->label('Status')

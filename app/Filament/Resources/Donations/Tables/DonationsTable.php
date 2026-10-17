@@ -17,7 +17,9 @@ class DonationsTable
                     ->date('d M Y'),
                 TextColumn::make('donor_name')
                     ->label('Donatur')
-                    ->searchable(),
+                    ->searchable()
+                    ->extraHeaderAttributes(['class' => 'fi-mobile-title-column'])
+                    ->extraCellAttributes(['class' => 'fi-mobile-title-column']),
                 TextColumn::make('campaign.title')
                     ->label('Bantu Pesantren')
                     ->wrap(),
