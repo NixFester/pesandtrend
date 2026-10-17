@@ -47,7 +47,8 @@ class HomePageRendersTest extends TestCase
 
         $this->assertStringContainsString('bg-forest-950 py-5 sm:py-6', $menuHtml);
         $this->assertStringContainsString('grid grid-cols-2 gap-x-3', $menuHtml);
-        $this->assertStringContainsString('lg:grid-cols-4', $menuHtml);
+        $this->assertStringContainsString('lg:flex lg:items-center', $menuHtml);
+        $this->assertStringContainsString('lg:contents', $menuHtml);
         $this->assertStringContainsString('rounded-full border border-white/10 bg-white/5', $menuHtml);
         $this->assertStringContainsString(asset('images/icon/bantu_pesantren.svg'), $menuHtml);
         $this->assertStringContainsString(asset('images/icon/bimbel.svg'), $menuHtml);
@@ -60,9 +61,11 @@ class HomePageRendersTest extends TestCase
         $this->assertStringContainsString(route('bimbel.index'), $menuHtml);
         $this->assertStringContainsString('Lainnya', $menuHtml);
         $this->assertStringContainsString('aria-controls="homepage-menu-more"', $menuHtml);
-        $this->assertStringContainsString('grid grid-cols-3 gap-x-1 gap-y-2', $menuHtml);
-        $this->assertStringContainsString('Cari Sekolah', $menuHtml);
-        $this->assertStringContainsString(route('schools.index'), $menuHtml);
+        $this->assertStringContainsString('focus-visible:ring-gold-400 lg:hidden', $menuHtml);
+        $this->assertStringContainsString('grid grid-cols-2 gap-x-3 gap-y-2', $menuHtml);
+        $this->assertStringContainsString('lg:!mt-0 lg:!contents', $menuHtml);
+        $this->assertStringNotContainsString('Cari Sekolah', $menuHtml);
+        $this->assertStringNotContainsString('href="'.route('schools.index').'"', $menuHtml);
         $this->assertStringContainsString('Bandingkan Sekolah', $menuHtml);
         $this->assertStringContainsString(route('compare.index'), $menuHtml);
         $this->assertStringContainsString('Kalkulator Biaya', $menuHtml);
@@ -71,7 +74,16 @@ class HomePageRendersTest extends TestCase
         $this->assertStringContainsString(route('seo.schools.best'), $menuHtml);
         $this->assertStringContainsString('Pesantren Pilihan', $menuHtml);
         $this->assertStringContainsString(route('seo.pesantren.best'), $menuHtml);
-        $this->assertStringContainsString(route('articles.index'), $menuHtml);
+        $this->assertStringNotContainsString('Artikel', $menuHtml);
+        $this->assertStringNotContainsString('href="'.route('articles.index').'"', $menuHtml);
+
+        $moreMenuStart = strpos($menuHtml, 'id="homepage-menu-more"');
+        $this->assertNotFalse($moreMenuStart);
+        $moreMenuEnd = strpos($menuHtml, '</div>', $moreMenuStart);
+        $moreMenuHtml = substr($menuHtml, $moreMenuStart, $moreMenuEnd - $moreMenuStart);
+
+        preg_match_all('/<a\b/', $moreMenuHtml, $moreMenuLinks);
+        $this->assertSame(4, count($moreMenuLinks[0]));
     }
 
     public function test_hero_search_form_submits_school_query_to_school_search(): void

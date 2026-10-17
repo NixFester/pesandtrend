@@ -77,7 +77,7 @@
 
     {{-- ================= MENU SECTION ================= --}}
     <section id="homepage-menu" class="bg-forest-950 py-5 sm:py-6" aria-labelledby="homepage-menu-heading">
-        <div class="container-app" x-data="{ expanded: false }">
+        <div class="container-app lg:flex lg:items-center" x-data="{ expanded: false }">
             <h2 id="homepage-menu-heading" class="sr-only">Menu utama</h2>
             @php
                 $menuItems = [
@@ -108,12 +108,12 @@
                 ];
             @endphp
 
-            <div class="grid grid-cols-2 gap-x-3 lg:grid-cols-4 lg:gap-x-3">
+            <div class="grid grid-cols-2 gap-x-3 lg:contents">
                 @foreach ($menuItems as $item)
                     @if ($item['route'])
-                        <a href="{{ $item['route'] }}" class="group flex min-h-36 cursor-pointer flex-col items-center rounded-2xl px-1 py-2 text-center transition-colors duration-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400">
+                        <a href="{{ $item['route'] }}" class="group flex min-h-36 cursor-pointer flex-col items-center rounded-2xl px-1 py-2 text-center transition-colors duration-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 lg:min-w-0 lg:flex-1">
                     @else
-                        <div class="flex min-h-36 flex-col items-center rounded-2xl px-1 py-2 text-center">
+                        <div class="flex min-h-36 flex-col items-center rounded-2xl px-1 py-2 text-center lg:min-w-0 lg:flex-1">
                     @endif
                         <span class="flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-colors duration-200 xs:h-[88px] xs:w-[88px] @if ($item['route']) group-hover:border-white/20 group-hover:bg-white/10 @endif">
                             <img src="{{ asset('images/icon/'.$item['icon']) }}" alt="" aria-hidden="true" class="h-8 w-8 object-contain">
@@ -134,7 +134,7 @@
 
             <button
                 type="button"
-                class="mt-2 flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-white/75 transition-colors duration-200 hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400"
+                class="mt-2 flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-white/75 transition-colors duration-200 hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 lg:hidden"
                 aria-controls="homepage-menu-more"
                 :aria-expanded="expanded.toString()"
                 @click="expanded = !expanded"
@@ -152,44 +152,32 @@
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="translate-y-0 opacity-100"
                 x-transition:leave-end="translate-y-1 opacity-0"
-                class="mt-2 grid grid-cols-3 gap-x-1 gap-y-2 sm:gap-x-3"
+                class="mt-2 grid grid-cols-2 gap-x-3 gap-y-2 lg:!mt-0 lg:!contents"
                 x-cloak
             >
-                <a href="{{ route('schools.index') }}" class="group flex min-h-28 cursor-pointer flex-col items-center rounded-2xl px-1 py-2 text-center transition-colors duration-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400">
-                    <span class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-colors duration-200 group-hover:bg-white/10">
-                        <x-app-icon name="search" class="h-6 w-6"/>
+                <a href="{{ route('compare.index') }}" class="group flex min-h-36 cursor-pointer flex-col items-center rounded-2xl px-1 py-2 text-center transition-colors duration-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 lg:min-w-0 lg:flex-1">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-colors duration-200 group-hover:bg-white/10 lg:h-[88px] lg:w-[88px]">
+                        <x-app-icon name="scale" class="h-6 w-6 lg:h-7 lg:w-7"/>
                     </span>
-                    <span class="mt-2 text-[11px] font-medium leading-tight text-white/75 xs:text-sm">Cari Sekolah</span>
+                    <span class="mt-2 text-[11px] font-medium leading-tight text-white/75 xs:text-sm lg:mt-3">Bandingkan Sekolah</span>
                 </a>
-                <a href="{{ route('compare.index') }}" class="group flex min-h-28 cursor-pointer flex-col items-center rounded-2xl px-1 py-2 text-center transition-colors duration-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400">
-                    <span class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-colors duration-200 group-hover:bg-white/10">
-                        <x-app-icon name="scale" class="h-6 w-6"/>
+                <a href="{{ route('calculator.index') }}" class="group flex min-h-36 cursor-pointer flex-col items-center rounded-2xl px-1 py-2 text-center transition-colors duration-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 lg:min-w-0 lg:flex-1">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-colors duration-200 group-hover:bg-white/10 lg:h-[88px] lg:w-[88px]">
+                        <x-app-icon name="calculator" class="h-6 w-6 lg:h-7 lg:w-7"/>
                     </span>
-                    <span class="mt-2 text-[11px] font-medium leading-tight text-white/75 xs:text-sm">Bandingkan Sekolah</span>
+                    <span class="mt-2 text-[11px] font-medium leading-tight text-white/75 xs:text-sm lg:mt-3">Kalkulator Biaya</span>
                 </a>
-                <a href="{{ route('calculator.index') }}" class="group flex min-h-28 cursor-pointer flex-col items-center rounded-2xl px-1 py-2 text-center transition-colors duration-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400">
-                    <span class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-colors duration-200 group-hover:bg-white/10">
-                        <x-app-icon name="calculator" class="h-6 w-6"/>
+                <a href="{{ route('seo.schools.best') }}" class="group flex min-h-36 cursor-pointer flex-col items-center rounded-2xl px-1 py-2 text-center transition-colors duration-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 lg:min-w-0 lg:flex-1">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-colors duration-200 group-hover:bg-white/10 lg:h-[88px] lg:w-[88px]">
+                        <x-app-icon name="trophy" class="h-6 w-6 lg:h-7 lg:w-7"/>
                     </span>
-                    <span class="mt-2 text-[11px] font-medium leading-tight text-white/75 xs:text-sm">Kalkulator Biaya</span>
+                    <span class="mt-2 text-[11px] font-medium leading-tight text-white/75 xs:text-sm lg:mt-3">Sekolah Terbaik</span>
                 </a>
-                <a href="{{ route('seo.schools.best') }}" class="group flex min-h-28 cursor-pointer flex-col items-center rounded-2xl px-1 py-2 text-center transition-colors duration-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400">
-                    <span class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-colors duration-200 group-hover:bg-white/10">
-                        <x-app-icon name="trophy" class="h-6 w-6"/>
+                <a href="{{ route('seo.pesantren.best') }}" class="group flex min-h-36 cursor-pointer flex-col items-center rounded-2xl px-1 py-2 text-center transition-colors duration-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 lg:min-w-0 lg:flex-1">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-colors duration-200 group-hover:bg-white/10 lg:h-[88px] lg:w-[88px]">
+                        <x-app-icon name="sparkles" class="h-6 w-6 lg:h-7 lg:w-7"/>
                     </span>
-                    <span class="mt-2 text-[11px] font-medium leading-tight text-white/75 xs:text-sm">Sekolah Terbaik</span>
-                </a>
-                <a href="{{ route('seo.pesantren.best') }}" class="group flex min-h-28 cursor-pointer flex-col items-center rounded-2xl px-1 py-2 text-center transition-colors duration-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400">
-                    <span class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-colors duration-200 group-hover:bg-white/10">
-                        <x-app-icon name="sparkles" class="h-6 w-6"/>
-                    </span>
-                    <span class="mt-2 text-[11px] font-medium leading-tight text-white/75 xs:text-sm">Pesantren Pilihan</span>
-                </a>
-                <a href="{{ route('articles.index') }}" class="group flex min-h-28 cursor-pointer flex-col items-center rounded-2xl px-1 py-2 text-center transition-colors duration-200 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400">
-                    <span class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-colors duration-200 group-hover:bg-white/10">
-                        <x-app-icon name="newspaper" class="h-6 w-6"/>
-                    </span>
-                    <span class="mt-2 text-[11px] font-medium leading-tight text-white/75 xs:text-sm">Artikel</span>
+                    <span class="mt-2 text-[11px] font-medium leading-tight text-white/75 xs:text-sm lg:mt-3">Pesantren Pilihan</span>
                 </a>
             </div>
         </div>
